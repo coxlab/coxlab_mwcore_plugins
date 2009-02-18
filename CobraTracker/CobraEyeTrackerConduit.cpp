@@ -8,29 +8,30 @@
  */
 
 #include "CobraEyeTrackerConduit.h"
-	
+
+using namespace mw;
 
 	
-void mCobraDevice::addChild(std::map<std::string, std::string> parameters,
-										mComponentRegistry *reg,
-										shared_ptr<mComponent> _child){
+void CobraDevice::addChild(std::map<std::string, std::string> parameters,
+										ComponentRegistry *reg,
+                           shared_ptr<mw::Component> _child){
 
-	shared_ptr<mCobraChannel> channel = dynamic_pointer_cast<mCobraChannel, mComponent>(_child);
+	shared_ptr<CobraChannel> channel = dynamic_pointer_cast<CobraChannel, mw::Component>(_child);
 	if(channel == NULL){
-		throw mSimpleException("Attempt to access an invalid Cobra EyeTracker channel object");
+		throw SimpleException("Attempt to access an invalid Cobra EyeTracker channel object");
 	}
     
-    conduit->registerCallback(channel->getCapability(), bind(&mCobraChannel::update, channel, _1)); 
+    conduit->registerCallback(channel->getCapability(), bind(&CobraChannel::update, channel, _1)); 
 }
 
 
-shared_ptr<mComponent> mCobraDeviceFactory::createObject(std::map<std::string, std::string> parameters,
-												 mComponentRegistry *reg) {
+shared_ptr<mw::Component> CobraDeviceFactory::createObject(std::map<std::string, std::string> parameters,
+												 ComponentRegistry *reg) {
 												 
 	REQUIRE_ATTRIBUTES(parameters, "device_name");
 	
 	string resource_name = parameters["device_name"];
-    shared_ptr <mComponent> newDevice(new mCobraDevice(resource_name));
+    shared_ptr <mw::Component> newDevice(new CobraDevice(resource_name));
 
 	
     return newDevice;

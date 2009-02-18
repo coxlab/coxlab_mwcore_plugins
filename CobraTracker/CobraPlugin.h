@@ -8,14 +8,15 @@
  */
 
 #include <MonkeyWorksCore/Plugin.h>
+using namespace mw;
 
 extern "C"{
-    mPlugin *getPlugin();
+    Plugin *getPlugin();
 }
 
 
 
-class CobraPlugin : public mPlugin {
+class CobraPlugin : public Plugin {
     
-	virtual void registerComponents(shared_ptr<mComponentRegistry> registry);	
+	virtual void registerComponents(shared_ptr<ComponentRegistry> registry);	
 };

@@ -231,6 +231,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -270,20 +272,21 @@
 								<string>08FB77AFFE84173DC02AAC07</string>
 								<string>5CCA29F80E8AD551007BDA56</string>
 								<string>32C88E010371C26100C91783</string>
+								<string>089C167CFE841241C02AAC07</string>
 								<string>1C37FBAC04509CD000000102</string>
-								<string>5CA091B60F0DA8E900062E67</string>
+								<string>5C6617270F4CA5DC00C8FD71</string>
 								<string>1C37FABC05509CD000000102</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>6</integer>
-									<integer>1</integer>
-									<integer>0</integer>
+									<integer>19</integer>
+									<integer>15</integer>
+									<integer>14</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 0}, {186, 445}}</string>
+							<string>{{0, 17}, {186, 445}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -313,14 +316,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>CobraPlugin.cpp</string>
+								<string>CobraEyeTrackerConduit.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -328,24 +329,41 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>CobraPlugin.cpp</string>
+										<string>CobraEyeTrackerConduit.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>5CA091BF0F0DA8E900062E67</string>
+										<string>5C6617670F4CA88500C8FD71</string>
 										<key>history</key>
 										<array>
-											<string>5CA091B70F0DA8E900062E67</string>
-											<string>5CA091B80F0DA8E900062E67</string>
-											<string>5CA091B90F0DA8E900062E67</string>
+											<string>5C6617510F4CA88500C8FD71</string>
+											<string>5C6617520F4CA88500C8FD71</string>
+											<string>5C6617530F4CA88500C8FD71</string>
+											<string>5C6617540F4CA88500C8FD71</string>
+											<string>5C6617550F4CA88500C8FD71</string>
+											<string>5C6617560F4CA88500C8FD71</string>
+											<string>5C6617570F4CA88500C8FD71</string>
+											<string>5C6617580F4CA88500C8FD71</string>
 										</array>
 										<key>prevStack</key>
 										<array>
 											<string>5CA091BA0F0DA8E900062E67</string>
 											<string>5CA091BB0F0DA8E900062E67</string>
 											<string>5CA091BC0F0DA8E900062E67</string>
-											<string>5CA091BD0F0DA8E900062E67</string>
-											<string>5CA091BE0F0DA8E900062E67</string>
+											<string>5C6617590F4CA88500C8FD71</string>
+											<string>5C66175A0F4CA88500C8FD71</string>
+											<string>5C66175B0F4CA88500C8FD71</string>
+											<string>5C66175C0F4CA88500C8FD71</string>
+											<string>5C66175D0F4CA88500C8FD71</string>
+											<string>5C66175E0F4CA88500C8FD71</string>
+											<string>5C66175F0F4CA88500C8FD71</string>
+											<string>5C6617600F4CA88500C8FD71</string>
+											<string>5C6617610F4CA88500C8FD71</string>
+											<string>5C6617620F4CA88500C8FD71</string>
+											<string>5C6617630F4CA88500C8FD71</string>
+											<string>5C6617640F4CA88500C8FD71</string>
+											<string>5C6617650F4CA88500C8FD71</string>
+											<string>5C6617660F4CA88500C8FD71</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -403,9 +421,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>5CA091C00F0DA8E900062E67</string>
+				<string>5C6617680F4CA88500C8FD71</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>5CA091C10F0DA8E900062E67</string>
+				<string>5C6617690F4CA88500C8FD71</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -539,6 +557,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>5C66173A0F4CA62300C8FD71</string>
 		<string>/Users/davidcox/Repositories/monkeyworks/coxlab_mwcore_plugins/CobraTracker/CobraPlugin.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
@@ -546,8 +565,12 @@
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
+			<key>FirstTimeWindowDisplayed</key>
+			<false/>
 			<key>Identifier</key>
 			<string>windowTool.build</string>
+			<key>IsVertical</key>
+			<true/>
 			<key>Layout</key>
 			<array>
 				<dict>
@@ -559,48 +582,44 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>&lt;No Editor&gt;</string>
-								<key>PBXSplitModuleInNavigatorKey</key>
-								<dict>
-									<key>Split0</key>
-									<dict>
-										<key>PBXProjectModuleGUID</key>
-										<string>1CD052900623707200166675</string>
-									</dict>
-									<key>SplitCount</key>
-									<string>1</string>
-								</dict>
+								<string>CobraEyeTrackerConduit.cpp</string>
 								<key>StatusBarVisibility</key>
-								<integer>1</integer>
+								<true/>
 							</dict>
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {500, 215}}</string>
+								<string>{{0, 0}, {983, 163}}</string>
 								<key>RubberWindowFrame</key>
-								<string>192 257 500 500 0 0 1280 1002 </string>
+								<string>321 127 983 445 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>218pt</string>
+							<string>163pt</string>
 						</dict>
 						<dict>
 							<key>BecomeActive</key>
-							<integer>1</integer>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
+								<key>PBXBuildLogShowsTranscriptDefaultKey</key>
+								<string>{{0, 93}, {983, 143}}</string>
 								<key>PBXProjectModuleGUID</key>
 								<string>XCMainBuildResultsModuleGUID</string>
 								<key>PBXProjectModuleLabel</key>
 								<string>Build</string>
+								<key>XCBuildResultsTrigger_Collapse</key>
+								<integer>1021</integer>
+								<key>XCBuildResultsTrigger_Open</key>
+								<integer>1011</integer>
 							</dict>
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 222}, {500, 236}}</string>
+								<string>{{0, 168}, {983, 236}}</string>
 								<key>RubberWindowFrame</key>
-								<string>192 257 500 500 0 0 1280 1002 </string>
+								<string>321 127 983 445 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXBuildResultsModule</string>
@@ -609,7 +628,7 @@
 						</dict>
 					</array>
 					<key>Proportion</key>
-					<string>458pt</string>
+					<string>404pt</string>
 				</dict>
 			</array>
 			<key>Name</key>
@@ -619,18 +638,22 @@
 				<string>PBXBuildResultsModule</string>
 			</array>
 			<key>StatusbarIsVisible</key>
-			<integer>1</integer>
+			<true/>
 			<key>TableOfContents</key>
 			<array>
-				<string>1C78EAA5065D492600B07095</string>
-				<string>1C78EAA6065D492600B07095</string>
+				<string>5C66173A0F4CA62300C8FD71</string>
+				<string>5C66173B0F4CA62300C8FD71</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.buildV3</string>
 			<key>WindowString</key>
-			<string>192 257 500 500 0 0 1280 1002 </string>
+			<string>321 127 983 445 0 0 1440 878 </string>
+			<key>WindowToolGUID</key>
+			<string>5C66173A0F4CA62300C8FD71</string>
+			<key>WindowToolIsVisible</key>
+			<true/>
 		</dict>
 		<dict>
 			<key>Identifier</key>

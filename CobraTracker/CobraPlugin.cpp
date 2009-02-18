@@ -10,18 +10,18 @@
 #include "CobraPlugin.h"
 #include "CobraEyeTrackerConduit.h"
 
-mPlugin *getPlugin(){
+Plugin *getPlugin(){
     return new CobraPlugin();
 }
 
 
-void CobraPlugin::registerComponents(shared_ptr<mComponentRegistry> registry) {
+void CobraPlugin::registerComponents(shared_ptr<ComponentRegistry> registry) {
 	
 
 	registry->registerFactory(std::string("iodevice/cobra_tracker"),
-								  (mComponentFactory *)(new mCobraDeviceFactory()));
+								  (ComponentFactory *)(new CobraDeviceFactory()));
 
 	registry->registerFactory(std::string("iochannel/cobra_tracker"),
-								  (mComponentFactory *)(new mCobraDeviceChannelFactory()));
+								  (ComponentFactory *)(new CobraDeviceChannelFactory()));
 	
 }

@@ -21,10 +21,10 @@
 #include "MonkeyWorksCore/IPCEventTransport.h"
 
 using namespace std;
+using namespace mw;
 
 
-
-class mCobraDevice  : public mIODevice {
+class CobraDevice  : public IODevice {
 
 public:
 
@@ -38,17 +38,17 @@ public:
 
 protected:
 
-    shared_ptr<mSimpleConduit> conduit;
+    shared_ptr<SimpleConduit> conduit;
 
 
 public:
 
-    mCobraDevice(string _resource_name = "cobra_eye_tracker"){
+    CobraDevice(string _resource_name = "cobra_eye_tracker"){
     
-        shared_ptr<mIPCEventTransport> transport(new mIPCEventTransport(mEventTransport::server_event_transport,
-                                                                        mEventTransport::bidirectional_event_transport,
+        shared_ptr<IPCEventTransport> transport(new IPCEventTransport(EventTransport::server_event_transport,
+                                                                        EventTransport::bidirectional_event_transport,
                                                                         _resource_name));
-        conduit = shared_ptr<mSimpleConduit>(new mSimpleConduit(transport));
+        conduit = shared_ptr<SimpleConduit>(new SimpleConduit(transport));
         
         // now doing this in the channels themselves
         //conduit->registerCallback(mCobraDevice::gaze_h, bind(&mCobraDevice::handleIncomingEvent, this, _1));
@@ -60,12 +60,12 @@ public:
     
     }
     
-    virtual ~mCobraDevice(){
+    virtual ~CobraDevice(){
         conduit->finalize();
     }
     
     
-    virtual void handleIncomingEvent(shared_ptr<mEvent> event){
+    virtual void handleIncomingEvent(shared_ptr<Event> event){
     
         fprintf(stderr, "Got event, yo: %d", event->getEventCode()); fflush(stderr);
     }
@@ -77,14 +77,14 @@ public:
         return conduit->initialize();
     }
     
-    virtual mExpandableList<mIOCapability> *getCapabilities(){ return NULL; }
+    virtual ExpandableList<IOCapability> *getCapabilities(){ return NULL; }
     virtual bool mapRequestsToChannels(){  return true;  }
     virtual bool initializeChannels(){  return true;  }
     virtual bool startup(){  return true;  }
 
     virtual void addChild(std::map<std::string, std::string> parameters,
-                            mComponentRegistry *reg,
-                            shared_ptr<mComponent> _child);
+                            ComponentRegistry *reg,
+                          shared_ptr<mw::Component> _child);
     
 
     virtual void setActive(bool _active){
@@ -111,46 +111,46 @@ public:
 };
 
 
-class mCobraChannel : public mComponent {
+class CobraChannel : public mw::Component {
 
     protected:
 
-    shared_ptr<mVariable> variable;
+    shared_ptr<Variable> variable;
     int capability;
     
     public:
 
-    mCobraChannel(string cap, shared_ptr<mVariable> var){
+    CobraChannel(string cap, shared_ptr<Variable> var){
         variable = var;
         if(cap == "gaze_h"){
-            capability = mCobraDevice::gaze_h;
+            capability = CobraDevice::gaze_h;
         } else if(cap == "gaze_v"){
-            capability = mCobraDevice::gaze_v;
+            capability = CobraDevice::gaze_v;
         }
     }
     
-    shared_ptr<mVariable> getVariable(){  return variable; }
+    shared_ptr<Variable> getVariable(){  return variable; }
     int getCapability(){ return capability; }
     
-    void update(shared_ptr<mEvent> event){
+    void update(shared_ptr<Event> event){
         //fprintf(stderr, "Got event: code=%d, capability=%d, data=%g\n", event->getEventCode(), capability, (double)event->getData()); fflush(stderr);
         variable->operator=(event->getData());
     }
     
 };
 
-class mCobraDeviceChannelFactory : public mComponentFactory {
+class CobraDeviceChannelFactory : public ComponentFactory {
 
-	shared_ptr<mComponent> createObject(std::map<std::string, std::string> parameters,
-													 mComponentRegistry *reg) {
+	shared_ptr<mw::Component> createObject(std::map<std::string, std::string> parameters,
+													 ComponentRegistry *reg) {
 		
 		REQUIRE_ATTRIBUTES(parameters, "variable", "capability");
 		
 		string capability_string = to_lower_copy(parameters["capability"]);
 		
-		shared_ptr<mVariable> variable = reg->getVariable(parameters["variable"]);
+		shared_ptr<Variable> variable = reg->getVariable(parameters["variable"]);
 		
-		shared_ptr <mComponent> new_channel(new mCobraChannel(capability_string, variable));
+		shared_ptr <mw::Component> new_channel(new CobraChannel(capability_string, variable));
 		return new_channel;
 	}
 
@@ -158,10 +158,10 @@ class mCobraDeviceChannelFactory : public mComponentFactory {
 
 
 
-class mCobraDeviceFactory : public mComponentFactory {
+class CobraDeviceFactory : public ComponentFactory {
 
-	shared_ptr<mComponent> createObject(std::map<std::string, std::string> parameters,
-													 mComponentRegistry *reg);
+	shared_ptr<mw::Component> createObject(std::map<std::string, std::string> parameters,
+													 ComponentRegistry *reg);
 };
 
 
