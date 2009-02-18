@@ -274,19 +274,19 @@
 								<string>32C88E010371C26100C91783</string>
 								<string>089C167CFE841241C02AAC07</string>
 								<string>1C37FBAC04509CD000000102</string>
-								<string>5C6617270F4CA5DC00C8FD71</string>
+								<string>5C66176F0F4CAA7F00C8FD71</string>
+								<string>5C6617700F4CAA7F00C8FD71</string>
 								<string>1C37FABC05509CD000000102</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>19</integer>
 									<integer>15</integer>
 									<integer>14</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 17}, {186, 445}}</string>
+							<string>{{0, 16}, {186, 445}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -305,7 +305,7 @@
 							<real>186</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>406 332 788 504 0 0 1440 878 </string>
+						<string>274 368 788 504 0 0 1440 878 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -333,7 +333,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>5C6617670F4CA88500C8FD71</string>
+										<string>5C6617710F4CAA7F00C8FD71</string>
 										<key>history</key>
 										<array>
 											<string>5C6617510F4CA88500C8FD71</string>
@@ -377,7 +377,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {580, 285}}</string>
 								<key>RubberWindowFrame</key>
-								<string>406 332 788 504 0 0 1440 878 </string>
+								<string>274 368 788 504 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -397,7 +397,7 @@
 								<key>Frame</key>
 								<string>{{0, 290}, {580, 173}}</string>
 								<key>RubberWindowFrame</key>
-								<string>406 332 788 504 0 0 1440 878 </string>
+								<string>274 368 788 504 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
@@ -561,7 +561,7 @@
 		<string>/Users/davidcox/Repositories/monkeyworks/coxlab_mwcore_plugins/CobraTracker/CobraPlugin.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>406 332 788 504 0 0 1440 878 </string>
+	<string>274 368 788 504 0 0 1440 878 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
