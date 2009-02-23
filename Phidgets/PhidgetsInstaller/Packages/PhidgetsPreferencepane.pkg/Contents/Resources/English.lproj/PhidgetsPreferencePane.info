@@ -1,0 +1,17 @@
+Title Phidgets Preference Pane
+Version 
+Description The Preference Pane for viewing library and connected Phidget information and for controlling the WebService.
+DefaultLocation /Library/PreferencePanes
+DeleteWarning 
+
+### Package Flags
+
+NeedsAuthorization YES
+Required NO
+Relocatable NO
+RequiresReboot NO
+UseUserMask NO
+OverwritePermissions NO
+InstallFat NO
+RootVolumeOnly NO
+OnlyUpdateInstalledLanguages NO
