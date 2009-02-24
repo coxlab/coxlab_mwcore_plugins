@@ -41,6 +41,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		5C488B980F5347CC00C5A526 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5C488B430F52ED3D00C5A526 /* InstallPhidgets */;
+			remoteInfo = InstallPhidgets;
+		};
 		5CFC67B90F2A84A800552431 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
@@ -173,6 +180,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				5C488B990F5347CC00C5A526 /* PBXTargetDependency */,
 			);
 			name = PhidgetsPlugin;
 			productInstallPath = "$(HOME)/Library/Bundles";
@@ -252,6 +260,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		5C488B990F5347CC00C5A526 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5C488B430F52ED3D00C5A526 /* InstallPhidgets */;
+			targetProxy = 5C488B980F5347CC00C5A526 /* PBXContainerItemProxy */;
+		};
 		5CFC67BA0F2A84A800552431 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8D5B49AC048680CD000E48DA /* PhidgetsPlugin */;
