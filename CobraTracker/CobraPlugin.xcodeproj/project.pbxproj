@@ -23,6 +23,7 @@
 /* Begin PBXBuildFile section */
 		5C4B0A650DC79212001BC518 /* MonkeyWorksCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C4B0A630DC79212001BC518 /* MonkeyWorksCore.framework */; };
 		5C4B0ADE0DC793E2001BC518 /* CobraPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5C4B0ADD0DC793E2001BC518 /* CobraPlugin.cpp */; };
+		5C7A88040F816542007B4724 /* MWLibrary.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5C7A88030F816542007B4724 /* MWLibrary.xml */; };
 		5CCA29FB0E8AD56F007BDA56 /* CobraEyeTrackerConduit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5CCA29FA0E8AD56F007BDA56 /* CobraEyeTrackerConduit.cpp */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
@@ -33,7 +34,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* CobraPlugin */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = CobraPlugin;
 		};
 /* End PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		5C4B0A640DC79212001BC518 /* Phidget21.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Phidget21.framework; path = /Library/Frameworks/Phidget21.framework; sourceTree = "<absolute>"; };
 		5C4B0ADC0DC793E2001BC518 /* CobraPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CobraPlugin.h; sourceTree = "<group>"; };
 		5C4B0ADD0DC793E2001BC518 /* CobraPlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CobraPlugin.cpp; sourceTree = "<group>"; };
+		5C7A88030F816542007B4724 /* MWLibrary.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = MWLibrary.xml; sourceTree = "<group>"; };
 		5CCA29F90E8AD56F007BDA56 /* CobraEyeTrackerConduit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CobraEyeTrackerConduit.h; sourceTree = "<group>"; };
 		5CCA29FA0E8AD56F007BDA56 /* CobraEyeTrackerConduit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CobraEyeTrackerConduit.cpp; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* CobraPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CobraPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -94,6 +96,7 @@
 			children = (
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
+				5C7A88030F816542007B4724 /* MWLibrary.xml */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -199,6 +202,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
+				5C7A88040F816542007B4724 /* MWLibrary.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,6 +350,60 @@
 			};
 			name = Release;
 		};
+		5C72413C1096132D004887A5 /* Development (10.5 Compatible) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APP_SUPPORT_DIR = "/Library/Application Support/MonkeyWorks";
+				ARCHS = (
+					i386,
+					x86_64,
+				);
+				FINAL_INSTALL_DIR = "$(APP_SUPPORT_DIR)/Plugins/Core Plugins";
+				GCC_VERSION = 4.0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MW_INCLUDE_DIR = "\"$(APP_SUPPORT_DIR)/Developer/include\"";
+				MW_LIB_DIR = "\"$(APP_SUPPORT_DIR)/Developer/lib\"";
+				PREBINDING = NO;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
+			};
+			name = "Development (10.5 Compatible)";
+		};
+		5C72413D1096132D004887A5 /* Development (10.5 Compatible) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = CobraPlugin_Prefix.pch;
+				HEADER_SEARCH_PATHS = (
+					"$(MW_INCLUDE_DIR)",
+					/usr/include/libxml2,
+				);
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(APP_SUPPORT_DIR)/Plugins/Core Plugins";
+				LIBRARY_SEARCH_PATHS = "$(MW_LIB_DIR)";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = CobraPlugin;
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = YES;
+			};
+			name = "Development (10.5 Compatible)";
+		};
+		5C72413E1096132D004887A5 /* Development (10.5 Compatible) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = Everything;
+			};
+			name = "Development (10.5 Compatible)";
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -353,6 +411,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB913B08733D840010E9CD /* Debug */,
+				5C72413D1096132D004887A5 /* Development (10.5 Compatible) */,
 				1DEB913C08733D840010E9CD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -362,6 +421,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB913F08733D840010E9CD /* Debug */,
+				5C72413C1096132D004887A5 /* Development (10.5 Compatible) */,
 				1DEB914008733D840010E9CD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -371,6 +431,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5C66176B0F4CAA7700C8FD71 /* Debug */,
+				5C72413E1096132D004887A5 /* Development (10.5 Compatible) */,
 				5C66176C0F4CAA7700C8FD71 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;

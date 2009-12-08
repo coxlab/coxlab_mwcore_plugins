@@ -34,30 +34,33 @@ public:
     // conduit be built with these values as constants
     enum CobraCapability {   gaze_h = 0, 
                          gaze_v = 1,
-                         pupil_radius = 2  };
+                         pupil_radius = 2,
+                         timestamp = 3,
+                         combined_gaze_info = 4,
+                        };
 
 protected:
 
     shared_ptr<SimpleConduit> conduit;
 
-
+    shared_ptr<Variable> gaze_h_variable, gaze_v_variable, pupil_radius_variable, timestamp_variable;
+    
+    NSTask *task;
+    
 public:
 
     CobraDevice(string _resource_name = "cobra_eye_tracker"){
     
-        shared_ptr<IPCEventTransport> transport(new IPCEventTransport(EventTransport::server_event_transport,
+        fprintf(stderr, _resource_name.c_str()); fflush(stderr);
+        shared_ptr<IPCEventTransport> transport(new IPCEventTransport(EventTransport::client_event_transport,
                                                                         EventTransport::bidirectional_event_transport,
                                                                         _resource_name));
+        //transport->flush();
         conduit = shared_ptr<SimpleConduit>(new SimpleConduit(transport));
         
-        // now doing this in the channels themselves
-        //conduit->registerCallback(mCobraDevice::gaze_h, bind(&mCobraDevice::handleIncomingEvent, this, _1));
-        //conduit->registerCallback(mCobraDevice::gaze_v, bind(&mCobraDevice::handleIncomingEvent, this, _1));
-        //conduit->registerCallback(mCobraDevice::pupil_radius, bind(&mCobraDevice::handleIncomingEvent, this, _1));
+        conduit->registerCallback(CobraDevice::combined_gaze_info, bind(&CobraDevice::handleIncomingEvent, this, _1));
         
-        // Moved to attachPhysicalDevice
-        //conduit->initialize();
-    
+        
     }
     
     virtual ~CobraDevice(){
@@ -67,15 +70,39 @@ public:
     
     virtual void handleIncomingEvent(shared_ptr<Event> event){
     
-        fprintf(stderr, "Got event, yo: %d", event->getEventCode()); fflush(stderr);
+        // forward the event into the data stream?
+        
+        
+        Datum combined_gaze_info = event->getData();
+        
+        Datum gaze_h_datum = combined_gaze_info.getElement(gaze_h);
+        Datum gaze_v_datum = combined_gaze_info.getElement(gaze_v);
+        Datum pupil_radius_datum = combined_gaze_info.getElement(pupil_radius);
+        Datum timestamp_datum = combined_gaze_info.getElement(timestamp);
+        
+        MonkeyWorksTime time = event->getTime();
+        
+        if(gaze_h_variable != NULL){
+            gaze_h_variable->setValue(gaze_h_datum, time);
+        }
+        
+        if(gaze_v_variable != NULL){
+            gaze_v_variable->setValue(gaze_v_datum, time);
+        }
+        
+        if(pupil_radius_variable != NULL){
+            pupil_radius_variable->setValue(pupil_radius_datum, time);
+        }
+        
+        if(timestamp_variable != NULL){
+            timestamp_variable->setValue(timestamp_datum, time);
+        }
     }
     
 
     // Garbage that should be removed from the base class
     
-    virtual bool attachPhysicalDevice(){  
-        return conduit->initialize();
-    }
+    virtual bool attachPhysicalDevice();
     
     virtual ExpandableList<IOCapability> *getCapabilities(){ return NULL; }
     virtual bool mapRequestsToChannels(){  return true;  }
@@ -126,14 +153,19 @@ class CobraChannel : public mw::Component {
             capability = CobraDevice::gaze_h;
         } else if(cap == "gaze_v"){
             capability = CobraDevice::gaze_v;
+        } else if(cap == "pupil_radius"){
+            capability = CobraDevice::pupil_radius;
+        } else if(cap == "timestamp"){
+            capability = CobraDevice::timestamp;
         }
     }
     
     shared_ptr<Variable> getVariable(){  return variable; }
     int getCapability(){ return capability; }
     
+    // Deprecated!: now sending events as bound-together groups
     void update(shared_ptr<Event> event){
-        //fprintf(stderr, "Got event: code=%d, capability=%d, data=%g\n", event->getEventCode(), capability, (double)event->getData()); fflush(stderr);
+        fprintf(stderr, "Got event: code=%d, capability=%d, data=%g\n", event->getEventCode(), capability, (double)event->getData()); fflush(stderr);
         variable->operator=(event->getData());
     }
     

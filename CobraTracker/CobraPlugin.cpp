@@ -18,10 +18,10 @@ Plugin *getPlugin(){
 void CobraPlugin::registerComponents(shared_ptr<ComponentRegistry> registry) {
 	
 
-	registry->registerFactory(std::string("iodevice/cobra_tracker"),
+	registry->registerFactory(std::string("iodevice/cobra_eye_tracker"),
 								  (ComponentFactory *)(new CobraDeviceFactory()));
 
-	registry->registerFactory(std::string("iochannel/cobra_tracker"),
+	registry->registerFactory(std::string("iochannel/cobra_eye_tracker"),
 								  (ComponentFactory *)(new CobraDeviceChannelFactory()));
 	
 }

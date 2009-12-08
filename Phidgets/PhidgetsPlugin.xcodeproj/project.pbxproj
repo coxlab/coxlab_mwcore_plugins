@@ -45,7 +45,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 5C488B430F52ED3D00C5A526 /* InstallPhidgets */;
+			remoteGlobalIDString = 5C488B430F52ED3D00C5A526;
 			remoteInfo = InstallPhidgets;
 		};
 		5CFC67B90F2A84A800552431 /* PBXContainerItemProxy */ = {
@@ -230,7 +230,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# shell script goes here\n\nif test -e /Library/Frameworks/Phidgets21.framework\nthen\techo \"No need to install the phidgets framework\"\nelse installer -pkg PhidgetsInstaller/Phidgets.mpkg\nfi\nexit 0";
+			shellScript = "# shell script goes here\necho \"Deciding whether to install Phidgets\"\n\nif test -e /Library/Frameworks/Phidgets21.framework\nthen\techo \"No need to install the phidgets framework\"\nelse installer -pkg PhidgetsInstaller/Phidgets.mpkg -target /\nfi\nexit 0";
 		};
 		5C4B0B5D0DC7CAB9001BC518 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -284,7 +284,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		1DEB913B08733D840010E9CD /* Debug */ = {
+		1DEB913B08733D840010E9CD /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
@@ -307,7 +307,7 @@
 				WRAPPER_EXTENSION = bundle;
 				ZERO_LINK = YES;
 			};
-			name = Debug;
+			name = Development;
 		};
 		1DEB913C08733D840010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -329,19 +329,26 @@
 			};
 			name = Release;
 		};
-		1DEB913F08733D840010E9CD /* Debug */ = {
+		1DEB913F08733D840010E9CD /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_SUPPORT_DIR = "/Library/Application Support/MonkeyWorks";
+				ARCHS = (
+					x86_64,
+					i386,
+				);
 				FINAL_INSTALL_DIR = "$(APP_SUPPORT_DIR)/Plugins/Core Plugins";
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = 4.2;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				MW_INCLUDE_DIR = "\"$(APP_SUPPORT_DIR)/Developer/include\"";
 				MW_LIB_DIR = "\"$(APP_SUPPORT_DIR)/Developer/lib\"";
 				PREBINDING = NO;
-				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk";
 			};
-			name = Debug;
+			name = Development;
 		};
 		1DEB914008733D840010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -357,7 +364,7 @@
 			};
 			name = Release;
 		};
-		5C488B440F52ED3E00C5A526 /* Debug */ = {
+		5C488B440F52ED3E00C5A526 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
@@ -365,7 +372,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				PRODUCT_NAME = InstallPhidgets;
 			};
-			name = Debug;
+			name = Development;
 		};
 		5C488B450F52ED3E00C5A526 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -378,7 +385,53 @@
 			};
 			name = Release;
 		};
-		5CFC67B70F2A849C00552431 /* Debug */ = {
+		5C518CCE108670D50004DBC0 /* Development (10.5 Compatible) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APP_SUPPORT_DIR = "/Library/Application Support/MonkeyWorks";
+				ARCHS = (
+					x86_64,
+					i386,
+				);
+				FINAL_INSTALL_DIR = "$(APP_SUPPORT_DIR)/Plugins/Core Plugins";
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = 4.0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MW_INCLUDE_DIR = "\"$(APP_SUPPORT_DIR)/Developer/gcc40/include\"";
+				MW_LIB_DIR = "\"$(APP_SUPPORT_DIR)/Developer/gcc40/lib\"";
+				PREBINDING = NO;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
+			};
+			name = "Development (10.5 Compatible)";
+		};
+		5C518CCF108670D50004DBC0 /* Development (10.5 Compatible) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = PhidgetsPlugin_Prefix.pch;
+				HEADER_SEARCH_PATHS = (
+					"$(MW_INCLUDE_DIR)",
+					/usr/include/libxml2,
+				);
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = /Library/MonkeyWorks/Plugins;
+				LIBRARY_SEARCH_PATHS = "$(MW_LIB_DIR)";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = PhidgetsPlugin;
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = YES;
+			};
+			name = "Development (10.5 Compatible)";
+		};
+		5C518CD0108670D50004DBC0 /* Development (10.5 Compatible) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
@@ -386,7 +439,27 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				PRODUCT_NAME = Everything;
 			};
-			name = Debug;
+			name = "Development (10.5 Compatible)";
+		};
+		5C518CD1108670D50004DBC0 /* Development (10.5 Compatible) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = InstallPhidgets;
+			};
+			name = "Development (10.5 Compatible)";
+		};
+		5CFC67B70F2A849C00552431 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = Everything;
+			};
+			name = Development;
 		};
 		5CFC67B80F2A849C00552431 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -405,7 +478,8 @@
 		1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "PhidgetsPlugin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1DEB913B08733D840010E9CD /* Debug */,
+				1DEB913B08733D840010E9CD /* Development */,
+				5C518CCF108670D50004DBC0 /* Development (10.5 Compatible) */,
 				1DEB913C08733D840010E9CD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -414,7 +488,8 @@
 		1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "PhidgetsPlugin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1DEB913F08733D840010E9CD /* Debug */,
+				1DEB913F08733D840010E9CD /* Development */,
+				5C518CCE108670D50004DBC0 /* Development (10.5 Compatible) */,
 				1DEB914008733D840010E9CD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -423,7 +498,8 @@
 		5C488B460F52ED5C00C5A526 /* Build configuration list for PBXAggregateTarget "InstallPhidgets" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5C488B440F52ED3E00C5A526 /* Debug */,
+				5C488B440F52ED3E00C5A526 /* Development */,
+				5C518CD1108670D50004DBC0 /* Development (10.5 Compatible) */,
 				5C488B450F52ED3E00C5A526 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -432,7 +508,8 @@
 		5CFC67BF0F2A84AC00552431 /* Build configuration list for PBXAggregateTarget "Everything" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5CFC67B70F2A849C00552431 /* Debug */,
+				5CFC67B70F2A849C00552431 /* Development */,
+				5C518CD0108670D50004DBC0 /* Development (10.5 Compatible) */,
 				5CFC67B80F2A849C00552431 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
