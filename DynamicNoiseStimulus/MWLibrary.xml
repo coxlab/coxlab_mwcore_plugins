@@ -1,0 +1,38 @@
+<MWElements>
+  <MWElement name="Dynamic Noise Stimulus">
+    <!-- XPath 2.0 expression defining nodes of this type -->
+    <!-- -->
+    <match_signature>stimulus[@type="dynamic_noise_stimulus"]</match_signature>
+    
+    <!-- Which super-types does the object belong to -->
+    <isa>Stimulus</isa>
+    
+    <description>
+      A dynamic noise stimulus (e.g. for spike triggered averaging).
+    </description>
+    
+    <!-- Payload -->
+    <!-- This XML gets inserted when you drop this object into the project -->
+    <code>
+      <stimulus type="dynamic_noise_stimulus" 
+                tag="Dynamic Noise Stimulus"
+                power_spectrum_type="uniform" 
+                frames_per_sequence="200"
+                pixel_width="256"
+                pixel_height="256"
+                random_seed="0"
+                frames_per_second="15"
+                statistics_reporting=""
+                error_reporting=""
+                x_position="0.0"
+                y_position="0.0"
+                x_size="5.0" 
+                y_size="5.0"
+                rotation="0.0"
+                alpha_multiplier="1.0"
+                deferred="No"
+                />
+      
+    </code>
+  </MWElement>
+</MWElements>
