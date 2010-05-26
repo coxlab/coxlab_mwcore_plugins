@@ -117,7 +117,7 @@ DynamicNoiseStimulus::DynamicNoiseStimulus(std::string _tag,
     
     
     // create a GLSL bicubic interpolation filter
-    bicubic_filter_shader = shared_ptr<Shaders::ConvolutionFilterShader>(new Shaders::ConvolutionFilterShader(VS_SCALINGMETHOD_CUBIC, false));
+    bicubic_filter_shader = shared_ptr<Shaders::ConvolutionFilterShader>(new Shaders::ConvolutionFilterShader(VS_SCALINGMETHOD_LANCZOS3, false));
     
     
 }
@@ -224,10 +224,10 @@ void DynamicNoiseStimulus::drawInUnitSquare(StimulusDisplay* _display){
         
         glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
         
-//        bicubic_filter_shader->SetSourceTexture(0);
-//        bicubic_filter_shader->SetWidth((float)pixel_width);
-//        bicubic_filter_shader->SetHeight((float)pixel_height);
-//        bicubic_filter_shader->Enable();
+        bicubic_filter_shader->SetSourceTexture(0);
+        bicubic_filter_shader->SetWidth((float)pixel_width);
+        bicubic_filter_shader->SetHeight((float)pixel_height);
+        bicubic_filter_shader->Enable();
         
         
         
@@ -275,7 +275,7 @@ void DynamicNoiseStimulus::drawInUnitSquare(StimulusDisplay* _display){
 		
                 
 		
-        //bicubic_filter_shader->Disable();
+        bicubic_filter_shader->Disable();
         
         glBindTexture(GL_TEXTURE_2D, 0); // unbind that fucker
 		
