@@ -1,6 +1,6 @@
 /*
  *  Phidgets.cpp
- *  MonkeyWorksCore
+ *  MWorksCore
  *
  *  Created by David Cox on 1/28/08.
  *  Copyright 2008 __MyCompanyName__. All rights reserved.
@@ -8,7 +8,7 @@
  */
 
 #include "Phidgets.h"
-#include "MonkeyWorksCore/ComponentRegistry.h"
+#include "MWorksCore/ComponentRegistry.h"
 
 using namespace mw;
 

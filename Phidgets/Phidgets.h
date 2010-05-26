@@ -1,19 +1,19 @@
 /*
  *  Phidgets.h
- *  MonkeyWorksCore
+ *  MWorksCore
  *
  *  Created by David Cox on 1/28/08.
  *  Copyright 2008 __MyCompanyName__. All rights reserved.
  *
  */
+#include "MWorksCore/Plugin.h"
+#include "MWorksCore/Utilities.h"
+#include "MWorksCore/IODevice.h"
+#include "MWorksCore/GenericData.h"
 
 #include <Phidget21/phidget21.h>
 #include <string>
 #include <boost/format.hpp>
-#include "MonkeyWorksCore/Utilities.h"
-#include "MonkeyWorksCore/Plugin.h"
-#include "MonkeyWorksCore/IODevice.h"
-#include "MonkeyWorksCore/GenericData.h"
 
 using namespace std;
 

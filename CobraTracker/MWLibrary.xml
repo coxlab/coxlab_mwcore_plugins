@@ -14,6 +14,8 @@
       <iodevice  type="cobra_eye_tracker" tag="Cobra Eye Tracker" device_name="cobra1" executable_path="/Applications/EyeTracker.app/Contents/MacOS/EyeTracker">
         <iochannel type="cobra_eye_tracker" tag="Horizontal Gaze Angle" variable="gaze_h" capability="gaze_h"/>
         <iochannel type="cobra_eye_tracker" tag="Vertical Gaze Angle" variable="gaze_v" capability="gaze_v"/>
+        <iochannel type="cobra_eye_tracker" tag="Pupil Radius" variable="pupil_radius" capability="pupil_radius"/>
+        <iochannel type="cobra_eye_tracker" tag="Timestamp" variable="cobra_timestamp" capability="timestamp"/>
       </iodevice>
     </code>
   </MWElement>

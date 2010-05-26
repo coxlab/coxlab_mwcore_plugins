@@ -1,11 +1,10 @@
 // !$*UTF8*$!
 {
 	089C1669FE841209C02AAC07 /* Project object */ = {
-		activeBuildConfigurationName = "Development (10.5 Compatible)";
+		activeBuildConfigurationName = Development;
 		activeExecutable = 5C7A88CA0F81A081007B4724 /* Server */;
 		activeTarget = 8D5B49AC048680CD000E48DA /* CobraPlugin */;
 		addToTargets = (
-			8D5B49AC048680CD000E48DA /* CobraPlugin */,
 		);
 		breakpoints = (
 			5C492FED1093E9C9002047A3 /* CobraEyeTrackerConduit.h:55 */,
@@ -53,12 +52,24 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXFindDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFindDataSource_LocationID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					200,
+					726,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFindDataSource_MessageID,
+					PBXFindDataSource_LocationID,
+				);
+			};
 			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
 				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					509,
+					672,
 					60,
 					20,
 					48,
@@ -75,24 +86,20 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 283967133;
-			PBXWorkspaceStateSaveDate = 283967133;
+			PBXPerProjectTemplateStateSaveDate = 291061876;
+			PBXWorkspaceStateSaveDate = 291061876;
 		};
 		perUserProjectItems = {
-			5C49525F1093F05D002047A3 = 5C49525F1093F05D002047A3 /* PBXTextBookmark */;
-			5C5251EB10CD88D300ED20AE = 5C5251EB10CD88D300ED20AE /* PBXTextBookmark */;
-			5C52525010CD9B1000ED20AE = 5C52525010CD9B1000ED20AE /* PBXTextBookmark */;
-			5C52531A10CE13A600ED20AE = 5C52531A10CE13A600ED20AE /* PBXTextBookmark */;
-			5C6617510F4CA88500C8FD71 = 5C6617510F4CA88500C8FD71 /* PBXTextBookmark */;
-			5C6617520F4CA88500C8FD71 = 5C6617520F4CA88500C8FD71 /* PBXTextBookmark */;
-			5C6617530F4CA88500C8FD71 = 5C6617530F4CA88500C8FD71 /* PlistBookmark */;
-			5C6617540F4CA88500C8FD71 = 5C6617540F4CA88500C8FD71 /* PBXTextBookmark */;
-			5C77F52B10E96B5700919719 = 5C77F52B10E96B5700919719 /* PBXTextBookmark */;
-			5C7A89900F81C09C007B4724 = 5C7A89900F81C09C007B4724 /* PBXTextBookmark */;
-			5C9C072C10C9C77300D2F654 = 5C9C072C10C9C77300D2F654 /* PBXTextBookmark */;
-			5C9C074410CD2CB700D2F654 = 5C9C074410CD2CB700D2F654 /* PBXTextBookmark */;
-			5CF80E0310C8480500650F95 = 5CF80E0310C8480500650F95 /* PBXTextBookmark */;
-			5CF8E88C10C8423D00650F95 = 5CF8E88C10C8423D00650F95 /* PBXTextBookmark */;
+			5C52525010CD9B1000ED20AE /* PBXTextBookmark */ = 5C52525010CD9B1000ED20AE /* PBXTextBookmark */;
+			5C6617520F4CA88500C8FD71 /* PBXTextBookmark */ = 5C6617520F4CA88500C8FD71 /* PBXTextBookmark */;
+			5C6617530F4CA88500C8FD71 /* PlistBookmark */ = 5C6617530F4CA88500C8FD71 /* PlistBookmark */;
+			5C78E8E51159413B00151A76 /* PBXTextBookmark */ = 5C78E8E51159413B00151A76 /* PBXTextBookmark */;
+			5C78E8F3115941EF00151A76 /* PBXTextBookmark */ = 5C78E8F3115941EF00151A76 /* PBXTextBookmark */;
+			5C78E8FF115942EC00151A76 /* PBXTextBookmark */ = 5C78E8FF115942EC00151A76 /* PBXTextBookmark */;
+			5C78E900115942EC00151A76 /* PBXTextBookmark */ = 5C78E900115942EC00151A76 /* PBXTextBookmark */;
+			5C78E901115942EC00151A76 /* XCBuildMessageTextBookmark */ = 5C78E901115942EC00151A76 /* XCBuildMessageTextBookmark */;
+			5C78E903115942EC00151A76 /* PBXTextBookmark */ = 5C78E903115942EC00151A76 /* PBXTextBookmark */;
+			5CF80E0310C8480500650F95 /* PBXTextBookmark */ = 5CF80E0310C8480500650F95 /* PBXTextBookmark */;
 		};
 		sourceControlManager = 5CA091B10F0DA85D00062E67 /* Source Control */;
 		userBuildSettings = {
@@ -107,7 +114,7 @@
 	};
 	32DBCF630370AF2F00C91783 /* CobraPlugin_Prefix.pch */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {654, 253}}";
+			sepNavIntBoundsRect = "{{0, 0}, {890, 490}}";
 			sepNavSelRange = "{0, 0}";
 			sepNavVisRange = "{0, 166}";
 		};
@@ -129,28 +136,11 @@
 		originalNumberOfMultipleMatches = 1;
 		state = 0;
 	};
-	5C49525F1093F05D002047A3 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 5C4952601093F05D002047A3 /* Experiment.h */;
-		name = "Experiment.h: 276";
-		rLen = 0;
-		rLoc = 12350;
-		rType = 0;
-		vrLen = 806;
-		vrLoc = 11800;
-	};
-	5C4952601093F05D002047A3 /* Experiment.h */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.h;
-		name = Experiment.h;
-		path = /Users/davidcox/Repositories/monkeyworks/mw_core/Core/ParadigmComponents/Experiment.h;
-		sourceTree = "<absolute>";
-	};
 	5C4B0ADC0DC793E2001BC518 /* CobraPlugin.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {890, 528}}";
-			sepNavSelRange = "{110, 1}";
-			sepNavVisRange = "{0, 374}";
+			sepNavIntBoundsRect = "{{0, 0}, {890, 490}}";
+			sepNavSelRange = "{156, 0}";
+			sepNavVisRange = "{0, 369}";
 		};
 	};
 	5C4B0ADD0DC793E2001BC518 /* CobraPlugin.cpp */ = {
@@ -160,16 +150,6 @@
 			sepNavVisRange = "{0, 628}";
 		};
 	};
-	5C5251EB10CD88D300ED20AE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 5C9C074910CD2CB700D2F654 /* split_member.hpp */;
-		name = "split_member.hpp: 63";
-		rLen = 0;
-		rLoc = 1712;
-		rType = 0;
-		vrLen = 1238;
-		vrLoc = 1456;
-	};
 	5C52525010CD9B1000ED20AE /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 5CCA29FA0E8AD56F007BDA56 /* CobraEyeTrackerConduit.cpp */;
@@ -178,33 +158,6 @@
 		rLoc = 1127;
 		rType = 0;
 		vrLen = 906;
-		vrLoc = 0;
-	};
-	5C52531A10CE13A600ED20AE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 5CCA29F90E8AD56F007BDA56 /* CobraEyeTrackerConduit.h */;
-		name = "CobraEyeTrackerConduit.h: 58";
-		rLen = 7;
-		rLoc = 1768;
-		rType = 0;
-		vrLen = 1316;
-		vrLoc = 1264;
-	};
-	5C6617450F4CA69000C8FD71 /* Component.h */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.h;
-		name = Component.h;
-		path = /Developer/SDKs/MacOSX10.5.sdk/Library/Frameworks/MonkeyWorksCore.framework/Headers/Component.h;
-		sourceTree = "<absolute>";
-	};
-	5C6617510F4CA88500C8FD71 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 32DBCF630370AF2F00C91783 /* CobraPlugin_Prefix.pch */;
-		name = "CobraPlugin_Prefix.pch: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 166;
 		vrLoc = 0;
 	};
 	5C6617520F4CA88500C8FD71 /* PBXTextBookmark */ = {
@@ -228,34 +181,91 @@
 		rLen = 0;
 		rLoc = 2147483647;
 	};
-	5C6617540F4CA88500C8FD71 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 5C6617450F4CA69000C8FD71 /* Component.h */;
-		name = "Component.h: 5";
-		rLen = 0;
-		rLoc = 57;
-		rType = 0;
-		vrLen = 369;
-		vrLoc = 193;
-	};
 	5C66176A0F4CAA7700C8FD71 /* Everything */ = {
 		activeExec = 0;
 	};
-	5C77F52B10E96B5700919719 /* PBXTextBookmark */ = {
+	5C78E8E51159413B00151A76 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5C7A88030F816542007B4724 /* MWLibrary.xml */;
+		name = "MWLibrary.xml: 16";
+		rLen = 0;
+		rLoc = 677;
+		rType = 0;
+		vrLen = 1065;
+		vrLoc = 0;
+	};
+	5C78E8F3115941EF00151A76 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5C4B0ADC0DC793E2001BC518 /* CobraPlugin.h */;
+		name = "CobraPlugin.h: 10";
+		rLen = 0;
+		rLoc = 156;
+		rType = 0;
+		vrLen = 369;
+		vrLoc = 0;
+	};
+	5C78E8FF115942EC00151A76 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 5CCA29F90E8AD56F007BDA56 /* CobraEyeTrackerConduit.h */;
-		name = "CobraEyeTrackerConduit.h: 58";
-		rLen = 7;
-		rLoc = 1768;
+		name = "CobraEyeTrackerConduit.h: 48";
+		rLen = 0;
+		rLoc = 1234;
 		rType = 0;
-		vrLen = 1316;
-		vrLoc = 1264;
+		vrLen = 899;
+		vrLoc = 228;
+	};
+	5C78E900115942EC00151A76 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 32DBCF630370AF2F00C91783 /* CobraPlugin_Prefix.pch */;
+		name = "CobraPlugin_Prefix.pch: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 166;
+		vrLoc = 0;
+	};
+	5C78E901115942EC00151A76 /* XCBuildMessageTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "#warning This file includes at least one deprecated or antiquated header. Please consider using one of the 32 headers found in section 17.4.1.2 of the C++ standard. Examples include substituting the <X> header for the <X.h> header for C++ includes, or <iostream> instead of the deprecated header <iostream.h>. To disable this warning use -Wno-deprecated.";
+		fRef = 5C78E902115942EC00151A76 /* backward_warning.h */;
+		fallbackIsa = XCBuildMessageTextBookmark;
+		rLen = 1;
+		rLoc = 31;
+		rType = 1;
+	};
+	5C78E902115942EC00151A76 /* backward_warning.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = backward_warning.h;
+		path = "/Developer/SDKs/MacOSX10.6.sdk/usr/include/c++/4.2.1/backward/backward_warning.h";
+		sourceTree = "<absolute>";
+	};
+	5C78E903115942EC00151A76 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5C78E904115942EC00151A76 /* backward_warning.h */;
+		name = "backward_warning.h: 32";
+		rLen = 0;
+		rLoc = 1479;
+		rType = 0;
+		vrLen = 1634;
+		vrLoc = 0;
+	};
+	5C78E904115942EC00151A76 /* backward_warning.h */ = {
+		isa = PBXFileReference;
+		name = backward_warning.h;
+		path = "/Developer/SDKs/MacOSX10.6.sdk/usr/include/c++/4.2.1/backward/backward_warning.h";
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {890, 570}}";
+			sepNavSelRange = "{1479, 0}";
+			sepNavVisRange = "{0, 1571}";
+		};
 	};
 	5C7A88030F816542007B4724 /* MWLibrary.xml */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1132, 376}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1132, 490}}";
 			sepNavSelRange = "{677, 0}";
-			sepNavVisRange = "{0, 838}";
+			sepNavVisRange = "{0, 1065}";
 		};
 	};
 	5C7A88CA0F81A081007B4724 /* Server */ = {
@@ -313,57 +323,6 @@
 		path = /Applications/MWServer.app;
 		sourceTree = "<absolute>";
 	};
-	5C7A88FD0F81A0B2007B4724 /* StimulusDisplay.cpp */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.cpp.cpp;
-		name = StimulusDisplay.cpp;
-		path = /Users/davidcox/Repositories/monkeyworks/mw_core/Core/Stimuli/StimulusDisplay.cpp;
-		sourceTree = "<absolute>";
-	};
-	5C7A89900F81C09C007B4724 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 5C7A88FD0F81A0B2007B4724 /* StimulusDisplay.cpp */;
-		name = "StimulusDisplay.cpp: 572";
-		rLen = 0;
-		rLoc = 15482;
-		rType = 0;
-		vrLen = 874;
-		vrLoc = 12198;
-	};
-	5C9C072C10C9C77300D2F654 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 5C4B0ADC0DC793E2001BC518 /* CobraPlugin.h */;
-		name = "CobraPlugin.h: 6";
-		rLen = 1;
-		rLoc = 110;
-		rType = 0;
-		vrLen = 374;
-		vrLoc = 0;
-	};
-	5C9C074410CD2CB700D2F654 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 5C9C074510CD2CB700D2F654 /* nvp.hpp */;
-		name = "nvp.hpp: 88";
-		rLen = 0;
-		rLoc = 2786;
-		rType = 0;
-		vrLen = 1150;
-		vrLoc = 2355;
-	};
-	5C9C074510CD2CB700D2F654 /* nvp.hpp */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.cpp.h;
-		name = nvp.hpp;
-		path = "/Library/Application Support/MonkeyWorks/Developer/gcc40/include/boost/serialization/nvp.hpp";
-		sourceTree = "<absolute>";
-	};
-	5C9C074910CD2CB700D2F654 /* split_member.hpp */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.cpp.h;
-		name = split_member.hpp;
-		path = "/Library/Application Support/MonkeyWorks/Developer/gcc40/include/boost/serialization/split_member.hpp";
-		sourceTree = "<absolute>";
-	};
 	5CA091B10F0DA85D00062E67 /* Source Control */ = {
 		isa = PBXSourceControlManager;
 		fallbackIsa = XCSourceControlManager;
@@ -380,9 +339,9 @@
 	};
 	5CCA29F90E8AD56F007BDA56 /* CobraEyeTrackerConduit.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {890, 3045}}";
-			sepNavSelRange = "{1768, 7}";
-			sepNavVisRange = "{1264, 1316}";
+			sepNavIntBoundsRect = "{{0, 0}, {922, 3165}}";
+			sepNavSelRange = "{1234, 0}";
+			sepNavVisRange = "{1086, 242}";
 		};
 	};
 	5CCA29FA0E8AD56F007BDA56 /* CobraEyeTrackerConduit.cpp */ = {
@@ -436,16 +395,6 @@
 		modificationTime = 281940890.525821;
 		originalNumberOfMultipleMatches = 1;
 		state = 0;
-	};
-	5CF8E88C10C8423D00650F95 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 5C7A88030F816542007B4724 /* MWLibrary.xml */;
-		name = "MWLibrary.xml: 16";
-		rLen = 0;
-		rLoc = 677;
-		rType = 0;
-		vrLen = 838;
-		vrLoc = 0;
 	};
 	8D5B49AC048680CD000E48DA /* CobraPlugin */ = {
 		activeExec = 0;

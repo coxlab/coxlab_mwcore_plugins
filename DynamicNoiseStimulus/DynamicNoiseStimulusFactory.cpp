@@ -31,6 +31,8 @@ shared_ptr<mw::Component> DynamicNoiseStimulusFactory::createObject(std::map<std
         power_spectrum = DynamicNoiseStimulus::white; 
     } else if(power_spectrum_type_string == "one_over_f"){
         power_spectrum = DynamicNoiseStimulus::one_over_f;
+    } else if(power_spectrum_type_string == "bandlimited_gwn"){
+        power_spectrum = DynamicNoiseStimulus::bandlimited_gwn;
     }
     
     // how fast should the frames go by
@@ -51,6 +53,13 @@ shared_ptr<mw::Component> DynamicNoiseStimulusFactory::createObject(std::map<std
 	shared_ptr<Variable> y_position = reg->getVariable(parameters["y_position"]);	
 	shared_ptr<Variable> rotation = reg->getVariable(parameters["rotation"]);	
 	
+    shared_ptr<Variable> spatial_lowpass_cutoff = reg->getVariable(parameters["spatial_lowpass_cutoff"], "100.");
+    shared_ptr<Variable> spatial_highpass_cutoff = reg->getVariable(parameters["spatial_highpass_cutoff"], ".1");
+    shared_ptr<Variable> temporal_lowpass_cutoff = reg->getVariable(parameters["temporal_lowpass_cutoff"], "100.");
+    shared_ptr<Variable> temporal_highpass_cutoff = reg->getVariable(parameters["temporal_highpass_cutoff"], ".1");
+    
+    
+    
 	shared_ptr<Variable> alpha_multiplier = 
     reg->getVariable(parameters["alpha_multiplier"], std::string("1.0"));	
 	
@@ -76,22 +85,26 @@ shared_ptr<mw::Component> DynamicNoiseStimulusFactory::createObject(std::map<std
 	
     
     shared_ptr<Stimulus> new_stimulus(new DynamicNoiseStimulus(tagname, 
-                                                              power_spectrum, 
-                                                              frames_per_sequence,
-                                                              pixel_width,
-                                                              pixel_height,
-                                                              random_seed,
-                                                              scheduler,
-                                                              default_display,
-                                                              frames_per_second,
-                                                              statistics_reporting,
-                                                              error_reporting,
-                                                              x_position, 
-                                                              y_position,
-                                                              x_size, 
-                                                              y_size, 
-                                                              rotation,
-                                                              alpha_multiplier)); 
+                                                               power_spectrum, 
+                                                               frames_per_sequence,
+                                                               pixel_width,
+                                                               pixel_height,
+                                                               spatial_lowpass_cutoff,
+                                                               spatial_highpass_cutoff,
+                                                               temporal_lowpass_cutoff,
+                                                               temporal_highpass_cutoff,
+                                                               random_seed,
+                                                               scheduler,
+                                                               default_display,
+                                                               frames_per_second,
+                                                               statistics_reporting,
+                                                               error_reporting,
+                                                               x_position, 
+                                                               y_position,
+                                                               x_size, 
+                                                               y_size, 
+                                                               rotation,
+                                                               alpha_multiplier)); 
 
     shared_ptr <StimulusNode> stim_node = shared_ptr<StimulusNode>(new StimulusNode(new_stimulus));
 	reg->registerStimulusNode(tagname, stim_node);

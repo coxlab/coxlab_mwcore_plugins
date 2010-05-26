@@ -12,13 +12,13 @@
 
 #include <string>
 #include <boost/format.hpp>
-#include "MonkeyWorksCore/Utilities.h"
-#include "MonkeyWorksCore/Plugin.h"
-#include "MonkeyWorksCore/IODevice.h"
-#include "MonkeyWorksCore/ComponentFactory.h"
+#include "MWorksCore/Utilities.h"
+#include "MWorksCore/Plugin.h"
+#include "MWorksCore/IODevice.h"
+#include "MWorksCore/ComponentFactory.h"
 
-#include "MonkeyWorksCore/SimpleConduit.h"
-#include "MonkeyWorksCore/IPCEventTransport.h"
+#include "MWorksCore/SimpleConduit.h"
+#include "MWorksCore/IPCEventTransport.h"
 
 using namespace std;
 using namespace mw;
@@ -80,7 +80,7 @@ public:
         Datum pupil_radius_datum = combined_gaze_info.getElement(pupil_radius);
         Datum timestamp_datum = combined_gaze_info.getElement(timestamp);
         
-        MonkeyWorksTime time = event->getTime();
+        MWorksTime time = event->getTime();
         
         if(gaze_h_variable != NULL){
             gaze_h_variable->setValue(gaze_h_datum, time);

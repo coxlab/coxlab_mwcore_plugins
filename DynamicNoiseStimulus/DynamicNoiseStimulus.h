@@ -33,7 +33,8 @@ class DynamicNoiseStimulus : public DynamicStimulusDriver, public BasicTransform
 
 public: enum power_spectrum_type {
     white = 1,
-    one_over_f = 2
+    one_over_f = 2,
+    bandlimited_gwn = 3
 };
     
 protected:
@@ -60,6 +61,11 @@ protected:
     int frames_per_sequence;
     int pixel_width, pixel_height;
     
+    
+    shared_ptr<Variable> spatial_lowpass_cutoff;
+    shared_ptr<Variable> spatial_highpass_cutoff;
+    shared_ptr<Variable> temporal_lowpass_cutoff;
+    shared_ptr<Variable> temporal_highpass_cutoff;
     shared_ptr<Variable> random_seed;
     
     boost::mt19937 rng;
@@ -79,6 +85,10 @@ public:
                          int _frames_per_sequence,
                          int _pixel_width,
                          int _pixel_height,
+                         shared_ptr<Variable> spatial_lowpass_cutoff,
+                         shared_ptr<Variable> spatial_highpass_cutoff,
+                         shared_ptr<Variable> temporal_lowpass_cutoff,
+                         shared_ptr<Variable> temporal_highpass_cutoff,
                          shared_ptr<Variable> random_seed,
                          shared_ptr<Scheduler> _scheduler,
                          shared_ptr<StimulusDisplay> _stimulus_display,
@@ -99,7 +109,8 @@ public:
     virtual void load(StimulusDisplay* _display);
     virtual void drawInUnitSquare(StimulusDisplay* _display);
     
-    void generateNoiseImage(int width, int height, long random_seed, 
+    void generateModulusImage();
+    void generateNoiseImage(int width, int height, int frames, long random_seed, 
                             fftw_complex *modulus_image, fftw_complex *random_phase_storage,
                             fftw_complex *fft_in_storage, fftw_complex *fft_out_storage,
                             float *result_storage);
