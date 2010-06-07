@@ -9,7 +9,7 @@
 
 #include "CobraEyeTrackerConduit.h"
 
-using namespace mw;
+namespace mw {
 
 
 bool CobraDevice::attachPhysicalDevice(){  
@@ -71,6 +71,8 @@ shared_ptr<mw::Component> CobraDeviceFactory::createObject(std::map<std::string,
     shared_ptr <mw::Component> newDevice(new CobraDevice(resource_name));
 
     return newDevice;
+    
+}
     
 }
 

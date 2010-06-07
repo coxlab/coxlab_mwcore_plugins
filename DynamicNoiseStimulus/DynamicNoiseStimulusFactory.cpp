@@ -46,6 +46,7 @@ shared_ptr<mw::Component> DynamicNoiseStimulusFactory::createObject(std::map<std
     int pixel_height = (int)(reg->getNumber(parameters["pixel_height"]));
     
     shared_ptr<Variable> random_seed = reg->getVariable(parameters["random_seed"]);
+    shared_ptr<Variable> rng_count = reg->getVariable(parameters["rng_count"]);
     
     shared_ptr<Variable> x_size = reg->getVariable(parameters["x_size"]);	
 	shared_ptr<Variable> y_size = reg->getVariable(parameters["y_size"]);	
@@ -94,6 +95,7 @@ shared_ptr<mw::Component> DynamicNoiseStimulusFactory::createObject(std::map<std
                                                                temporal_lowpass_cutoff,
                                                                temporal_highpass_cutoff,
                                                                random_seed,
+                                                               rng_count,
                                                                scheduler,
                                                                default_display,
                                                                frames_per_second,
@@ -125,7 +127,7 @@ shared_ptr<mw::Component> DynamicNoiseStimulusFactory::createObject(std::map<std
     
     // TODO: deferred load?
     if(deferred != Stimulus::deferred_load && deferred != Stimulus::explicit_load){
-        new_stimulus->load(default_display.get());
+        new_stimulus->load(default_display);
     }
     
     

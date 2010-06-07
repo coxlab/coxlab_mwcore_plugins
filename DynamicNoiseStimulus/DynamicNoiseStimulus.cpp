@@ -24,6 +24,7 @@ DynamicNoiseStimulus::DynamicNoiseStimulus(std::string _tag,
                         shared_ptr<Variable> _temporal_lowpass_cutoff,
                         shared_ptr<Variable> _temporal_highpass_cutoff,
                         shared_ptr<Variable> _random_seed,
+                        shared_ptr<Variable> _rng_count,
                         shared_ptr<Scheduler> _scheduler,
                         shared_ptr<StimulusDisplay> _stimulus_display,
                         shared_ptr<Variable> _frames_per_second,
@@ -47,11 +48,18 @@ DynamicNoiseStimulus::DynamicNoiseStimulus(std::string _tag,
                                                _yscale,
                                                _rot,
                                                _alpha),
-                        rng(_random_seed->getValue().getInteger()), 
+                        random_seed_datum(time(0)),
+                        rng((long)random_seed_datum), 
                         phase_distribution(-3.14,3.14), 
                         random_phase_gen(rng,phase_distribution){
                              
-    //random_seed = registerVariable(_random_seed); 
+    _random_seed->setValue(random_seed_datum);
+    random_seed = _random_seed; 
+    
+    rng_count_internal = 0LL;
+    Datum rng_count_datum(rng_count_internal);
+    _rng_count->setValue(rng_count_datum);
+    rng_count = _rng_count;
                             
     power_spectrum = _power_spectrum;
     frames_per_sequence = _frames_per_sequence;
@@ -115,7 +123,7 @@ DynamicNoiseStimulus::~DynamicNoiseStimulus(){
 }
 
 
-void DynamicNoiseStimulus::load(StimulusDisplay* _display){
+void DynamicNoiseStimulus::load(shared_ptr<StimulusDisplay> _display){
     
     
     for(int i = 0; i < _display->getNContexts(); i++){
@@ -147,7 +155,7 @@ void DynamicNoiseStimulus::load(StimulusDisplay* _display){
     }
 }
 
-void DynamicNoiseStimulus::drawInUnitSquare(StimulusDisplay* _display){
+void DynamicNoiseStimulus::drawInUnitSquare(shared_ptr<StimulusDisplay> _display){
 
     
     int frame_number = getFrameNumber();
@@ -169,13 +177,13 @@ void DynamicNoiseStimulus::drawInUnitSquare(StimulusDisplay* _display){
 		glBindTexture(GL_TEXTURE_2D, texture_id);
         //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
         
         glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
         
@@ -197,32 +205,33 @@ void DynamicNoiseStimulus::drawInUnitSquare(StimulusDisplay* _display){
         
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		
+        double m = 1.0;
         
         if(aspect > 1) {
 			
             glTexCoord2f(0.0,0.0); 
             glVertex3f(0.0,(0.5-0.5/aspect),0.0);
             
-            glTexCoord2f(1.0,0.0); 
+            glTexCoord2f(m,0.0); 
 			glVertex3f(1.0,(0.5-0.5/aspect),0.0);
             
-            glTexCoord2f(1.0,1.0); 
+            glTexCoord2f(m,m); 
             glVertex3f(1.0,(0.5-0.5/aspect) + 1.0/aspect,0.0);
 			
-            glTexCoord2f(0.0,1.0); 
+            glTexCoord2f(0.0,m); 
             glVertex3f(0.0,(0.5-0.5/aspect) + 1.0/aspect,0.0);
         } else {
 			
             glTexCoord2f(0.0,0.0); 
             glVertex3f((1.0 - aspect)/2.0,0.0,0.0);
             
-            glTexCoord2f(1.0,0.0);
+            glTexCoord2f(0.9,0.0);
 			glVertex3f((1.0 - aspect)/2.0 + aspect,0.0,0.0);
             
-            glTexCoord2f(1.0,1.0); 
+            glTexCoord2f(0.9,0.9); 
             glVertex3f((1.0 - aspect)/2.0 + aspect,1.0,0.0);
             
-            glTexCoord2f(0.0,1.0); 
+            glTexCoord2f(0.0,0.9); 
             glVertex3f((1.0 - aspect)/2.0,1.0,0.0);
         }
 		
@@ -292,10 +301,10 @@ void DynamicNoiseStimulus::preallocateStorage(){
 void DynamicNoiseStimulus::generateModulusImage(){
 
     double filter_order = 2.0;
-    double space_lowpass_cutoff = (double)spatial_lowpass_cutoff->getValue();
-    double space_highpass_cutoff = (double)spatial_highpass_cutoff->getValue();
-    double time_lowpass_cutoff = (double)temporal_lowpass_cutoff->getValue();
-    double time_highpass_cutoff = (double)temporal_highpass_cutoff->getValue();
+    double space_lowpass_cutoff = (double)spatial_lowpass_cutoff->getValue() / pixel_width;
+    double space_highpass_cutoff = (double)spatial_highpass_cutoff->getValue() / pixel_width;
+    double time_lowpass_cutoff = (double)temporal_lowpass_cutoff->getValue() / frames_per_sequence;
+    double time_highpass_cutoff = (double)temporal_highpass_cutoff->getValue() / frames_per_sequence;
     
     
     if(power_spectrum == white){
@@ -349,8 +358,8 @@ void DynamicNoiseStimulus::generateModulusImage(){
                     //s_low *= 1.0 / (1.0 + pow(fabs(w) / time_lowpass_cutoff, 2.0 * filter_order));
                     
                     
-                    //modulus_image[k*pixel_height*pixel_width + i*pixel_width + j][0] =  s_low - s_high;
-                    modulus_image[k*pixel_height*pixel_width + i*pixel_width + j][0] =  r;
+                    modulus_image[k*pixel_height*pixel_width + i*pixel_width + j][0] =  s_low - s_high;
+                    //modulus_image[k*pixel_height*pixel_width + i*pixel_width + j][0] =  r;
 
                 }
             }
@@ -433,14 +442,20 @@ void DynamicNoiseStimulus::generateNoiseImage(int width, int height, int frames_
                                               float *result_storage) {
     
     
+    Datum rng_count_datum((long long)rng_count_internal);
+    rng_count->setValue(rng_count_datum);
+    
     // Generate a random phase image:
     // use the rng to fill the preallocated random phase array
     for (int i = 0; i < (height * width * frames_per_sequence); i++) {
         complex<double> temp_phase(0.0,random_phase_gen());
+        rng_count_internal++;
         temp_phase = exp(temp_phase);
         random_phase_storage[i][0] = real(temp_phase);
         random_phase_storage[i][1] = imag(temp_phase);
     }
+    
+    
         
     // print out the storage locations
     //std::cerr << "fft_in_storage: \t\t\t" << fft_in_storage << " - to - " << fft_in_storage + (width*height) <<  std::endl;
@@ -489,9 +504,15 @@ void DynamicNoiseStimulus::generateNoiseImage(int width, int height, int frames_
     double running_mean = 0.0;
     double running_m2 = 0.0;
     
+    double min = 1000000.0;
+    double max = -1000000.0;
+    
     for (int j = 0; j < (height * width * frames_per_sequence); j++) {
-        //double val = fft_out_storage[j][0];
-        double val = modulus_image[j][0];
+        double val = fft_out_storage[j][0];
+        //double val = modulus_image[j][0];
+        
+        if(val < min) min = val;
+        if(val > max) max = val;
         
         //double val = (1.0 + random_phase_storage[j][0]) / 2.;
         result_storage[j] = val;
@@ -522,18 +543,20 @@ void DynamicNoiseStimulus::generateNoiseImage(int width, int height, int frames_
 //        }
     }
     
+    std::cerr << "max: " << max << " min: " << min << std::endl;
+    
     double stdev = sqrt(running_m2 / (width*height - 1));
     
     // Clean up the "plan"
     fftw_destroy_plan(fft_plan);    
 
-    double min = 1000., max = -1000.;
+    
     
     // renormalize the resulting mean luminance?
-//#define NORMALIZE  
+#define NORMALIZE  
 #ifdef NORMALIZE
         for(int i = 0; i < (height*width*frames_per_sequence); i++){
-            double newval = (0.5 + (result_storage[i] - running_mean) / (2*stdev));
+            double newval = (0.5 + (result_storage[i] - running_mean) / stdev);
             
             result_storage[i] = newval;
             if(newval > max){

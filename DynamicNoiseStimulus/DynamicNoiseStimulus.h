@@ -67,10 +67,14 @@ protected:
     shared_ptr<Variable> temporal_lowpass_cutoff;
     shared_ptr<Variable> temporal_highpass_cutoff;
     shared_ptr<Variable> random_seed;
+    shared_ptr<Variable> rng_count;
+    long long rng_count_internal;
     
-    boost::mt19937 rng;
+    Datum random_seed_datum;
+    boost::lagged_fibonacci1279 rng;
     boost::uniform_real<> phase_distribution;
-    boost::variate_generator<boost::mt19937, boost::uniform_real<> > random_phase_gen;
+    boost::variate_generator<boost::lagged_fibonacci1279, boost::uniform_real<> > random_phase_gen;
+    
     
     shared_ptr<Shaders::ConvolutionFilterShader> bicubic_filter_shader;
     
@@ -90,6 +94,7 @@ public:
                          shared_ptr<Variable> temporal_lowpass_cutoff,
                          shared_ptr<Variable> temporal_highpass_cutoff,
                          shared_ptr<Variable> random_seed,
+                         shared_ptr<Variable> rng_count,
                          shared_ptr<Scheduler> _scheduler,
                          shared_ptr<StimulusDisplay> _stimulus_display,
                          shared_ptr<Variable> _frames_per_second,
@@ -106,8 +111,8 @@ public:
 	~DynamicNoiseStimulus();
     
     
-    virtual void load(StimulusDisplay* _display);
-    virtual void drawInUnitSquare(StimulusDisplay* _display);
+    virtual void load(shared_ptr<StimulusDisplay> _display);
+    virtual void drawInUnitSquare(shared_ptr<StimulusDisplay> _display);
     
     void generateModulusImage();
     void generateNoiseImage(int width, int height, int frames, long random_seed, 

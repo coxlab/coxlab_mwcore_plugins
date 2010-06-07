@@ -20,8 +20,9 @@
 #include "MWorksCore/SimpleConduit.h"
 #include "MWorksCore/IPCEventTransport.h"
 
+namespace mw {
+
 using namespace std;
-using namespace mw;
 
 
 class CobraDevice  : public IODevice {
@@ -104,9 +105,6 @@ public:
     
     virtual bool attachPhysicalDevice();
     
-    virtual ExpandableList<IOCapability> *getCapabilities(){ return NULL; }
-    virtual bool mapRequestsToChannels(){  return true;  }
-    virtual bool initializeChannels(){  return true;  }
     virtual bool startup(){  return true;  }
 
     virtual void addChild(std::map<std::string, std::string> parameters,
@@ -196,6 +194,7 @@ class CobraDeviceFactory : public ComponentFactory {
 													 ComponentRegistry *reg);
 };
 
+}
 
 #endif
 

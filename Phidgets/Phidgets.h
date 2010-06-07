@@ -198,9 +198,9 @@ class PhidgetDevice : public IODevice {
 		
 		// specify what this device can do
 		virtual bool attachPhysicalDevice(){ return true; }
-		virtual ExpandableList<IOCapability> *getCapabilities(){ return NULL; }
-		virtual bool mapRequestsToChannels(){  return true;  }
-		virtual bool initializeChannels(){  return true;  }
+		//virtual ExpandableList<IOCapability> *getCapabilities(){ return NULL; }
+		//virtual bool mapRequestsToChannels(){  return true;  }
+		//virtual bool initializeChannels(){  return true;  }
 		virtual bool startup(){  
 			return true;  
 		}
@@ -227,7 +227,7 @@ class PhidgetDevice : public IODevice {
 		
 		
 		// this will stop anyIO behavior on a device and put the device in a shutdown state (if the device has one) -- e.g. turn off x-ray
-		virtual bool shutdown(){ return true; }
+		//virtual bool shutdown(){ return true; }
 
 
 };
