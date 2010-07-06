@@ -125,7 +125,7 @@ shared_ptr<mw::Component> DynamicNoiseStimulusFactory::createObject(std::map<std
     
     // TODO: deferred load?
     if(deferred != Stimulus::deferred_load && deferred != Stimulus::explicit_load){
-        new_stimulus->load(default_display.get());
+        new_stimulus->load(default_display);
     }
     
     

@@ -147,8 +147,7 @@ void DynamicNoiseStimulus::load(StimulusDisplay* _display){
     }
 }
 
-void DynamicNoiseStimulus::drawInUnitSquare(StimulusDisplay* _display){
-
+void DynamicNoiseStimulus::drawInUnitSquare(shared_ptr<StimulusDisplay> display) {
     
     int frame_number = getFrameNumber();
     

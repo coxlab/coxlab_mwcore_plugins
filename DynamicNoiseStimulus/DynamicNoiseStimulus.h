@@ -107,7 +107,8 @@ public:
     
     
     virtual void load(StimulusDisplay* _display);
-    virtual void drawInUnitSquare(StimulusDisplay* _display);
+    //virtual void drawInUnitSquare(StimulusDisplay* _display);
+    virtual void drawInUnitSquare(shared_ptr<StimulusDisplay> display);
     
     void generateModulusImage();
     void generateNoiseImage(int width, int height, int frames, long random_seed, 
