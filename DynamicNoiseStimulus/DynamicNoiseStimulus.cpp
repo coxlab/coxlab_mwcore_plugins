@@ -38,9 +38,9 @@ DynamicNoiseStimulus::DynamicNoiseStimulus(std::string _tag,
                         shared_ptr<Variable> _alpha):
                         DynamicStimulusDriver (_scheduler,
                                                _stimulus_display,
-                                               _frames_per_second,
-                                               _statistics_reporting,
-                                               _error_reporting),
+                                               _frames_per_second),
+                                               //_statistics_reporting,
+                                               //_error_reporting),
                         BasicTransformStimulus(_tag,
                                                _xoffset,
                                                _yoffset,
@@ -155,8 +155,7 @@ void DynamicNoiseStimulus::load(shared_ptr<StimulusDisplay> _display){
     }
 }
 
-void DynamicNoiseStimulus::drawInUnitSquare(shared_ptr<StimulusDisplay> _display){
-
+void DynamicNoiseStimulus::drawInUnitSquare(shared_ptr<StimulusDisplay> display) {
     
     int frame_number = getFrameNumber();
     
