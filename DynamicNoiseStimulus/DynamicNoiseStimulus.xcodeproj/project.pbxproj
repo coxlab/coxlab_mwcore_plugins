@@ -21,7 +21,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		5CAC1A361194A5BD0068E578 /* libfftw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CAC1A351194A5BD0068E578 /* libfftw3.a */; };
 		5CD61F711173A560007339B7 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CD61F701173A560007339B7 /* OpenGL.framework */; };
 		5CF9AEBB0FD5795C00F405F6 /* DynamicNoiseStimulusFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5CF9AEB70FD5795C00F405F6 /* DynamicNoiseStimulusFactory.cpp */; };
 		5CF9AEBC0FD5795C00F405F6 /* DynamicNoiseStimulusPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5CF9AEB90FD5795C00F405F6 /* DynamicNoiseStimulusPlugin.cpp */; };
@@ -53,9 +52,7 @@
 		5C78EE6B115D02EE00151A76 /* Development.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Development.xcconfig; path = "/Library/Application Support/MWorks/Developer/Xcode/Development.xcconfig"; sourceTree = "<absolute>"; };
 		5C78EE6C115D02EE00151A76 /* WARNING.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = WARNING.txt; path = "/Library/Application Support/MWorks/Developer/Xcode/WARNING.txt"; sourceTree = "<absolute>"; };
 		5C79964D115E244500504D50 /* fftw3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fftw3.h; sourceTree = "<group>"; };
-		5CAC1A351194A5BD0068E578 /* libfftw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libfftw3.a; sourceTree = "<group>"; };
 		5CD61F701173A560007339B7 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		5CD61FA21173A996007339B7 /* libfftw3f.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libfftw3f.a; sourceTree = "<group>"; };
 		5CF9AEB70FD5795C00F405F6 /* DynamicNoiseStimulusFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DynamicNoiseStimulusFactory.cpp; sourceTree = SOURCE_ROOT; };
 		5CF9AEB80FD5795C00F405F6 /* DynamicNoiseStimulusFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamicNoiseStimulusFactory.h; sourceTree = SOURCE_ROOT; };
 		5CF9AEB90FD5795C00F405F6 /* DynamicNoiseStimulusPlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DynamicNoiseStimulusPlugin.cpp; sourceTree = SOURCE_ROOT; };
@@ -79,7 +76,6 @@
 			files = (
 				BFBFB0D610446C180019216B /* MWorksCore.framework in Frameworks */,
 				5CD61F711173A560007339B7 /* OpenGL.framework in Frameworks */,
-				5CAC1A361194A5BD0068E578 /* libfftw3.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -199,8 +195,6 @@
 		5C79964E115E244500504D50 /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				5CAC1A351194A5BD0068E578 /* libfftw3.a */,
-				5CD61FA21173A996007339B7 /* libfftw3f.a */,
 			);
 			path = lib;
 			sourceTree = "<group>";
@@ -380,7 +374,7 @@
 					"$(MW_LIB_DIR)/**",
 					"\"$(SRCROOT)/fftw/lib\"",
 				);
-				OTHER_LDFLAGS = "-lfftw3f";
+				OTHER_LDFLAGS = "$(SRCROOT)/fftw/lib/libfftw3.a";
 				PRODUCT_NAME = DynamicNoiseStimulus;
 				WRAPPER_EXTENSION = bundle;
 			};
