@@ -38,6 +38,7 @@ public:
                          pupil_radius = 2,
                          timestamp = 3,
                          combined_gaze_info = 4,
+                         ping = 5
                         };
 
 protected:
@@ -60,7 +61,7 @@ public:
         conduit = shared_ptr<SimpleConduit>(new SimpleConduit(transport));
         
         conduit->registerCallback(CobraDevice::combined_gaze_info, bind(&CobraDevice::handleIncomingEvent, this, _1));
-        
+        conduit->registerCallback(CobraDevice::ping, bind(&CobraDevice::handlePingEvent, this, _1));
         
     }
     
@@ -68,6 +69,13 @@ public:
         conduit->finalize();
     }
     
+    
+    virtual void handlePingEvent(shared_ptr<Event> event){
+    
+        fprintf(stderr, "PING");
+        fflush(stderr);
+    
+    }
     
     virtual void handleIncomingEvent(shared_ptr<Event> event){
     
@@ -103,10 +111,8 @@ public:
 
     // Garbage that should be removed from the base class
     
-    virtual bool attachPhysicalDevice();
+    virtual bool initialize();
     
-    virtual bool startup(){  return true;  }
-
     virtual void addChild(std::map<std::string, std::string> parameters,
                             ComponentRegistry *reg,
                           shared_ptr<mw::Component> _child);

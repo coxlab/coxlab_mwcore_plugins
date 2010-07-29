@@ -12,7 +12,7 @@
 namespace mw {
 
 
-bool CobraDevice::attachPhysicalDevice(){  
+bool CobraDevice::initialize(){  
     return conduit->initialize();
 }
 
