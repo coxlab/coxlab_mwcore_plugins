@@ -21,7 +21,9 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		5C18636D123B0C3700E95478 /* md5.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5C18636B123B0C3700E95478 /* md5.cc */; };
 		5CD61F711173A560007339B7 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CD61F701173A560007339B7 /* OpenGL.framework */; };
+		5CE49040124C5CA900FFDD31 /* PythonDynamicNoiseStimulus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5CE4903F124C5CA900FFDD31 /* PythonDynamicNoiseStimulus.cpp */; };
 		5CF9AEBB0FD5795C00F405F6 /* DynamicNoiseStimulusFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5CF9AEB70FD5795C00F405F6 /* DynamicNoiseStimulusFactory.cpp */; };
 		5CF9AEBC0FD5795C00F405F6 /* DynamicNoiseStimulusPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5CF9AEB90FD5795C00F405F6 /* DynamicNoiseStimulusPlugin.cpp */; };
 		5CFCAB0A1105FB4C007CE55F /* MWLibrary.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5CFCAB091105FB4C007CE55F /* MWLibrary.xml */; };
@@ -48,11 +50,15 @@
 		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		32DBCF630370AF2F00C91783 /* DynamicNoiseStimulus_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamicNoiseStimulus_Prefix.pch; sourceTree = "<group>"; };
+		5C18636B123B0C3700E95478 /* md5.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = md5.cc; sourceTree = "<group>"; };
+		5C18636C123B0C3700E95478 /* md5.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = md5.hh; sourceTree = "<group>"; };
 		5C78EE6A115D02EE00151A76 /* Development_10.5_compatible.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Development_10.5_compatible.xcconfig; path = "/Library/Application Support/MWorks/Developer/Xcode/Development_10.5_compatible.xcconfig"; sourceTree = "<absolute>"; };
 		5C78EE6B115D02EE00151A76 /* Development.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Development.xcconfig; path = "/Library/Application Support/MWorks/Developer/Xcode/Development.xcconfig"; sourceTree = "<absolute>"; };
 		5C78EE6C115D02EE00151A76 /* WARNING.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = WARNING.txt; path = "/Library/Application Support/MWorks/Developer/Xcode/WARNING.txt"; sourceTree = "<absolute>"; };
 		5C79964D115E244500504D50 /* fftw3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fftw3.h; sourceTree = "<group>"; };
 		5CD61F701173A560007339B7 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		5CE4903E124C5CA900FFDD31 /* PythonDynamicNoiseStimulus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PythonDynamicNoiseStimulus.h; sourceTree = "<group>"; };
+		5CE4903F124C5CA900FFDD31 /* PythonDynamicNoiseStimulus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PythonDynamicNoiseStimulus.cpp; sourceTree = "<group>"; };
 		5CF9AEB70FD5795C00F405F6 /* DynamicNoiseStimulusFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DynamicNoiseStimulusFactory.cpp; sourceTree = SOURCE_ROOT; };
 		5CF9AEB80FD5795C00F405F6 /* DynamicNoiseStimulusFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamicNoiseStimulusFactory.h; sourceTree = SOURCE_ROOT; };
 		5CF9AEB90FD5795C00F405F6 /* DynamicNoiseStimulusPlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DynamicNoiseStimulusPlugin.cpp; sourceTree = SOURCE_ROOT; };
@@ -85,6 +91,7 @@
 		089C166AFE841209C02AAC07 /* DynamicNoiseStimulus */ = {
 			isa = PBXGroup;
 			children = (
+				5CE4903D124C5C8F00FFDD31 /* Python Bindings */,
 				5CFCAB0F11060747007CE55F /* INSTRUCTIONS.txt */,
 				5C78EE69115D02C700151A76 /* External Config */,
 				08FB77AFFE84173DC02AAC07 /* Classes */,
@@ -160,9 +167,19 @@
 		32C88E010371C26100C91783 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				5C18636A123B0C3700E95478 /* md5 */,
 				32DBCF630370AF2F00C91783 /* DynamicNoiseStimulus_Prefix.pch */,
 			);
 			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		5C18636A123B0C3700E95478 /* md5 */ = {
+			isa = PBXGroup;
+			children = (
+				5C18636B123B0C3700E95478 /* md5.cc */,
+				5C18636C123B0C3700E95478 /* md5.hh */,
+			);
+			path = md5;
 			sourceTree = "<group>";
 		};
 		5C78EE69115D02C700151A76 /* External Config */ = {
@@ -197,6 +214,15 @@
 			children = (
 			);
 			path = lib;
+			sourceTree = "<group>";
+		};
+		5CE4903D124C5C8F00FFDD31 /* Python Bindings */ = {
+			isa = PBXGroup;
+			children = (
+				5CE4903E124C5CA900FFDD31 /* PythonDynamicNoiseStimulus.h */,
+				5CE4903F124C5CA900FFDD31 /* PythonDynamicNoiseStimulus.cpp */,
+			);
+			name = "Python Bindings";
 			sourceTree = "<group>";
 		};
 		5CFE591C0F571BEB000C7F30 /* Editor Definitions */ = {
@@ -295,6 +321,8 @@
 				5CFE591A0F571B15000C7F30 /* DynamicNoiseStimulus.cpp in Sources */,
 				5CF9AEBB0FD5795C00F405F6 /* DynamicNoiseStimulusFactory.cpp in Sources */,
 				5CF9AEBC0FD5795C00F405F6 /* DynamicNoiseStimulusPlugin.cpp in Sources */,
+				5C18636D123B0C3700E95478 /* md5.cc in Sources */,
+				5CE49040124C5CA900FFDD31 /* PythonDynamicNoiseStimulus.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

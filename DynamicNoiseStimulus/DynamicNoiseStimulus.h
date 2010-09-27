@@ -68,7 +68,13 @@ protected:
     shared_ptr<Variable> temporal_highpass_cutoff;
     shared_ptr<Variable> random_seed;
     shared_ptr<Variable> rng_count;
+    char *hash_string;
     long long rng_count_internal;
+    
+    long long starting_rng_count, ending_rng_count;
+    
+    // an "announce" variable to dump image data to
+    shared_ptr<Variable> load_announce_variable;
     
     Datum random_seed_datum;
     boost::lagged_fibonacci1279 rng;
@@ -95,11 +101,10 @@ public:
                          shared_ptr<Variable> temporal_highpass_cutoff,
                          shared_ptr<Variable> random_seed,
                          shared_ptr<Variable> rng_count,
+                         shared_ptr<Variable> _load_announce_variable,
                          shared_ptr<Scheduler> _scheduler,
                          shared_ptr<StimulusDisplay> _stimulus_display,
                          shared_ptr<Variable> _frames_per_second,
-                         shared_ptr<Variable> _statistics_reporting,
-                         shared_ptr<Variable> _error_reporting,
                          shared_ptr<Variable> _xoffset, 
                          shared_ptr<Variable> _yoffset,
                          shared_ptr<Variable> _xscale, 
@@ -107,7 +112,6 @@ public:
                          shared_ptr<Variable> _rot,
                          shared_ptr<Variable> _alpha);
     
-	//DynamicNoiseStimulus(const DynamicNoiseStimulus &tocopy);
 	~DynamicNoiseStimulus();
     
     
@@ -115,12 +119,27 @@ public:
     virtual void drawInUnitSquare(shared_ptr<StimulusDisplay> _display);
     
     void generateModulusImage();
-    void generateNoiseImage(int width, int height, int frames, long random_seed, 
+    void generateNoiseImage(int width, int height, int frames, 
                             fftw_complex *modulus_image, fftw_complex *random_phase_storage,
                             fftw_complex *fft_in_storage, fftw_complex *fft_out_storage,
                             float *result_storage);
     
     void generateNoiseSequence();
+    
+    virtual Datum getCurrentAnnounceDrawData();
+    
+    
+    // Methods for accessing / manipulating state outside of an experiment
+    // (e.g. using the python bindings)
+    float *getNoiseData(){  return result_storage; }
+        
+    void seek_rng(long seed, long rng_count){
+        rng.seed(seed);
+        for(int i = 0; i < rng_count; i++){
+            random_phase_gen();
+        }
+    };
+    
 };
 
 #endif 

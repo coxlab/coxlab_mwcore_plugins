@@ -10,6 +10,7 @@
 #include "DynamicNoiseStimulus.h"
 #include <iostream>
 #include <fstream>
+#include "md5.hh"
 
 #define USE_FFTW_MALLOC     1
 
@@ -25,11 +26,10 @@ DynamicNoiseStimulus::DynamicNoiseStimulus(std::string _tag,
                         shared_ptr<Variable> _temporal_highpass_cutoff,
                         shared_ptr<Variable> _random_seed,
                         shared_ptr<Variable> _rng_count,
+                        shared_ptr<Variable> _load_announce_variable,
                         shared_ptr<Scheduler> _scheduler,
                         shared_ptr<StimulusDisplay> _stimulus_display,
                         shared_ptr<Variable> _frames_per_second,
-                        shared_ptr<Variable> _statistics_reporting,
-                        shared_ptr<Variable> _error_reporting,
                         shared_ptr<Variable> _xoffset, 
                         shared_ptr<Variable> _yoffset,
                         shared_ptr<Variable> _xscale, 
@@ -39,8 +39,6 @@ DynamicNoiseStimulus::DynamicNoiseStimulus(std::string _tag,
                         DynamicStimulusDriver (_scheduler,
                                                _stimulus_display,
                                                _frames_per_second),
-                                               //_statistics_reporting,
-                                               //_error_reporting),
                         BasicTransformStimulus(_tag,
                                                _xoffset,
                                                _yoffset,
@@ -69,15 +67,14 @@ DynamicNoiseStimulus::DynamicNoiseStimulus(std::string _tag,
     spatial_highpass_cutoff = _spatial_highpass_cutoff;
     temporal_lowpass_cutoff = _temporal_lowpass_cutoff;
     temporal_highpass_cutoff = _temporal_highpass_cutoff;
-                            
-                                
+    
+    load_announce_variable = _load_announce_variable;
+        
     // 2. pre-allocate storage
     preallocateStorage();
                                                 
-    // 3. get a seed and load an initial salvo of frames
     
-    
-    // create a GLSL bicubic interpolation filter
+    // 3. create a GLSL bicubic interpolation filter
     bicubic_filter_shader = shared_ptr<Shaders::ConvolutionFilterShader>(new Shaders::ConvolutionFilterShader(VS_SCALINGMETHOD_LANCZOS3, false));
     
     
@@ -126,33 +123,44 @@ DynamicNoiseStimulus::~DynamicNoiseStimulus(){
 void DynamicNoiseStimulus::load(shared_ptr<StimulusDisplay> _display){
     
     
-    for(int i = 0; i < _display->getNContexts(); i++){
-        _display->setCurrent(i);
-        if (!bicubic_filter_shader->CompileAndLink()){
-            merror(M_DISPLAY_MESSAGE_DOMAIN, "GL: Error compiling and linking video filter shader");
-            bicubic_filter_shader->Free();
-            bicubic_filter_shader = shared_ptr<Shaders::ConvolutionFilterShader>();
+    if(_display != NULL){
+        for(int i = 0; i < _display->getNContexts(); i++){
+            _display->setCurrent(i);
+            if (!bicubic_filter_shader->CompileAndLink()){
+                merror(M_DISPLAY_MESSAGE_DOMAIN, "GL: Error compiling and linking video filter shader");
+                bicubic_filter_shader->Free();
+                bicubic_filter_shader = shared_ptr<Shaders::ConvolutionFilterShader>();
+            }
         }
     }
     
-    long seed = (long)0;//(random_seed->getValue());
+    starting_rng_count = rng_count_internal;
 
     generateModulusImage();
 
-    generateNoiseImage(pixel_width, pixel_height, frames_per_sequence, seed, 
+    generateNoiseImage(pixel_width, pixel_height, frames_per_sequence, 
                        modulus_image, random_phase_storage,
                        fft_in_storage,fft_out_storage,
                        result_storage);
     
+    MD5 md5_hash;
+    md5_hash.update((unsigned char *)result_storage, sizeof(result_storage));
+    md5_hash.finalize();
+    hash_string = md5_hash.hex_digest();
     
-    for(int f = 0; f < frames_per_sequence; f++){
-        
-        int offset = f * pixel_width * pixel_height;
-        for(int i = 0; i < _display->getNContexts(); i++){
-            _display->setCurrent(i);
-            loadDataToGLTexture(result_storage + offset, pixel_width, pixel_height, frame_textures[f]);
+    
+    if(_display != NULL){
+        for(int f = 0; f < frames_per_sequence; f++){
+            
+            int offset = f * pixel_width * pixel_height;
+            for(int i = 0; i < _display->getNContexts(); i++){
+                _display->setCurrent(i);
+                loadDataToGLTexture(result_storage + offset, pixel_width, pixel_height, frame_textures[f]);
+            }
         }
     }
+    
+    ending_rng_count = rng_count_internal;
 }
 
 void DynamicNoiseStimulus::drawInUnitSquare(shared_ptr<StimulusDisplay> display) {
@@ -435,7 +443,7 @@ void DynamicNoiseStimulus::loadDataToGLTexture(float *data, int width, int heigh
 //      modulus_image:       an fftw_complex array containing the power spectrum info for this stimulus
 //      random_seed:   a seed for the random number generator
 
-void DynamicNoiseStimulus::generateNoiseImage(int width, int height, int frames_per_sequence, long random_seed, 
+void DynamicNoiseStimulus::generateNoiseImage(int width, int height, int frames_per_sequence, 
                                               fftw_complex *modulus_image, fftw_complex *random_phase_storage,
                                               fftw_complex *fft_in_storage, fftw_complex *fft_out_storage,
                                               float *result_storage) {
@@ -589,4 +597,21 @@ void DynamicNoiseStimulus::generateNoiseImage(int width, int height, int frames_
     // And we're done
 
 }
+
+
+Datum DynamicNoiseStimulus::getCurrentAnnounceDrawData() {
+    
+    Datum announceData(M_DICTIONARY, 3);
+    announceData.addElement(STIM_NAME,tag);        // char
+    announceData.addElement(STIM_ACTION,STIM_ACTION_DRAW);
+    announceData.addElement(STIM_TYPE,"dynamic_noise");
+    announceData.addElement("frame", Datum((long)getFrameNumber()));
+    announceData.addElement("rng_start", Datum(starting_rng_count));
+    announceData.addElement("rng_end", Datum(ending_rng_count));
+    announceData.addElement("seed", random_seed->getValue());
+    announceData.addElement("md5", hash_string);
+    
+    return (announceData);
+}
+
 

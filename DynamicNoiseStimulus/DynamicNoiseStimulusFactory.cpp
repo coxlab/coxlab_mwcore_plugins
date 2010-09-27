@@ -59,15 +59,12 @@ shared_ptr<mw::Component> DynamicNoiseStimulusFactory::createObject(std::map<std
     shared_ptr<Variable> temporal_lowpass_cutoff = reg->getVariable(parameters["temporal_lowpass_cutoff"], "100.");
     shared_ptr<Variable> temporal_highpass_cutoff = reg->getVariable(parameters["temporal_highpass_cutoff"], ".1");
     
-    
+    shared_ptr<Variable> load_announce = reg->getVariable(ANNOUNCE_STIMULUS_LOAD_TAGNAME);
+
     
 	shared_ptr<Variable> alpha_multiplier = 
     reg->getVariable(parameters["alpha_multiplier"], std::string("1.0"));	
 	
-    // DDC: not entirely sure that having these is the right way to go, but 
-    // I'm keeping them in until I have to think about it more carefully
-    shared_ptr<Variable> error_reporting = reg->getVariable(parameters["error_reporting"]);
-    shared_ptr<Variable> statistics_reporting = reg->getVariable(parameters["statistics_reporting"]);
     
     if(GlobalCurrentExperiment == 0) {
 		throw SimpleException("no experiment currently defined");		
@@ -83,7 +80,7 @@ shared_ptr<mw::Component> DynamicNoiseStimulusFactory::createObject(std::map<std
 		throw SimpleException("no scheduler registered");		
 	}
     
-	
+    
     
     shared_ptr<Stimulus> new_stimulus(new DynamicNoiseStimulus(tagname, 
                                                                power_spectrum, 
@@ -96,11 +93,10 @@ shared_ptr<mw::Component> DynamicNoiseStimulusFactory::createObject(std::map<std
                                                                temporal_highpass_cutoff,
                                                                random_seed,
                                                                rng_count,
+                                                               load_announce,
                                                                scheduler,
                                                                default_display,
                                                                frames_per_second,
-                                                               statistics_reporting,
-                                                               error_reporting,
                                                                x_position, 
                                                                y_position,
                                                                x_size, 
