@@ -59,7 +59,8 @@ shared_ptr<mw::Component> DynamicNoiseStimulusFactory::createObject(std::map<std
     shared_ptr<Variable> temporal_lowpass_cutoff = reg->getVariable(parameters["temporal_lowpass_cutoff"], "100.");
     shared_ptr<Variable> temporal_highpass_cutoff = reg->getVariable(parameters["temporal_highpass_cutoff"], ".1");
     
-    shared_ptr<Variable> load_announce = reg->getVariable(ANNOUNCE_STIMULUS_LOAD_TAGNAME);
+    //shared_ptr<Variable> load_announce = reg->getVariable(ANNOUNCE_STIMULUS_LOAD_TAGNAME);
+    shared_ptr<Variable> load_announce = reg->getVariable(parameters["dynamic_stimulus_load_announce_variable"]);
 
     
 	shared_ptr<Variable> alpha_multiplier = 
@@ -127,5 +128,5 @@ shared_ptr<mw::Component> DynamicNoiseStimulusFactory::createObject(std::map<std
     }
     
     
-	return dynamic_pointer_cast<Stimulus, Component>(new_stimulus);
+	return dynamic_pointer_cast<Stimulus, mw::Component>(new_stimulus);
 }

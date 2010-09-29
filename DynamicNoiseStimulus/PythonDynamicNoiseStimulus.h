@@ -7,7 +7,14 @@
  *
  */
 
+
+#include <boost/python.hpp>
+#include <vector>
+
+
 #include "DynamicNoiseStimulus.h"
+
+using namespace boost::python;
 
 namespace mw{
 
@@ -15,9 +22,12 @@ class DynamicNoiseStimulusWrapper {
 
 protected:
 
-    shared_ptr<DynamicNoiseStimulus> stim;
+    shared_ptr<DynamicNoiseGenerator> generator;
+    double spatial_lowpass_cutoff, spatial_highpass_cutoff, temporal_lowpass_cutoff, temporal_highpass_cutoff;
     
 public:
+
+    DynamicNoiseStimulusWrapper() { }
 
     DynamicNoiseStimulusWrapper(int _power_spectrum, 
                                 int _frames_per_sequence,
@@ -27,63 +37,60 @@ public:
                                 double _spatial_highpass_cutoff,
                                 double _temporal_lowpass_cutoff,
                                 double _temporal_highpass_cutoff){
-                                
-        shared_ptr<Variable> spatial_lowpass_cutoff(new ConstantVariable(_spatial_lowpass_cutoff));
-        shared_ptr<Variable> spatial_highpass_cutoff(new ConstantVariable(_spatial_highpass_cutoff));
-        shared_ptr<Variable> temporal_lowpass_cutoff(new ConstantVariable(_temporal_lowpass_cutoff));
-        shared_ptr<Variable> temporal_highpass_cutoff(new ConstantVariable(_temporal_highpass_cutoff));
-        shared_ptr<Variable> random_seed(new ConstantVariable(0));
-        shared_ptr<Variable> rng_count(new ConstantVariable(0));
-
+        
+        spatial_lowpass_cutoff = _spatial_lowpass_cutoff;
+        spatial_highpass_cutoff = _spatial_highpass_cutoff;
+        temporal_lowpass_cutoff = _temporal_lowpass_cutoff;
+        temporal_highpass_cutoff = _temporal_highpass_cutoff;
+        
         shared_ptr<Variable> dummy_variable(new ConstantVariable(0L));
         shared_ptr<Scheduler> scheduler;
-        shared_ptr<StimulusDisplay> display;
                                                         
-        stim = shared_ptr<DynamicNoiseStimulus>( new DynamicNoiseStimulus("dummy",
-                                                                          _power_spectrum, 
+        generator = shared_ptr<DynamicNoiseGenerator>( new DynamicNoiseGenerator((DynamicNoiseGenerator::power_spectrum_type)_power_spectrum, 
                                                                           _frames_per_sequence,
                                                                           _pixel_width,
-                                                                          _pixel_height,
-                                                                          spatial_lowpass_cutoff
-                                                                          spatial_highpass_cutoff,
-                                                                          temporal_lowpass_cutoff,
-                                                                          temporal_highpass_cutoff,
-                                                                          random_seed,
-                                                                          rng_count,
-                                                                          dummy_variable, //_load_announce_variable,
-                                                                          scheduler, // empty
-                                                                          display, // empty
-                                                                          dummy_variable, //_frames_per_second,
-                                                                          dummy_variable, //_xoffset, 
-                                                                          dummy_variable, //_yoffset,
-                                                                          dummy_variable, //_xscale, 
-                                                                          dummy_variable, //_yscale, 
-                                                                          dummy_variable, //_rot,
-                                                                          dummy_variable //_alpha
-                                                                          ));
+                                                                          _pixel_height ));
+        
+        
         
     }
     
    
-    float *getData(){
-        stim->seekRNG(_random_seed, _rng_count);
-        stim->load(display); // load, but with a nonexistant stim display
-        return stim->getNoiseData();
+    std::vector<float> getData(long _random_seed, unsigned long long _rng_count){
+        generator->seekRNG(_random_seed, _rng_count);
+        
+        generator->generateModulusImage(spatial_lowpass_cutoff, spatial_highpass_cutoff, temporal_lowpass_cutoff, temporal_highpass_cutoff);
+        generator->generateNoiseImage();
+                
+        float *result = generator->getNoiseData();
+        int width = generator->getNoiseDataWidth();
+        int height = generator->getNoiseDataHeight();
+        int n_frames = generator->getNoiseDataNFrames();
+        
+        // needn't be particularly efficient
+        std::vector<float> thedata;
+        for(int i = 0; i < width * height * n_frames; i++){
+            thedata.push_back(result[i]);
+        }
+        
+        return thedata;
     }
     
     
-                                                                         
+    int hello(){ return 1;}
+                                                                                       
 };
 
 
-BOOST_PYTHON_MODULE(_conduit)
+BOOST_PYTHON_MODULE(DynamicNoiseStimulusPythonBindings)
 {
     
-    PyEval_InitThreads();
+    //PyEval_InitThreads();
     
-    class_<DynamicNoiseStimulusWrapper>("DyanmicNoiseStimulus", init<int,int,int,int,double,double,double,double>())
-    .def("_get_data", &DynamicNoiseStimulusWrapper::getData)
-    
+    class_<DynamicNoiseStimulusWrapper>("DynamicNoiseStimulus", init<int,int,int,int,double,double,double,double>())
+        .def(init<>())
+        .def("_get_data", &DynamicNoiseStimulusWrapper::getData)
+        //.def("hello_world", &DynamicNoiseStimulusWrapper::hello)
     ;
 }
 

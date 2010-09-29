@@ -36,8 +36,9 @@ DynamicNoiseStimulus::DynamicNoiseStimulus(std::string _tag,
                         shared_ptr<Variable> _yscale, 
                         shared_ptr<Variable> _rot,
                         shared_ptr<Variable> _alpha):
+                        
+                        DynamicNoiseGenerator(_power_spectrum, _frames_per_sequence, _pixel_width, _pixel_height),
                         DynamicStimulusDriver (_scheduler,
-                                               _stimulus_display,
                                                _frames_per_second),
                         BasicTransformStimulus(_tag,
                                                _xoffset,
@@ -45,12 +46,10 @@ DynamicNoiseStimulus::DynamicNoiseStimulus(std::string _tag,
                                                _xscale,
                                                _yscale,
                                                _rot,
-                                               _alpha),
-                        random_seed_datum(time(0)),
-                        rng((long)random_seed_datum), 
-                        phase_distribution(-3.14,3.14), 
-                        random_phase_gen(rng,phase_distribution){
-                             
+                                               _alpha)
+                        {
+    
+    display = _stimulus_display;
     _random_seed->setValue(random_seed_datum);
     random_seed = _random_seed; 
     
@@ -59,22 +58,16 @@ DynamicNoiseStimulus::DynamicNoiseStimulus(std::string _tag,
     _rng_count->setValue(rng_count_datum);
     rng_count = _rng_count;
                             
-    power_spectrum = _power_spectrum;
-    frames_per_sequence = _frames_per_sequence;
-    pixel_width = _pixel_width;
-    pixel_height = _pixel_height;                            
+                               
     spatial_lowpass_cutoff = _spatial_lowpass_cutoff;
     spatial_highpass_cutoff = _spatial_highpass_cutoff;
     temporal_lowpass_cutoff = _temporal_lowpass_cutoff;
     temporal_highpass_cutoff = _temporal_highpass_cutoff;
     
     load_announce_variable = _load_announce_variable;
-        
-    // 2. pre-allocate storage
-    preallocateStorage();
-                                                
     
-    // 3. create a GLSL bicubic interpolation filter
+    preallocateTextures();
+                
     bicubic_filter_shader = shared_ptr<Shaders::ConvolutionFilterShader>(new Shaders::ConvolutionFilterShader(VS_SCALINGMETHOD_LANCZOS3, false));
     
     
@@ -136,12 +129,18 @@ void DynamicNoiseStimulus::load(shared_ptr<StimulusDisplay> _display){
     
     starting_rng_count = rng_count_internal;
 
-    generateModulusImage();
 
-    generateNoiseImage(pixel_width, pixel_height, frames_per_sequence, 
-                       modulus_image, random_phase_storage,
-                       fft_in_storage,fft_out_storage,
-                       result_storage);
+    generateModulusImage((double)spatial_lowpass_cutoff->getValue(),
+                         (double)spatial_highpass_cutoff->getValue(),
+                         (double)temporal_lowpass_cutoff->getValue(),
+                         (double)temporal_highpass_cutoff->getValue());
+    
+    
+
+    Datum rng_count_datum((long long)rng_count_internal);
+    rng_count->setValue(rng_count_datum);
+    
+    generateNoiseImage();
     
     MD5 md5_hash;
     md5_hash.update((unsigned char *)result_storage, sizeof(result_storage));
@@ -263,7 +262,7 @@ void DynamicNoiseStimulus::drawInUnitSquare(shared_ptr<StimulusDisplay> display)
     
 }
 
-void DynamicNoiseStimulus::preallocateStorage(){
+void DynamicNoiseGenerator::preallocateStorage(){
     //      modulus_image:               an fftw_complex width * height array for storing the desired power spectrum of the noise 
     //      random_phase_storage:  an fftw_complex width * height array for storing a randomly generated phase image
     //      fft_in_storage:        an fftw_complex width * height array that stores the full complex input, combining the
@@ -287,31 +286,39 @@ void DynamicNoiseStimulus::preallocateStorage(){
 #endif
     
     result_storage = new float[pixel_height * pixel_width * frames_per_sequence];
+}
     
+void DynamicNoiseStimulus::preallocateTextures(){
     // Generate texture maps in each OpenGL context
-    int n_contexts = display->getNContexts();
-    for(int f = 0; f < frames_per_sequence; f++){
-        
-        vector<GLuint> inner;
-        
-        for(int c = 0; c < n_contexts; c++){
-            display->setCurrent(c);
-            GLuint tex_id = 0;
-            glGenTextures(1,&tex_id);
-            inner.push_back(tex_id);
+    if(display != NULL){
+        int n_contexts = display->getNContexts();
+        for(int f = 0; f < frames_per_sequence; f++){
+            
+            vector<GLuint> inner;
+            
+            for(int c = 0; c < n_contexts; c++){
+                display->setCurrent(c);
+                GLuint tex_id = 0;
+                glGenTextures(1,&tex_id);
+                inner.push_back(tex_id);
+            }
+            
+            frame_textures.push_back(inner);
         }
-        
-        frame_textures.push_back(inner);
     }
 }
 
-void DynamicNoiseStimulus::generateModulusImage(){
+void DynamicNoiseGenerator::generateModulusImage(double spatial_lowpass_cutoff, 
+                                                double spatial_highpass_cutoff,
+                                                double temporal_lowpass_cutoff,
+                                                double temporal_highpass_cutoff){
 
     double filter_order = 2.0;
-    double space_lowpass_cutoff = (double)spatial_lowpass_cutoff->getValue() / pixel_width;
-    double space_highpass_cutoff = (double)spatial_highpass_cutoff->getValue() / pixel_width;
-    double time_lowpass_cutoff = (double)temporal_lowpass_cutoff->getValue() / frames_per_sequence;
-    double time_highpass_cutoff = (double)temporal_highpass_cutoff->getValue() / frames_per_sequence;
+    
+    double space_lowpass_cutoff = (double)spatial_lowpass_cutoff / pixel_width;
+    double space_highpass_cutoff = (double)spatial_highpass_cutoff / pixel_width;
+    double time_lowpass_cutoff = (double)temporal_lowpass_cutoff / frames_per_sequence;
+    double time_highpass_cutoff = (double)temporal_highpass_cutoff / frames_per_sequence;
     
     
     if(power_spectrum == white){
@@ -443,18 +450,18 @@ void DynamicNoiseStimulus::loadDataToGLTexture(float *data, int width, int heigh
 //      modulus_image:       an fftw_complex array containing the power spectrum info for this stimulus
 //      random_seed:   a seed for the random number generator
 
-void DynamicNoiseStimulus::generateNoiseImage(int width, int height, int frames_per_sequence, 
-                                              fftw_complex *modulus_image, fftw_complex *random_phase_storage,
-                                              fftw_complex *fft_in_storage, fftw_complex *fft_out_storage,
-                                              float *result_storage) {
+void DynamicNoiseGenerator::generateNoiseImage(){
+
+
+//                                              fftw_complex *modulus_image, fftw_complex *random_phase_storage,
+//                                              fftw_complex *fft_in_storage, fftw_complex *fft_out_storage,
+//                                              float *result_storage) {
     
     
-    Datum rng_count_datum((long long)rng_count_internal);
-    rng_count->setValue(rng_count_datum);
     
     // Generate a random phase image:
     // use the rng to fill the preallocated random phase array
-    for (int i = 0; i < (height * width * frames_per_sequence); i++) {
+    for (int i = 0; i < (pixel_height * pixel_width * frames_per_sequence); i++) {
         complex<double> temp_phase(0.0,random_phase_gen());
         rng_count_internal++;
         temp_phase = exp(temp_phase);
@@ -474,7 +481,7 @@ void DynamicNoiseStimulus::generateNoiseImage(int width, int height, int frames_
     // Combine with modulus and do inverse
 
     // note from Brett: making the plan fubars the input
-    fftw_plan fft_plan = fftw_plan_dft_3d(frames_per_sequence, height, width, fft_in_storage, fft_out_storage, FFTW_BACKWARD, FFTW_ESTIMATE);
+    fftw_plan fft_plan = fftw_plan_dft_3d(frames_per_sequence, pixel_height, pixel_width, fft_in_storage, fft_out_storage, FFTW_BACKWARD, FFTW_ESTIMATE);
     
     //fftw_print_plan(fft_plan);
     
@@ -482,7 +489,7 @@ void DynamicNoiseStimulus::generateNoiseImage(int width, int height, int frames_
     
     
     // fill input
-    for (int j = 0; j < (height * width * frames_per_sequence); j++) {
+    for (int j = 0; j < (pixel_height * pixel_width * frames_per_sequence); j++) {
         //for (int j = 0; j < ((height * width)/2 + 1); j++) {
         complex<double> temp_modulus(modulus_image[j][0],modulus_image[j][1]);
         //complex<double> temp_modulus = modulus_image[j];
@@ -514,7 +521,7 @@ void DynamicNoiseStimulus::generateNoiseImage(int width, int height, int frames_
     double min = 1000000.0;
     double max = -1000000.0;
     
-    for (int j = 0; j < (height * width * frames_per_sequence); j++) {
+    for (int j = 0; j < (pixel_height * pixel_width * frames_per_sequence); j++) {
         double val = fft_out_storage[j][0];
         //double val = modulus_image[j][0];
         
@@ -552,7 +559,7 @@ void DynamicNoiseStimulus::generateNoiseImage(int width, int height, int frames_
     
     std::cerr << "max: " << max << " min: " << min << std::endl;
     
-    double stdev = sqrt(running_m2 / (width*height - 1));
+    double stdev = sqrt(running_m2 / (pixel_width*pixel_height - 1));
     
     // Clean up the "plan"
     fftw_destroy_plan(fft_plan);    
@@ -562,7 +569,7 @@ void DynamicNoiseStimulus::generateNoiseImage(int width, int height, int frames_
     // renormalize the resulting mean luminance?
 #define NORMALIZE  
 #ifdef NORMALIZE
-        for(int i = 0; i < (height*width*frames_per_sequence); i++){
+        for(int i = 0; i < (pixel_height*pixel_width*frames_per_sequence); i++){
             double newval = (0.5 + (result_storage[i] - running_mean) / stdev);
             
             result_storage[i] = newval;
