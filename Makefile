@@ -5,10 +5,10 @@ all: cobra-plugin phidgets-plugin
 
 cobra-plugin:
 	cd $(COBRA_PLUGIN); \
-	xcodebuild clean -alltargets -configuration Debug; \
-	xcodebuild build -target Everything -configuration Debug
+	xcodebuild clean -alltargets -configuration Development; \
+	xcodebuild build -target Everything -configuration Development
 
 phidgets-plugin:
 	cd $(PHIDGETS_PLUGIN); \
-	xcodebuild clean -alltargets -configuration Debug; \
-	xcodebuild build -target Everything -configuration Debug
+	xcodebuild clean -alltargets -configuration Development; \
+	xcodebuild build -target Everything -configuration Development

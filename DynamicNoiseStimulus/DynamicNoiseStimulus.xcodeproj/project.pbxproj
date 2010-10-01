@@ -59,7 +59,6 @@
 		32DBCF630370AF2F00C91783 /* DynamicNoiseStimulus_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamicNoiseStimulus_Prefix.pch; sourceTree = "<group>"; };
 		5C18636B123B0C3700E95478 /* md5.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = md5.cc; sourceTree = "<group>"; };
 		5C18636C123B0C3700E95478 /* md5.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = md5.hh; sourceTree = "<group>"; };
-		5C78EE6A115D02EE00151A76 /* Development_10.5_compatible.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Development_10.5_compatible.xcconfig; path = "/Library/Application Support/MWorks/Developer/Xcode/Development_10.5_compatible.xcconfig"; sourceTree = "<absolute>"; };
 		5C78EE6B115D02EE00151A76 /* Development.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Development.xcconfig; path = "/Library/Application Support/MWorks/Developer/Xcode/Development.xcconfig"; sourceTree = "<absolute>"; };
 		5C78EE6C115D02EE00151A76 /* WARNING.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = WARNING.txt; path = "/Library/Application Support/MWorks/Developer/Xcode/WARNING.txt"; sourceTree = "<absolute>"; };
 		5C79964D115E244500504D50 /* fftw3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fftw3.h; sourceTree = "<group>"; };
@@ -203,7 +202,6 @@
 		5C78EE69115D02C700151A76 /* External Config */ = {
 			isa = PBXGroup;
 			children = (
-				5C78EE6A115D02EE00151A76 /* Development_10.5_compatible.xcconfig */,
 				5C78EE6B115D02EE00151A76 /* Development.xcconfig */,
 				5C78EE6C115D02EE00151A76 /* WARNING.txt */,
 			);
@@ -537,7 +535,6 @@
 		};
 		5CFCAB1A11060926007CE55F /* Development (10.5 Compatible) */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5C78EE6A115D02EE00151A76 /* Development_10.5_compatible.xcconfig */;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = "$(MW_INCLUDE_DIR)";
 				LIBRARY_SEARCH_PATHS = "$(MW_LIB_DIR)/**";

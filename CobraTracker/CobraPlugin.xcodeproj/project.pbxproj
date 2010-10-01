@@ -49,7 +49,6 @@
 		5C4B0A640DC79212001BC518 /* Phidget21.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Phidget21.framework; path = /Library/Frameworks/Phidget21.framework; sourceTree = "<absolute>"; };
 		5C4B0ADC0DC793E2001BC518 /* CobraPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CobraPlugin.h; sourceTree = "<group>"; };
 		5C4B0ADD0DC793E2001BC518 /* CobraPlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CobraPlugin.cpp; sourceTree = "<group>"; };
-		5C78E8D61159409200151A76 /* Development_10.5_compatible.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Development_10.5_compatible.xcconfig; path = "/Library/Application Support/MWorks/Developer/Xcode/Development_10.5_compatible.xcconfig"; sourceTree = "<absolute>"; };
 		5C78E8D71159409200151A76 /* Development.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Development.xcconfig; path = "/Library/Application Support/MWorks/Developer/Xcode/Development.xcconfig"; sourceTree = "<absolute>"; };
 		5C78E8D81159409200151A76 /* WARNING.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = WARNING.txt; path = "/Library/Application Support/MWorks/Developer/Xcode/WARNING.txt"; sourceTree = "<absolute>"; };
 		5C7A88030F816542007B4724 /* MWLibrary.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = MWLibrary.xml; sourceTree = "<group>"; };
@@ -154,7 +153,6 @@
 		5C78E8CB1159407D00151A76 /* External Config */ = {
 			isa = PBXGroup;
 			children = (
-				5C78E8D61159409200151A76 /* Development_10.5_compatible.xcconfig */,
 				5C78E8D71159409200151A76 /* Development.xcconfig */,
 				5C78E8D81159409200151A76 /* WARNING.txt */,
 			);
@@ -346,7 +344,6 @@
 		};
 		5C72413C1096132D004887A5 /* Development (10.5 Compatible) */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5C78E8D61159409200151A76 /* Development_10.5_compatible.xcconfig */;
 			buildSettings = {
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				GCC_PREFIX_HEADER = CobraPlugin_Prefix.pch;
