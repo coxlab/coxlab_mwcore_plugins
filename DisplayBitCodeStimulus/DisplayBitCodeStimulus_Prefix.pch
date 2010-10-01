@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'DisplayBitCodeStimulus' target in the 'DisplayBitCodeStimulus' project.
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
