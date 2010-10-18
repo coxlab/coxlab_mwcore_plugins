@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<monkeyml version="1.0">
+    <io_devices _id="id38800855" tag="IO Devices">
+        <iodevice _id="_id1" type="cnc" tag="CNC" device_name="cnc" executable_path="/Applications/cncController.app/Contents/MacOS/cncController">
+            <iochannel _id="id38805137" type="cnc" tag="Path Origin X" variable="path_origin_x" capability="path_origin_x"></iochannel>
+            <iochannel _id="id38805148" type="cnc" tag="Path Origin Y" variable="path_origin_y" capability="path_origin_y"></iochannel>
+            <iochannel _id="id38805159" type="cnc" tag="Path Origin Z" variable="path_origin_z" capability="path_origin_z"></iochannel>
+            <iochannel _id="id38805170" type="cnc" tag="Path Slope X" variable="path_slope_x" capability="path_slope_x"></iochannel>
+            <iochannel _id="id38805181" type="cnc" tag="Path Slope Y" variable="path_slope_y" capability="path_slope_y"></iochannel>
+            <iochannel _id="id38805192" type="cnc" tag="Path Slope Z" variable="path_slope_z" capability="path_slope_z"></iochannel>
+            <iochannel _id="id38805203" type="cnc" tag="Location of Tip on Path" variable="path_depth" capability="path_depth"></iochannel>
+        </iodevice>
+    </io_devices>
+    <variables _id="id38800856" tag="Variables">
+        <variable _id="_id9" tag="path_origin_x" scope="global" logging="when_changed" default_value="0" type="float"></variable>
+        <variable _id="_id10" tag="path_origin_y" scope="global" logging="when_changed" default_value="0" type="float"></variable>
+        <variable _id="_id11" tag="path_origin_z" scope="global" logging="when_changed" default_value="0" type="float"></variable>
+        <variable _id="_id12" tag="path_slope_x" scope="global" logging="when_changed" default_value="0" type="float"></variable>
+        <variable _id="_id13" tag="path_slope_y" scope="global" logging="when_changed" default_value="0" type="float"></variable>
+        <variable _id="_id14" tag="path_slope_z" scope="global" logging="when_changed" default_value="0" type="float"></variable>
+        <variable _id="_id15" tag="path_depth" scope="global" logging="when_changed" default_value="0" type="float"></variable>
+    </variables>
+    <sounds _id="id38800857" tag="Sounds"></sounds>
+    <stimuli _id="id38800867" tag="Stimuli">
+        <stimulus _id="id38800868" tag="background" full_name="background" type="blank_screen" color="0, 0, 0"></stimulus>
+    </stimuli>
+    <filters _id="id38800877" tag="Filters"></filters>
+    <optimizers _id="id38800879" tag="Optimizers"></optimizers>
+    <experiment _id="id38800880" tag="New Experiment" full_name="" description="">
+        <protocol _id="id38800887" tag="New Protocol" nsamples="1" sampling_method="cycles" selection="sequential">
+            <action _id="_id17" tag="Start CNC" type="start_device_IO" device="CNC"></action>
+            <block _id="_id3" tag="New Block" nsamples="1000" sampling_method="cycles" selection="sequential">
+                <trial _id="_id5" tag="New Trial" nsamples="1" sampling_method="cycles" selection="sequential">
+                    <action _id="_id7" type="wait" tag="Wait" duration="1.0" duration_units="s"></action>
+                </trial>
+            </block>
+            <action _id="_id19" tag="Stop CNC" type="stop_device_IO" device="CNC"></action>
+        </protocol>
+    </experiment>
+</monkeyml>
