@@ -1,0 +1,25 @@
+<MWElements>
+  <MWElement name="CNC">
+    <!-- XPath 2.0 expression defining nodes of this type -->
+    <match_signature>iodevice[@type="cnc"]</match_signature>
+    
+    <isa>IODevice</isa>
+    
+    <description>
+      A plugin to communicate with a CNC running on the same system as the MW Server.
+    </description>
+    
+    <!-- Payload -->
+    <code>
+      <iodevice  type="cnc" tag="CNC" device_name="cnc" executable_path="/Applications/cncController.app/Contents/MacOS/cncController">
+        <iochannel type="cnc" tag="Path Origin X" variable="path_origin_x" capability="path_origin_x"/>
+        <iochannel type="cnc" tag="Path Origin Y" variable="path_origin_y" capability="path_origin_y"/>
+        <iochannel type="cnc" tag="Path Origin Z" variable="path_origin_z" capability="path_origin_z"/>
+        <iochannel type="cnc" tag="Path Slope X" variable="path_slope_x" capability="path_slope_x"/>
+        <iochannel type="cnc" tag="Path Slope Y" variable="path_slope_y" capability="path_slope_y"/>
+        <iochannel type="cnc" tag="Path Slope Z" variable="path_slope_z" capability="path_slope_z"/>
+        <iochannel type="cnc" tag="Location of Tip on Path" variable="path_depth" capability="path_depth"/>
+      </iodevice>
+    </code>
+  </MWElement>
+</MWElements>
