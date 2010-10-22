@@ -24,6 +24,7 @@
                 frames_per_second="15"
                 statistics_reporting=""
                 rng_count=""
+                load_announce_variable=""
                 error_reporting=""
                 x_position="0.0"
                 y_position="0.0"

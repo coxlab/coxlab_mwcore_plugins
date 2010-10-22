@@ -16,16 +16,11 @@ using namespace mw;
 
 shared_ptr<mw::Component> DynamicNoiseStimulusFactory::createObject(std::map<std::string, std::string> parameters,
                                                                mw::ComponentRegistry *reg) {
-	REQUIRE_ATTRIBUTES(parameters, 
-					   "tag",
-                       "power_spectrum_type",
-                       "frames_per_second",
-                       "frames_per_sequence");
 	
 	std::string tagname(parameters["tag"]);
 
     // what kind of noise to produce
-    std::string power_spectrum_type_string(parameters["power_spectrum_type"]);
+    std::string power_spectrum_type_string = reg->getValueForAttribute("power_spectrum_type", parameters);
     DynamicNoiseStimulus::power_spectrum_type power_spectrum = DynamicNoiseStimulus::white; 
     if(power_spectrum_type_string == "white"){
         power_spectrum = DynamicNoiseStimulus::white; 
@@ -36,35 +31,35 @@ shared_ptr<mw::Component> DynamicNoiseStimulusFactory::createObject(std::map<std
     }
     
     // how fast should the frames go by
-	shared_ptr<Variable> frames_per_second = reg->getVariable(parameters["frames_per_second"]);
+	shared_ptr<Variable> frames_per_second = reg->getVariableForAttribute("frames_per_second", parameters);
 
     // what is the maximum number of frames that will be presented at a go
     // This number is fixed at parse time so that the frames can be preallocated
-    int frames_per_sequence = reg->getNumber(parameters["frames_per_sequence"]);
+    int frames_per_sequence = reg->getNumberForAttribute("frames_per_sequence", parameters);
     
-    int pixel_width = (int)(reg->getNumber(parameters["pixel_width"]));
-    int pixel_height = (int)(reg->getNumber(parameters["pixel_height"]));
+    int pixel_width = (int)(reg->getNumberForAttribute("pixel_width", parameters));
+    int pixel_height = (int)(reg->getNumberForAttribute("pixel_height", parameters));
     
-    shared_ptr<Variable> random_seed = reg->getVariable(parameters["random_seed"]);
-    shared_ptr<Variable> rng_count = reg->getVariable(parameters["rng_count"]);
+    shared_ptr<Variable> random_seed = reg->getVariableForAttribute("random_seed", parameters);
+    shared_ptr<Variable> rng_count = reg->getVariableForAttribute("rng_count", parameters);
     
-    shared_ptr<Variable> x_size = reg->getVariable(parameters["x_size"]);	
-	shared_ptr<Variable> y_size = reg->getVariable(parameters["y_size"]);	
-	shared_ptr<Variable> x_position = reg->getVariable(parameters["x_position"]);	
-	shared_ptr<Variable> y_position = reg->getVariable(parameters["y_position"]);	
-	shared_ptr<Variable> rotation = reg->getVariable(parameters["rotation"]);	
+    shared_ptr<Variable> x_size = reg->getVariableForAttribute("x_size", parameters);	
+	shared_ptr<Variable> y_size = reg->getVariableForAttribute("y_size", parameters);	
+	shared_ptr<Variable> x_position = reg->getVariableForAttribute("x_position", parameters);	
+	shared_ptr<Variable> y_position = reg->getVariableForAttribute("y_position", parameters);	
+	shared_ptr<Variable> rotation = reg->getVariableForAttribute("rotation", parameters);	
 	
-    shared_ptr<Variable> spatial_lowpass_cutoff = reg->getVariable(parameters["spatial_lowpass_cutoff"], "100.");
-    shared_ptr<Variable> spatial_highpass_cutoff = reg->getVariable(parameters["spatial_highpass_cutoff"], ".1");
-    shared_ptr<Variable> temporal_lowpass_cutoff = reg->getVariable(parameters["temporal_lowpass_cutoff"], "100.");
-    shared_ptr<Variable> temporal_highpass_cutoff = reg->getVariable(parameters["temporal_highpass_cutoff"], ".1");
+    shared_ptr<Variable> spatial_lowpass_cutoff = reg->getVariableForAttribute("spatial_lowpass_cutoff", parameters, "100.");
+    shared_ptr<Variable> spatial_highpass_cutoff = reg->getVariableForAttribute("spatial_highpass_cutoff", parameters, ".1");
+    shared_ptr<Variable> temporal_lowpass_cutoff = reg->getVariableForAttribute("temporal_lowpass_cutoff", parameters, "100.");
+    shared_ptr<Variable> temporal_highpass_cutoff = reg->getVariableForAttribute("temporal_highpass_cutoff", parameters, ".1");
     
     //shared_ptr<Variable> load_announce = reg->getVariable(ANNOUNCE_STIMULUS_LOAD_TAGNAME);
-    shared_ptr<Variable> load_announce = reg->getVariable(parameters["load_announce_variable"]);
+    shared_ptr<Variable> load_announce = reg->getVariableForAttribute("load_announce_variable", parameters);
 
     
 	shared_ptr<Variable> alpha_multiplier = 
-    reg->getVariable(parameters["alpha_multiplier"], std::string("1.0"));	
+        reg->getVariableForAttribute("alpha_multiplier", parameters, std::string("1.0"));	
 	
     
     if(GlobalCurrentExperiment == 0) {
@@ -80,8 +75,6 @@ shared_ptr<mw::Component> DynamicNoiseStimulusFactory::createObject(std::map<std
 	if(scheduler == 0) {
 		throw SimpleException("no scheduler registered");		
 	}
-    
-    
     
     shared_ptr<Stimulus> new_stimulus(new DynamicNoiseStimulus(tagname, 
                                                                power_spectrum, 
