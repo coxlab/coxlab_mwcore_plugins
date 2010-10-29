@@ -1,0 +1,28 @@
+<MWElements>
+  <MWElement name="Phidgets IO">
+    <!-- XPath 2.0 expression defining nodes of this type -->
+    <!-- -->
+    <match_signature>iodevice[@type="phidget"]</match_signature>
+    
+    <!-- Which super-types does the object belong to -->
+    <isa>IODevice</isa>
+    
+    <description>
+      A basic driver for Phidgets (www.phidgets.com) DAQ devices. 
+    </description>
+    
+    <!-- Payload -->
+    <!-- This XML gets inserted when you drop this object into the project -->
+    <code>
+      <iodevice type="phidget" 
+                tag="My Phidget">
+            <iochannel type="phidget"
+                       tag="channel 1"
+                       variable=""
+                       index="0"
+                       capability="analog_input"/>
+       </iodevice>
+      
+    </code>
+  </MWElement>
+</MWElements>

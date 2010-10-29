@@ -151,6 +151,8 @@ protected:
     void loadDataToGLTexture(float *data, int width, int height, vector<GLuint> texture);
     void preallocateTextures();
     
+    int last_frame_drawn;
+    
 public:
 	
         
@@ -182,6 +184,14 @@ public:
     virtual void load(shared_ptr<StimulusDisplay> _display);
     virtual void drawInUnitSquare(shared_ptr<StimulusDisplay> _display);
     
+    
+    virtual void didStop() {
+        last_frame_drawn = -1;
+    }
+    
+    virtual bool needDraw() {
+        return started && (last_frame_drawn != getFrameNumber());
+    }
     
     virtual Datum getCurrentAnnounceDrawData();
     

@@ -425,7 +425,7 @@
 					"\"$(SRCROOT)/fftw/lib\"",
 				);
 				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "-lfftw3f";
+				OTHER_LDFLAGS = "$(SRCROOT)/fftw/lib/libfftw3.a";
 				PRODUCT_NAME = DynamicNoiseStimulus;
 				WRAPPER_EXTENSION = bundle;
 			};

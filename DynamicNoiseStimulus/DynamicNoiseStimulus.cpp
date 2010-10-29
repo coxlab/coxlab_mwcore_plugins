@@ -46,7 +46,8 @@ DynamicNoiseStimulus::DynamicNoiseStimulus(std::string _tag,
                                                _xscale,
                                                _yscale,
                                                _rot,
-                                               _alpha)
+                                               _alpha),
+                        last_frame_drawn(-1)
                         {
     
     display = _stimulus_display;
@@ -113,6 +114,7 @@ DynamicNoiseStimulus::~DynamicNoiseStimulus(){
 }
 
 
+
 void DynamicNoiseStimulus::load(shared_ptr<StimulusDisplay> _display){
     
     
@@ -166,7 +168,7 @@ void DynamicNoiseStimulus::drawInUnitSquare(shared_ptr<StimulusDisplay> display)
     
     int frame_number = getFrameNumber();
     
-    if(frame_number >= frames_per_sequence){
+    if(frame_number < 0 || frame_number >= frames_per_sequence){
         return;
     }
     
@@ -260,6 +262,7 @@ void DynamicNoiseStimulus::drawInUnitSquare(shared_ptr<StimulusDisplay> display)
                  "%s:%d", __FILE__, __LINE__);
     }
     
+    last_frame_drawn = frame_number;
 }
 
 void DynamicNoiseGenerator::preallocateStorage(){

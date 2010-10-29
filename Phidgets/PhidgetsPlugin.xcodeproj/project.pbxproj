@@ -32,6 +32,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		5C32C9B6127B64C5008913F7 /* MWLibrary.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5C32C9B5127B64C5008913F7 /* MWLibrary.xml */; };
 		5C4B0A610DC791D4001BC518 /* Phidgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5C4B0A5E0DC791D4001BC518 /* Phidgets.cpp */; };
 		5C4B0A650DC79212001BC518 /* MWorksCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C4B0A630DC79212001BC518 /* MWorksCore.framework */; };
 		5C4B0A660DC79212001BC518 /* Phidget21.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C4B0A640DC79212001BC518 /* Phidget21.framework */; };
@@ -63,13 +64,13 @@
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF630370AF2F00C91783 /* PhidgetsPlugin_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhidgetsPlugin_Prefix.pch; sourceTree = "<group>"; };
+		5C32C9B5127B64C5008913F7 /* MWLibrary.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = MWLibrary.xml; sourceTree = "<group>"; };
 		5C4B0A5E0DC791D4001BC518 /* Phidgets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Phidgets.cpp; sourceTree = "<group>"; };
 		5C4B0A5F0DC791D4001BC518 /* Phidgets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Phidgets.h; sourceTree = "<group>"; };
 		5C4B0A630DC79212001BC518 /* MWorksCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MWorksCore.framework; path = /Library/Frameworks/MWorksCore.framework; sourceTree = "<absolute>"; };
 		5C4B0A640DC79212001BC518 /* Phidget21.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Phidget21.framework; path = /Library/Frameworks/Phidget21.framework; sourceTree = "<absolute>"; };
 		5C4B0ADC0DC793E2001BC518 /* PhidgetsPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhidgetsPlugin.h; sourceTree = "<group>"; };
 		5C4B0ADD0DC793E2001BC518 /* PhidgetsPlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PhidgetsPlugin.cpp; sourceTree = "<group>"; };
-		5C78E9211159430900151A76 /* Development_10.5_compatible.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Development_10.5_compatible.xcconfig; path = "/Library/Application Support/MWorks/Developer/Xcode/Development_10.5_compatible.xcconfig"; sourceTree = "<absolute>"; };
 		5C78E9221159430900151A76 /* Development.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Development.xcconfig; path = "/Library/Application Support/MWorks/Developer/Xcode/Development.xcconfig"; sourceTree = "<absolute>"; };
 		5C78E9231159430900151A76 /* WARNING.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = WARNING.txt; path = "/Library/Application Support/MWorks/Developer/Xcode/WARNING.txt"; sourceTree = "<absolute>"; };
 		8D5B49B6048680CD000E48DA /* PhidgetsPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhidgetsPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -118,6 +119,7 @@
 			children = (
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
+				5C32C9B5127B64C5008913F7 /* MWLibrary.xml */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -172,7 +174,6 @@
 		5C78E91C115942F600151A76 /* External Config */ = {
 			isa = PBXGroup;
 			children = (
-				5C78E9211159430900151A76 /* Development_10.5_compatible.xcconfig */,
 				5C78E9221159430900151A76 /* Development.xcconfig */,
 				5C78E9231159430900151A76 /* WARNING.txt */,
 			);
@@ -209,7 +210,14 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "PhidgetsPlugin" */;
 			compatibilityVersion = "Xcode 3.0";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 089C166AFE841209C02AAC07 /* CoxlabCorePlugins */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -227,6 +235,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
+				5C32C9B6127B64C5008913F7 /* MWLibrary.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,7 +382,6 @@
 		};
 		5C518CCE108670D50004DBC0 /* Development (10.5 Compatible) */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5C78E9211159430900151A76 /* Development_10.5_compatible.xcconfig */;
 			buildSettings = {
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
