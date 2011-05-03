@@ -19,7 +19,7 @@
                 code="" n_markers="4" separation_ratio="1.0"
                 bg_luminance="0.0" fg_luminance="1.0"
                 x_position="0.0" y_position="0.0"
-                x_scale="9.0"  y_scale = "1.0" rotation="0.0"
+                x_size="9.0"  y_size = "1.0" rotation="0.0"
                 alpha_multiplier="1.0"/>
       <!-- <action type="my_mw_component" tag="My MW Action" />
         ... you get the idea ...

@@ -8,8 +8,10 @@
  */
 
 #include "DisplayBitCodeStimulusPlugin.h"
-#include "DisplayBitCodeStimulusFactory.h"
+//#include "DisplayBitCodeStimulusFactory.h"
 #include "MWorksCore/ComponentFactory.h"
+#include "MWorksCore/StandardStimulusFactory.h"
+#include "DisplayBitCodeStimulus.h"
 
 
 Plugin *getPlugin(){
@@ -21,10 +23,7 @@ namespace mw{
     
 void DisplayBitCodeStimulusPlugin::registerComponents(shared_ptr<mw::ComponentRegistry> registry) {
 	
-    // TODO: you need to customize the "signature" of the object your plugin will create
-    //       The signature is of the form component/type Ð(e.g. stimulus/circle, or iodevice/NIDAQ)
-    registry->registerFactory(std::string("stimulus/display_bit_code"),
-							  (ComponentFactory *)(new DisplayBitCodeStimulusFactory()));
+    registry->registerFactory<StandardStimulusFactory, DisplayBitCodeStimulus>();
 }
     
 }

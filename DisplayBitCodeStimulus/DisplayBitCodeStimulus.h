@@ -13,6 +13,8 @@
 #include <MWorksCore/Plugin.h>
 #include <MWorksCore/StandardStimuli.h>
 #include <boost/random.hpp>
+#include "MWorksCore/ComponentInfo.h"
+#include "MworksCore/ParameterValue.h"
 
 
 namespace mw{
@@ -39,19 +41,19 @@ protected:
     
 
 public:
-	DisplayBitCodeStimulus(std::string _tag, shared_ptr<Variable> _code,
-                           shared_ptr<Variable> _n_markers, 
-                           shared_ptr<Variable> _separation,
-                           shared_ptr<Variable> _bg_luminance,
-                           shared_ptr<Variable> _fg_luminance,
-                           shared_ptr<Variable> _xoffset, 
-                           shared_ptr<Variable> _yoffset,
-                           shared_ptr<Variable> _xscale, 
-                           shared_ptr<Variable> _yscale, 
-                           shared_ptr<Variable> _rot,
-                           shared_ptr<Variable> _alpha);
+
     
-	//DisplayBitCodeStimulus(const DisplayBitCodeStimulus &tocopy);
+    DisplayBitCodeStimulus(const ParameterValueMap &parameters);
+    
+    static void describeComponent(ComponentInfo& info);
+
+    static const std::string CODE_VARIABLE;
+    static const std::string N_MARKERS;
+    static const std::string SEPARATION;
+    static const std::string BG_LUMINANCE;
+    static const std::string FG_LUMINANCE;
+
+
 	~DisplayBitCodeStimulus();
 
     virtual void drawInUnitSquare(shared_ptr<StimulusDisplay> display);

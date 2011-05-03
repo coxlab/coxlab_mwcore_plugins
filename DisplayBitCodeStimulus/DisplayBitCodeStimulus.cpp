@@ -11,37 +11,37 @@
 
 namespace mw{
 
-DisplayBitCodeStimulus::DisplayBitCodeStimulus(std::string _tag, shared_ptr<Variable> _code,
-                                               shared_ptr<Variable> _n_markers, 
-                                               shared_ptr<Variable> _separation,
-                                               shared_ptr<Variable> _bg_luminance,
-                                               shared_ptr<Variable> _fg_luminance,
-                                               shared_ptr<Variable> _x, 
-                                               shared_ptr<Variable> _y,
-                                               shared_ptr<Variable> _xsc, 
-                                               shared_ptr<Variable> _ysc, 
-                                               shared_ptr<Variable> _rot,
-                                               shared_ptr<Variable> _alph):
-                                               BasicTransformStimulus(_tag,_x,_y,_xsc,_ysc,_rot,_alph),
-                                               generator(42u),
-                                               uni_dist(1, 1 << (int)(_n_markers->getValue())),
-                                               random_generator(generator, uni_dist)
-{
-    
-    // no need register any variables for freezing
-    code_variable = _code;
-    n_markers_variable = _n_markers;
-    separation_ratio_variable = _separation;
-    bg_luminance_variable = _bg_luminance;
-    fg_luminance_variable = _fg_luminance;
-    
-    
 
+DisplayBitCodeStimulus::DisplayBitCodeStimulus(const ParameterValueMap &p) :
+    BasicTransformStimulus(p),
+    code_variable(p[CODE_VARIABLE]),
+    n_markers_variable(p[N_MARKERS]),
+    separation_ratio_variable(p[SEPARATION]),
+    bg_luminance_variable(p[BG_LUMINANCE]),
+    fg_luminance_variable(p[FG_LUMINANCE]),
+    generator(42u),
+    uni_dist(1, 1 << (int)(n_markers_variable->getValue())),
+    random_generator(generator, uni_dist)
+{ }
+    
+void DisplayBitCodeStimulus::describeComponent(ComponentInfo& info){
+    BasicTransformStimulus::describeComponent(info);
+    info.setSignature("stimulus/display_bit_code");
+    info.addParameter(CODE_VARIABLE);
+    info.addParameter(N_MARKERS);
+    info.addParameter(SEPARATION);
+    info.addParameter(BG_LUMINANCE);
+    info.addParameter(FG_LUMINANCE);
 }
 
+const std::string DisplayBitCodeStimulus::CODE_VARIABLE("code");
+const std::string DisplayBitCodeStimulus::N_MARKERS("n_markers");
+const std::string DisplayBitCodeStimulus::SEPARATION("separation_ratio");
+const std::string DisplayBitCodeStimulus::BG_LUMINANCE("bg_luminance");
+const std::string DisplayBitCodeStimulus::FG_LUMINANCE("fg_luminance");
 
-//DisplayBitCodeStimulus::DisplayBitCodeStimulus(const DisplayBitCodeStimulus &tocopy):
-//                                    BasicTransformStimulus(tocopy){ }
+
+
 DisplayBitCodeStimulus::~DisplayBitCodeStimulus(){ }
 
 
@@ -65,13 +65,15 @@ void DisplayBitCodeStimulus::drawInUnitSquare(shared_ptr<StimulusDisplay> displa
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_ADD);
     
+    GLfloat z = 0.0;
+    
     // draw background
     glBegin(GL_QUADS);
     glColor4f(bg_lum, bg_lum, bg_lum, *alpha_multiplier);
-    glVertex3f(0.0,0.0,0.0);
-    glVertex3f(1.0,0.0,0.0);
-    glVertex3f(1.0,1.0,0.0);
-    glVertex3f(0.0,1.0,0.0);
+    glVertex3f(0.0,0.0,z);
+    glVertex3f(1.0,0.0,z);
+    glVertex3f(1.0,1.0,z);
+    glVertex3f(0.0,1.0,z);
     glEnd();
     
     // generate a unique code
@@ -93,10 +95,10 @@ void DisplayBitCodeStimulus::drawInUnitSquare(shared_ptr<StimulusDisplay> displa
             
             glBegin(GL_QUADS);
             glColor4f(fg_lum, fg_lum, fg_lum, *alpha_multiplier);
-            glVertex3f(x,sep_height,0.0);
-            glVertex3f(x+marker_width,sep_height,0.0);
-            glVertex3f(x+marker_width,sep_height+marker_height,0.0);
-            glVertex3f(x,sep_height+marker_height,0.0);
+            glVertex3f(x,sep_height,z);
+            glVertex3f(x+marker_width,sep_height,z);
+            glVertex3f(x+marker_width,sep_height+marker_height,z);
+            glVertex3f(x,sep_height+marker_height,z);
             glEnd();
         }
     }
