@@ -1,7 +1,8 @@
 //
-// Prefix header for all source files of the 'DisplayBitCodeStimulus' target in the 'DisplayBitCodeStimulus' project.
+// Prefix header for all source files of the 'MouseViewIODevice' target in the 'MouseViewIODevice' project.
 //
 
 #ifdef __OBJC__
+    #import <MWorksCore/glew.h>
     #import <Cocoa/Cocoa.h>
 #endif

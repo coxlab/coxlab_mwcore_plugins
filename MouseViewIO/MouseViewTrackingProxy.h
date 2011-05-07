@@ -7,10 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <boost/shared_ptr.hpp>
 
+namespace mw{
+    class MouseViewIODevice; // foward decl.
+}
 
 @interface MouseViewTrackingProxy : NSObject {
 @private
+
+   mw::MouseViewIODevice *device;
+   id event_monitor;
     
 }
 

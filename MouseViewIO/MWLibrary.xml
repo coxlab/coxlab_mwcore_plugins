@@ -1,26 +1,23 @@
 <MWElements>
-  <MWElement name="Display Bit Code Stimulus">
+  <MWElement name="Stimulus Display Mouse Control">
     <!-- XPath 2.0 expression defining nodes of this type -->
     <!-- -->
-    <match_signature>stimulus[@type="display_bit_code"]</match_signature>
+    <match_signature>iodevice[@type="display_mouse_control"]</match_signature>
     
     <!-- Which super-types does the object belong to -->
-    <isa>Stimulus</isa>
+    <isa>IODevice</isa>
     
     <description>
-      A stimulus object that generates a new random pattern of light squares to
-      be detected by a photodiode array to assist with timing synchronization
+      An IODevice object that alters variable values based on where the mouse is
+      over the stimulus display
     </description>
     
     <!-- Payload -->
     <!-- This XML gets inserted when you drop this object into the project -->
     <code>
-      <stimulus type="display_bit_code" tag="My Display Bit Code Stimulus"
-                code="" n_markers="4" separation_ratio="1.0"
-                bg_luminance="0.0" fg_luminance="1.0"
-                x_position="0.0" y_position="0.0"
-                x_size="9.0"  y_size = "1.0" rotation="0.0"
-                alpha_multiplier="1.0"/>
+      <iodevice type="display_mouse_control" tag="My Stimulus Display Mouse Control"
+                x="" y="" wheel="" wheel_scale="" wheel_min="" 
+                wheel_max="" counter="", counter_min="0" counter_max="1"/>
       <!-- <action type="my_mw_component" tag="My MW Action" />
         ... you get the idea ...
         ...

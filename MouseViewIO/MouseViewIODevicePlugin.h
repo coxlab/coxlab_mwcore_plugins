@@ -9,6 +9,7 @@
 #ifndef MouseViewIODevice_PLUGIN_H_
 #define MouseViewIODevice_PLUGIN_H_
 
+
 #include <MWorksCore/Plugin.h>
 using namespace mw;
 

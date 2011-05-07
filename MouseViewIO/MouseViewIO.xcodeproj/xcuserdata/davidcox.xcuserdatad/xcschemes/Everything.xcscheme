@@ -37,6 +37,9 @@
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Development">
+      <PathRunnable
+         FilePath = "/Volumes/Storage/Applications/MWServer.app">
+      </PathRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
