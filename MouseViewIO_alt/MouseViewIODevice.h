@@ -10,18 +10,17 @@
 #ifndef MouseViewIODevice_H_
 #define MouseViewIODevice_H_
 
-#include <MWorksCore/Plugin.h>
+#import "MouseViewIODevice_definitions.h"
+#include <MWorksCore/ComponentInfo.h>
+#include <MworksCore/ParameterValue.h>
+
+
 #include <MWorksCore/StandardStimuli.h>
-#include <boost/random.hpp>
-#include "MWorksCore/ComponentInfo.h"
-#include "MworksCore/ParameterValue.h"
 #include <MWorksCore/IODevice.h>
 #include <MWorksCore/OpenGLContextManager.h>
 
-#include <boost/enable_shared_from_this.hpp>
 
 #import "MouseViewTrackingProxy.h"
-
 #include <iostream>
 
 namespace mw{
@@ -48,15 +47,6 @@ protected:
 
 public:
 
-    static const std::string X_VARIABLE;
-    static const std::string Y_VARIABLE;
-    static const std::string WHEEL_VARIABLE;
-    static const std::string WHEEL_SCALE_VARIABLE;
-    static const std::string COUNTER_VARIABLE;
-    static const std::string COUNTER_MIN_VARIABLE;
-    static const std::string COUNTER_MAX_VARIABLE;
-    static const std::string WHEEL_MIN_VARIABLE;
-    static const std::string WHEEL_MAX_VARIABLE;
     
     MouseViewIODevice(const ParameterValueMap &parameters);
     

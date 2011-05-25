@@ -1,0 +1,35 @@
+<!-- THIS IS AN AUTO-GENERATED FILE: DO NOT EDIT IT DIRECTLY  -->
+<!-- The content of this file is pulled from the project YAML description -->
+<!-- see mw_idl.yml for details -->
+
+<MWElements>
+  <MWElement name="Display Mouse Control">
+    <!-- XPath 2.0 expression defining nodes of this type -->
+    <!-- -->
+    <match_signature>iodevice[@type="display_mouse_control"]</match_signature>
+    
+    <!-- Which super-types does the object belong to -->
+    <isa>IODevice</isa>
+    
+    <description>
+      A blah blah blah
+    </description>
+    
+    <!-- Payload -->
+    <!-- This XML gets inserted when you drop this object into the project -->
+    <code>
+      <iodevice type="display_mouse_control" 
+                tag="My Display Mouse Control"
+                x = "0.0"
+                y = "0.0"
+                wheel = "0.0"
+                wheel_scale = "0.0"
+                wheel_min = "0.0"
+                wheel_max = "0.0"
+                counter = "0"
+                counter_min = "0"
+                counter_max = "0"
+                />
+    </code>
+  </MWElement>
+</MWElements>

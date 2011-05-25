@@ -1,0 +1,48 @@
+---
+name:           Display Mouse Control
+object_name:    MouseViewIODevice
+parent_class:   IODevice
+
+description:    A blah blah blah
+signature:      iodevice/display_mouse_control
+
+parameters:
+  
+  - name:     x
+    default:  0.0
+    required: 1
+    
+  - name:     y
+    default:  0.0
+    required: 1
+
+  - name:     wheel
+    default:  0.0
+    required: 1
+
+  - name:     wheel_scale
+    default:  0.0
+    required: 1
+
+  - name:     wheel_min
+    default:  0.0
+    required: 1
+
+  - name:     wheel_max
+    default:  0.0
+    required: 1
+
+  - name:     counter
+    default:  0
+    required: 1
+  
+  - name:     counter_min
+    default:  0
+    required: 0
+
+  - name:     counter_max
+    default:  0
+    required: 0
+
+
+      
