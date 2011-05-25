@@ -113,10 +113,10 @@ Datum DisplayBitCodeStimulus::getCurrentAnnounceDrawData() {
     
     //mprintf("getting announce DRAW data for point stimulus %s",tag );
     
-    Datum announceData(M_DICTIONARY, 11);
+    Datum announceData(M_DICTIONARY, 2);
     announceData.addElement(STIM_NAME,tag);        // char
     announceData.addElement("bit_code",Datum((long)(*code_variable))); 
-    
+
     return (announceData);
 }
 
