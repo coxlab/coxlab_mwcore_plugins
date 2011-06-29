@@ -8,6 +8,7 @@
  */
 
 #include "DisplayBitCodeStimulus.h"
+#include <math.h>
 
 namespace mw{
 
@@ -20,7 +21,7 @@ DisplayBitCodeStimulus::DisplayBitCodeStimulus(const ParameterValueMap &p) :
     bg_luminance_variable(p[BG_LUMINANCE]),
     fg_luminance_variable(p[FG_LUMINANCE]),
     generator(42u),
-    uni_dist(1, 1 << (int)(n_markers_variable->getValue())),
+    uni_dist(0, (1 <<(int)(n_markers_variable->getValue()))-1),
     random_generator(generator, uni_dist)
 { }
     
@@ -76,14 +77,20 @@ void DisplayBitCodeStimulus::drawInUnitSquare(shared_ptr<StimulusDisplay> displa
     glVertex3f(0.0,1.0,z);
     glEnd();
     
-    // generate a unique code
-    int old_code = (int)(code_variable->getValue());
-    int new_code = old_code;
-    while(new_code == old_code){
-        new_code = random_generator();
+    
+    std::cerr << display->getCurrentContextIndex() << "!" << std::endl;
+    if(display->getCurrentContextIndex() == 0){
+        // generate a unique code
+        int old_code = (int)(code_variable->getValue());
+        int new_code = old_code;
+        while(new_code == old_code){
+            new_code = random_generator();
+        }
+        
+        code_variable->setValue(Datum((long)new_code));
     }
     
-    code_variable->setValue(Datum((long)new_code));
+    int current_code = (int)(code_variable->getValue());
     
     int counter = 0;
     for(double x = sep_width; x <= 1.0; x += marker_width+sep_width){
@@ -91,7 +98,7 @@ void DisplayBitCodeStimulus::drawInUnitSquare(shared_ptr<StimulusDisplay> displa
         int bitmask = 1 << counter;
         counter++;
         
-        if((new_code & bitmask) == bitmask){
+        if((current_code & bitmask) == bitmask){
             
             glBegin(GL_QUADS);
             glColor4f(fg_lum, fg_lum, fg_lum, *alpha_multiplier);

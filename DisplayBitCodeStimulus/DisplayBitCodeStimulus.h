@@ -35,8 +35,8 @@ protected:
     shared_ptr<Variable> bg_luminance_variable, fg_luminance_variable;
     
     boost::minstd_rand generator;
-    boost::uniform_real<> uni_dist;
-    boost::variate_generator< boost::minstd_rand, boost::uniform_real<> > random_generator;
+    boost::uniform_int<> uni_dist;
+    boost::variate_generator< boost::minstd_rand, boost::uniform_int<> > random_generator;
     
     
 
