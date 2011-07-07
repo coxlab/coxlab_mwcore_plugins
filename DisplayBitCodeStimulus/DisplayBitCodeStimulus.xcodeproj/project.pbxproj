@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
+		5CB3A1D013C5F59F0048F2FB /* Generate Protocol Buffers */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 5CB3A1D113C5F59F0048F2FB /* Build configuration list for PBXAggregateTarget "Generate Protocol Buffers" */;
+			buildPhases = (
+				5CB3A1D413C5F5B70048F2FB /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = "Generate Protocol Buffers";
+			productName = "Generate Protocol Buffers";
+		};
 		5CFCAB1E11060985007CE55F /* Everything */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 5CFCAB24110609AA007CE55F /* Build configuration list for PBXAggregateTarget "Everything" */;
@@ -21,6 +32,9 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		5CB3A1CC13C5F4A10048F2FB /* ClockSync.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5CB3A1CA13C5F4A10048F2FB /* ClockSync.cpp */; };
+		5CB3A1DA13C5F63D0048F2FB /* pixel_clock_info.proto in Resources */ = {isa = PBXBuildFile; fileRef = 5CB3A1D913C5F63D0048F2FB /* pixel_clock_info.proto */; };
+		5CB3A1DD13C5F6630048F2FB /* pixel_clock_info.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5CB3A1DB13C5F6630048F2FB /* pixel_clock_info.pb.cc */; };
 		5CF9AEBC0FD5795C00F405F6 /* DisplayBitCodeStimulusPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5CF9AEB90FD5795C00F405F6 /* DisplayBitCodeStimulusPlugin.cpp */; };
 		5CFCAB0A1105FB4C007CE55F /* MWLibrary.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5CFCAB091105FB4C007CE55F /* MWLibrary.xml */; };
 		5CFCAB0D1105FCF2007CE55F /* Development Notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5CFCAB0C1105FCF2007CE55F /* Development Notes.txt */; };
@@ -30,6 +44,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		5CB3A1D713C5F5D10048F2FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5CB3A1D013C5F59F0048F2FB;
+			remoteInfo = "Generate Protocol Buffers";
+		};
 		5CFCAB221106098C007CE55F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
@@ -43,6 +64,11 @@
 		32DBCF630370AF2F00C91783 /* DisplayBitCodeStimulus_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayBitCodeStimulus_Prefix.pch; sourceTree = "<group>"; };
 		5C78EE6B115D02EE00151A76 /* Development.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Development.xcconfig; path = "/Library/Application Support/MWorks/Developer/Xcode/Development.xcconfig"; sourceTree = "<absolute>"; };
 		5C78EE6C115D02EE00151A76 /* WARNING.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = WARNING.txt; path = "/Library/Application Support/MWorks/Developer/Xcode/WARNING.txt"; sourceTree = "<absolute>"; };
+		5CB3A1CA13C5F4A10048F2FB /* ClockSync.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClockSync.cpp; sourceTree = "<group>"; };
+		5CB3A1CB13C5F4A10048F2FB /* ClockSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClockSync.h; sourceTree = "<group>"; };
+		5CB3A1D913C5F63D0048F2FB /* pixel_clock_info.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pixel_clock_info.proto; sourceTree = "<group>"; };
+		5CB3A1DB13C5F6630048F2FB /* pixel_clock_info.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pixel_clock_info.pb.cc; sourceTree = "<group>"; };
+		5CB3A1DC13C5F6630048F2FB /* pixel_clock_info.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pixel_clock_info.pb.h; sourceTree = "<group>"; };
 		5CF9AEB90FD5795C00F405F6 /* DisplayBitCodeStimulusPlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DisplayBitCodeStimulusPlugin.cpp; sourceTree = SOURCE_ROOT; };
 		5CF9AEBA0FD5795C00F405F6 /* DisplayBitCodeStimulusPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayBitCodeStimulusPlugin.h; sourceTree = SOURCE_ROOT; };
 		5CFCAB091105FB4C007CE55F /* MWLibrary.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = MWLibrary.xml; sourceTree = "<group>"; };
@@ -72,6 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				5CFCAB0F11060747007CE55F /* INSTRUCTIONS.txt */,
+				5CB3A1CD13C5F54B0048F2FB /* Protocol Buffers */,
 				5C78EE69115D02C700151A76 /* External Config */,
 				08FB77AFFE84173DC02AAC07 /* Classes */,
 				5CFE591D0F571BF6000C7F30 /* Documentation */,
@@ -108,6 +135,8 @@
 				5CF9AEB90FD5795C00F405F6 /* DisplayBitCodeStimulusPlugin.cpp */,
 				5CFE59180F571B15000C7F30 /* DisplayBitCodeStimulus.h */,
 				5CFE59190F571B15000C7F30 /* DisplayBitCodeStimulus.cpp */,
+				5CB3A1CA13C5F4A10048F2FB /* ClockSync.cpp */,
+				5CB3A1CB13C5F4A10048F2FB /* ClockSync.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -152,6 +181,16 @@
 			name = "External Config";
 			sourceTree = "<group>";
 		};
+		5CB3A1CD13C5F54B0048F2FB /* Protocol Buffers */ = {
+			isa = PBXGroup;
+			children = (
+				5CB3A1DB13C5F6630048F2FB /* pixel_clock_info.pb.cc */,
+				5CB3A1DC13C5F6630048F2FB /* pixel_clock_info.pb.h */,
+				5CB3A1D913C5F63D0048F2FB /* pixel_clock_info.proto */,
+			);
+			name = "Protocol Buffers";
+			sourceTree = "<group>";
+		};
 		5CFE591C0F571BEB000C7F30 /* Editor Definitions */ = {
 			isa = PBXGroup;
 			children = (
@@ -184,6 +223,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				5CB3A1D813C5F5D10048F2FB /* PBXTargetDependency */,
 			);
 			name = DisplayBitCodeStimulus;
 			productInstallPath = "$(HOME)/Library/Bundles";
@@ -212,6 +252,7 @@
 			targets = (
 				8D5B49AC048680CD000E48DA /* DisplayBitCodeStimulus */,
 				5CFCAB1E11060985007CE55F /* Everything */,
+				5CB3A1D013C5F59F0048F2FB /* Generate Protocol Buffers */,
 			);
 		};
 /* End PBXProject section */
@@ -224,12 +265,26 @@
 				5CFCAB0A1105FB4C007CE55F /* MWLibrary.xml in Resources */,
 				5CFCAB0D1105FCF2007CE55F /* Development Notes.txt in Resources */,
 				5CFCAB26110609D2007CE55F /* UserDocumentation.rst in Resources */,
+				5CB3A1DA13C5F63D0048F2FB /* pixel_clock_info.proto in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		5CB3A1D413C5F5B70048F2FB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "# shell script goes here\necho ${SRCROOT}\nrm -f ${SRCROOT}/pixel_clock_info.pb.*\ncd ${SRCROOT}\n/usr/local/bin/protoc --proto_path=./ --cpp_out=./ pixel_clock_info.proto\nexit 0";
+		};
 		5CFCAB1D11060975007CE55F /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -252,12 +307,19 @@
 			files = (
 				5CFE591A0F571B15000C7F30 /* DisplayBitCodeStimulus.cpp in Sources */,
 				5CF9AEBC0FD5795C00F405F6 /* DisplayBitCodeStimulusPlugin.cpp in Sources */,
+				5CB3A1CC13C5F4A10048F2FB /* ClockSync.cpp in Sources */,
+				5CB3A1DD13C5F6630048F2FB /* pixel_clock_info.pb.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		5CB3A1D813C5F5D10048F2FB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5CB3A1D013C5F59F0048F2FB /* Generate Protocol Buffers */;
+			targetProxy = 5CB3A1D713C5F5D10048F2FB /* PBXContainerItemProxy */;
+		};
 		5CFCAB231106098C007CE55F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8D5B49AC048680CD000E48DA /* DisplayBitCodeStimulus */;
@@ -272,11 +334,21 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = DisplayBitCodeStimulus_Prefix.pch;
+				HEADER_SEARCH_PATHS = (
+					"$(MW_INCLUDE_DIR)",
+					/usr/local/include,
+				);
 				INFOPLIST_FILE = "DisplayBitCodeStimulus-Info.plist";
 				INSTALL_PATH = "$(PLUGINS_DIR)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(MW_LIB_DIR)",
+					/usr/local/lib,
+				);
 				OTHER_LDFLAGS = (
 					"-framework",
 					OpenGL,
+					"-lprotobuf",
+					"-lzmq",
 				);
 				PRODUCT_NAME = DisplayBitCodeStimulus;
 				WRAPPER_EXTENSION = bundle;
@@ -324,6 +396,20 @@
 			};
 			name = Release;
 		};
+		5CB3A1D213C5F59F0048F2FB /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Development;
+		};
+		5CB3A1D313C5F59F0048F2FB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		5CFCAB1F11060986007CE55F /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -365,6 +451,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		5CB3A1D113C5F59F0048F2FB /* Build configuration list for PBXAggregateTarget "Generate Protocol Buffers" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5CB3A1D213C5F59F0048F2FB /* Development */,
+				5CB3A1D313C5F59F0048F2FB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		5CFCAB24110609AA007CE55F /* Build configuration list for PBXAggregateTarget "Everything" */ = {
 			isa = XCConfigurationList;

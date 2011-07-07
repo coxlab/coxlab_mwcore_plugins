@@ -14,9 +14,19 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>Generate Protocol Buffers.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>5CB3A1D013C5F59F0048F2FB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>5CFCAB1E11060985007CE55F</key>
 		<dict>
 			<key>primary</key>

@@ -1,6 +1,6 @@
 // THIS IS AN AUTO-GENERATED FILE: DO NOT EDIT IT DIRECTLY
 // The content of this file is pulled from the project YAML description 
-// see mw_idl.yml for details
+// see plugin_definition.yml for details
 
 /*
  *  MouseViewIODevicePlugin.cpp
@@ -9,6 +9,7 @@
  *
  */
 
+#include "MouseViewIODevice.h"
 #include "MouseViewIODevice_plugin.h"
 #include "MWorksCore/ComponentFactory.h"
 #include "MWorksCore/StandardComponentFactory.h"
@@ -20,12 +21,10 @@ Plugin *getPlugin(){
 }
 
 
-namespace mw{
-    
-void MouseViewIODevicePlugin::registerComponents(shared_ptr<mw::ComponentRegistry> registry) {
+using namespace mw;
+
+void MouseViewIODevicePlugin::registerComponents(shared_ptr<ComponentRegistry> registry) {
 	
     registry->registerFactory<StandardComponentFactory, MouseViewIODevice>();
-}
-    
 }
 

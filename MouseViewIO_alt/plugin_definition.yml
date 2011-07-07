@@ -37,12 +37,8 @@ parameters:
     required: 1
   
   - name:     counter_min
-    default:  0
-    required: 0
 
   - name:     counter_max
-    default:  0
-    required: 0
 
 
       

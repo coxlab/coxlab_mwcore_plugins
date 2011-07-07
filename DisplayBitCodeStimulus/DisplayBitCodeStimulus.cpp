@@ -8,6 +8,7 @@
  */
 
 #include "DisplayBitCodeStimulus.h"
+#include "ClockSync.h"
 #include <math.h>
 
 namespace mw{
@@ -20,10 +21,25 @@ DisplayBitCodeStimulus::DisplayBitCodeStimulus(const ParameterValueMap &p) :
     separation_ratio_variable(p[SEPARATION]),
     bg_luminance_variable(p[BG_LUMINANCE]),
     fg_luminance_variable(p[FG_LUMINANCE]),
+    clock_offset_variable(p[CLOCK_OFFSET]),
     generator(42u),
     uni_dist(0, (1 <<(int)(n_markers_variable->getValue()))-1),
     random_generator(generator, uni_dist)
-{ }
+{ 
+
+
+    shared_ptr<VariableRegistry> registry = global_variable_registry;
+    shared_ptr<Variable> display_update_variable = registry->getVariable("#stimDisplayUpdate");
+    
+    if(clock_offset_variable != NULL){
+        clock_sync = shared_ptr<ClockSync>(new ClockSync((long)n_markers_variable->getValue(), 
+                                                         "tcp://127.0.0.1", 
+                                                         code_variable,
+                                                         display_update_variable,
+                                                         clock_offset_variable) );
+    }
+    
+}
     
 void DisplayBitCodeStimulus::describeComponent(ComponentInfo& info){
     BasicTransformStimulus::describeComponent(info);
@@ -33,6 +49,7 @@ void DisplayBitCodeStimulus::describeComponent(ComponentInfo& info){
     info.addParameter(SEPARATION);
     info.addParameter(BG_LUMINANCE);
     info.addParameter(FG_LUMINANCE);
+    info.addParameter(CLOCK_OFFSET);
 }
 
 const std::string DisplayBitCodeStimulus::CODE_VARIABLE("code");
@@ -40,7 +57,7 @@ const std::string DisplayBitCodeStimulus::N_MARKERS("n_markers");
 const std::string DisplayBitCodeStimulus::SEPARATION("separation_ratio");
 const std::string DisplayBitCodeStimulus::BG_LUMINANCE("bg_luminance");
 const std::string DisplayBitCodeStimulus::FG_LUMINANCE("fg_luminance");
-
+const std::string DisplayBitCodeStimulus::CLOCK_OFFSET("clock_offset");
 
 
 DisplayBitCodeStimulus::~DisplayBitCodeStimulus(){ }
@@ -118,7 +135,6 @@ void DisplayBitCodeStimulus::drawInUnitSquare(shared_ptr<StimulusDisplay> displa
 // override of base class to provide more info
 Datum DisplayBitCodeStimulus::getCurrentAnnounceDrawData() {
     
-    //mprintf("getting announce DRAW data for point stimulus %s",tag );
     
     Datum announceData(M_DICTIONARY, 2);
     announceData.addElement(STIM_NAME,tag);        // char

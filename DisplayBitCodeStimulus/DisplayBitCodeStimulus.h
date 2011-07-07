@@ -15,9 +15,13 @@
 #include <boost/random.hpp>
 #include "MWorksCore/ComponentInfo.h"
 #include "MworksCore/ParameterValue.h"
+#include "ClockSync.h"
 
 
 namespace mw{
+
+
+
     
 class DisplayBitCodeStimulus : public BasicTransformStimulus{
 
@@ -25,7 +29,7 @@ protected:
 
     // a variable for recording the current code value
     shared_ptr<Variable> code_variable;
-    
+        
     // number of bit markers to encode
     shared_ptr<Variable> n_markers_variable;
     
@@ -33,11 +37,15 @@ protected:
     shared_ptr<Variable> separation_ratio_variable;
     
     shared_ptr<Variable> bg_luminance_variable, fg_luminance_variable;
-    
+
+    // RNG
     boost::minstd_rand generator;
     boost::uniform_int<> uni_dist;
     boost::variate_generator< boost::minstd_rand, boost::uniform_int<> > random_generator;
     
+    
+    shared_ptr<ClockSync> clock_sync;
+    shared_ptr<Variable> clock_offset_variable;
     
 
 public:
@@ -52,6 +60,7 @@ public:
     static const std::string SEPARATION;
     static const std::string BG_LUMINANCE;
     static const std::string FG_LUMINANCE;
+    static const std::string CLOCK_OFFSET;
 
 
 	~DisplayBitCodeStimulus();

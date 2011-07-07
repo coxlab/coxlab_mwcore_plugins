@@ -9,11 +9,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "DisplayBitCodeStimulus.cpp"
-         timestampString = "331069163.088282"
+         timestampString = "331746726.867113"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "29"
-         endingLineNumber = "29"
+         startingLineNumber = "45"
+         endingLineNumber = "45"
          landmarkName = "DisplayBitCodeStimulus::describeComponent(ComponentInfo&amp; info)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -23,12 +23,96 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "DisplayBitCodeStimulus.cpp"
-         timestampString = "331069163.088282"
+         timestampString = "331746726.867113"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "17"
-         endingLineNumber = "17"
+         startingLineNumber = "18"
+         endingLineNumber = "18"
          landmarkName = "DisplayBitCodeStimulus::DisplayBitCodeStimulus(const ParameterValueMap &amp;p)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "ClockSync.h"
+         timestampString = "331753462.268782"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "146"
+         endingLineNumber = "146"
+         landmarkName = "mwCodeChangeCallback(const Datum&amp; data, MWTime time)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "ClockSync.h"
+         timestampString = "331753462.268782"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "155"
+         endingLineNumber = "155"
+         landmarkName = "stimulusDisplayUpdateCallback(const Datum&amp; data, MWTime time)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "ClockSync.h"
+         timestampString = "331753462.268782"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "165"
+         endingLineNumber = "165"
+         landmarkName = "codeTransitionCallback(int channel, int value)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "ClockSync.h"
+         timestampString = "331747644.327432"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "103"
+         endingLineNumber = "103"
+         landmarkName = "ClockSync(int _n_channels, std::string _zmq_address, shared_ptr&lt;Variable&gt; _code_variable, shared_ptr&lt;Variable&gt; _display_update_variable, shared_ptr&lt;Variable&gt; _offset_variable)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "DisplayBitCodeStimulus.cpp"
+         timestampString = "331750807.295584"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "31"
+         endingLineNumber = "31"
+         landmarkName = "DisplayBitCodeStimulus::DisplayBitCodeStimulus(const ParameterValueMap &amp;p)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "ClockSync.h"
+         timestampString = "331754132.951169"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "249"
+         endingLineNumber = "249"
+         landmarkName = "connectSockets()"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

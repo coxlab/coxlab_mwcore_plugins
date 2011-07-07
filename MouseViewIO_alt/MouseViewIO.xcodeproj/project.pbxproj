@@ -11,6 +11,7 @@
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 5C3190331375CA55006849EC /* Build configuration list for PBXAggregateTarget "Autogenerate Plugin Plumbing" */;
 			buildPhases = (
+				5C3190361375CA5B006849EC /* ShellScript */,
 			);
 			dependencies = (
 			);
@@ -45,6 +46,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		5C3190371375CAB0006849EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5C3190321375CA55006849EC;
+			remoteInfo = "Autogenerate Plugin Plumbing";
+		};
 		5CFCAB221106098C007CE55F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
@@ -55,7 +63,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		32DBCF630370AF2F00C91783 /* MouseViewIO_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseViewIO_Prefix.pch; sourceTree = "<group>"; };
+		32DBCF630370AF2F00C91783 /* mw_plugin.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mw_plugin.pch; sourceTree = "<group>"; };
 		5C2921AF1371D47800CBADC9 /* MouseViewTrackingProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseViewTrackingProxy.h; sourceTree = "<group>"; };
 		5C2921B01371D47800CBADC9 /* MouseViewTrackingProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MouseViewTrackingProxy.m; sourceTree = "<group>"; };
 		5C3190091374644A006849EC /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = ../../../../../../../System/Library/Frameworks/Cocoa.framework; sourceTree = "<group>"; };
@@ -165,7 +173,7 @@
 		32C88E010371C26100C91783 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				32DBCF630370AF2F00C91783 /* MouseViewIO_Prefix.pch */,
+				32DBCF630370AF2F00C91783 /* mw_plugin.pch */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -223,6 +231,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				5C3190381375CAB0006849EC /* PBXTargetDependency */,
 			);
 			name = MouseViewIO;
 			productInstallPath = "$(HOME)/Library/Bundles";
@@ -271,6 +280,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		5C3190361375CA5B006849EC /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "DBIN=\"/Library/Application Support/MWorks/Developer/bin\"\n\"$DBIN/mw_plugin_helper\" regenerate ${PROJECT_DIR}/plugin_definition.yml ${PROJECT_DIR}\n";
+		};
 		5CFCAB1D11060975007CE55F /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -301,6 +323,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		5C3190381375CAB0006849EC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5C3190321375CA55006849EC /* Autogenerate Plugin Plumbing */;
+			targetProxy = 5C3190371375CAB0006849EC /* PBXContainerItemProxy */;
+		};
 		5CFCAB231106098C007CE55F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8D5B49AC048680CD000E48DA /* MouseViewIO */;
@@ -314,7 +341,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = MouseViewIO_Prefix.pch;
+				GCC_PREFIX_HEADER = mw_plugin.pch;
 				INFOPLIST_FILE = "MouseViewIO-Info.plist";
 				INSTALL_PATH = "$(PLUGINS_DIR)";
 				OTHER_LDFLAGS = (
@@ -333,7 +360,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = MouseViewIO_Prefix.pch;
+				GCC_PREFIX_HEADER = mw_plugin.pch;
 				INFOPLIST_FILE = "MouseViewIO-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = MouseViewIO;
@@ -346,6 +373,7 @@
 			baseConfigurationReference = 5C78EE6B115D02EE00151A76 /* Development.xcconfig */;
 			buildSettings = {
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(MW_INCLUDE_DIR)";
 				LIBRARY_SEARCH_PATHS = "$(MW_LIB_DIR)";
 				PREBINDING = NO;
@@ -432,6 +460,7 @@
 				5C3190351375CA55006849EC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5CFCAB24110609AA007CE55F /* Build configuration list for PBXAggregateTarget "Everything" */ = {
 			isa = XCConfigurationList;
