@@ -24,6 +24,8 @@
 #include "pixel_clock_info.pb.h"
 
 
+#define FAKE_ZMQ
+
 namespace mw {
 
 
@@ -39,6 +41,11 @@ protected:
     
     // zmq sockets
     vector< shared_ptr<zmq::socket_t> > zmq_sockets; 
+    
+    
+    #ifdef FAKE_ZMQ
+    vector< shared_ptr<zmq::socket_t> > fake_zmq_sockets;
+    #endif
     
     int n_channels;
     
@@ -61,7 +68,7 @@ protected:
     // frame times for incoming transition events
     // negative values mean no transition
     // reset whenever a new "current" code is supplied
-    vector<MWTime> external_transition_frame_times;
+    vector<MWTime> external_transition_times;
     
     // the time when the display update event arrives
     // negative means not arrived yet
@@ -91,6 +98,7 @@ public:
               shared_ptr<Variable> _offset_variable) :
               
               ctx(1),
+              external_reconstructed_code(0),
               code_variable(_code_variable),
               n_channels(_n_channels),
               zmq_address(_zmq_address),
@@ -116,6 +124,11 @@ public:
         // reset the state of the object
         reset();
         
+        #ifdef FAKE_ZMQ
+        // set up fake zmq publish sockets to pipe out fake data
+        connectFakeZMQSockets();
+        #endif
+        
         // connect the zmq listener sockets
         connectSockets();
         
@@ -138,9 +151,9 @@ public:
         mw_display_update_time = -1;
         
         
-        external_transition_frame_times.clear();
+        external_transition_times.clear();
         for(int i = 0; i < n_channels; i++){
-            external_transition_frame_times.push_back(-1);
+            external_transition_times.push_back(-1);
         }
     }
 
@@ -149,39 +162,53 @@ public:
     // of evts driving this object
     void mwCodeChangeCallback(const Datum& data, MWTime time)
     {  
-        mprintf("mw code change callback!");
+        //mprintf("mw code change callback!");
         
+        int last_mw_code = current_mw_code;
         current_mw_code = (int)data;
         reset();
+        
+        #ifdef FAKE_ZMQ
+        emitFakeZMQEvents(last_mw_code, current_mw_code);
+        #endif
     }
     
     // callback to receive stimulus display update notification
     void stimulusDisplayUpdateCallback(const Datum& data, MWTime time)
     {
-        mprintf("stimulus update callback!");
+        //mprintf("stimulus update callback!. MWTime = %lld", time);
         
         boost::mutex::scoped_lock l(resource_mutex);
         
         mw_display_update_time = time;
+        
+        checkForMatch();
     }
     
     // callback to receive transitions from the zmq socket
     void codeTransitionCallback(int channel, int value, long long frame_number)
     {
-        mprintf("Code Transition callback!");
     
         boost::mutex::scoped_lock l(resource_mutex);
     
         // adjust bit
-        int shifted = value << channel;
-        external_reconstructed_code &= shifted;
-        
+        int shifted = 1 << channel;
+        if(value){
+            external_reconstructed_code |= shifted;
+        } else {
+            external_reconstructed_code &= ~shifted;
+        }
         
         #define SAMPLING_RATE   44100
         
         double external_seconds = (double)frame_number / (double)SAMPLING_RATE;
         
-        external_frame_transition_times[channel] = external_seconds;
+        external_transition_times[channel] = (MWTime)(external_seconds * 1e6);
+        
+        
+        //mprintf("Code Transition callback! (ch %d, val %d, frame %lld).  Reconstructed code = %d, MW time = %lld", 
+        //         channel, value, frame_number, external_reconstructed_code, external_transition_times[channel]);
+
         
         checkForMatch();
     }
@@ -194,7 +221,19 @@ public:
         if(current_mw_code == external_reconstructed_code && mw_display_update_time > 0){
         
             // compute a new time offset
+            MWTime max_time = -1;
+            vector<MWTime>::iterator i;
+            for(i = external_transition_times.begin(); i != external_transition_times.end(); i++){
+                MWTime t = *i;
+                if(t > max_time) max_time = t;
+            }
             
+            // TODO: correct for channel offset latencies
+            MWTime offset = mw_display_update_time - max_time;
+            
+            offset_variable->setValue(offset);
+            
+            //mprintf("Dropping offset event: %lld", offset);
         
         }
     
@@ -309,6 +348,69 @@ public:
                                boost::bind( &ClockSync::poll, this ), 
                                M_DEFAULT_NETWORK_PRIORITY, 0, 0, M_MISSED_EXECUTION_DROP );
     }
+
+
+
+
+    #ifdef FAKE_ZMQ
+    void connectFakeZMQSockets(){
+                
+        // dispose of any old sockets
+        fake_zmq_sockets.clear();
+        
+        for(int i = 0; i < n_channels; i++){
+            // generate a fresh socket
+            shared_ptr<zmq::socket_t> zmq_socket(new zmq::socket_t(ctx, ZMQ_PUB));
+            
+            uint64_t hwm = 1000;
+            zmq_socket->setsockopt(ZMQ_HWM, &hwm, sizeof(uint64_t));
+            
+            
+            // construct the url
+            ostringstream filename_stream, url_stream;
+            
+            string host_address = zmq_address;
+            
+            url_stream << host_address << ":" << BASE_PORT + i;
+            try {
+                zmq_socket->bind(url_stream.str().c_str());
+                std::cerr << "ZMQ client bound successfully to " << url_stream.str() << std::endl;
+            } catch (zmq::error_t& e) {
+                std::cerr << "ZMQ: " << e.what() << std::endl;
+            }
+            
+            fake_zmq_sockets.push_back(zmq_socket);
+        }
+    }
+    
+    void emitFakeZMQEvents(int last_code, int current_code){
+        
+        shared_ptr<Clock> clock = Clock::instance();
+        MWTime fake_now = clock->getCurrentTimeUS() + 4*1e6;
+        
+        for(int i = 0; i < n_channels; i++){
+            bool last_bit = ((last_code & (1 << i)) > 0);
+            bool this_bit = ((current_code & (1 << i)) > 0);
+
+            if(last_bit != this_bit){
+                PixelClockInfoBuffer evt;
+                evt.set_direction(this_bit);
+                evt.set_channel_id(i);
+                
+                long long fake_frame_number = (MWTime)(((double)fake_now/ (double)1e6) * (double)41000);
+                evt.set_time_stamp(fake_frame_number);
+                
+                string serialized;
+                evt.SerializeToString(&serialized);
+                zmq::message_t msg(serialized.length());
+                memcpy(msg.data(), serialized.c_str(), serialized.length());
+                bool rc = fake_zmq_sockets[i]->send(msg);
+                
+            }
+        }
+    }
+    
+    #endif
 
     
 };

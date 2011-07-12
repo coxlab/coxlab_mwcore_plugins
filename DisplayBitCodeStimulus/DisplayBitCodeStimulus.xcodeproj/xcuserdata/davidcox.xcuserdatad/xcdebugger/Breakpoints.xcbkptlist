@@ -37,11 +37,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ClockSync.h"
-         timestampString = "331753462.268782"
+         timestampString = "331827969.383034"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "146"
-         endingLineNumber = "146"
+         startingLineNumber = "165"
+         endingLineNumber = "165"
          landmarkName = "mwCodeChangeCallback(const Datum&amp; data, MWTime time)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -51,11 +51,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ClockSync.h"
-         timestampString = "331753462.268782"
+         timestampString = "331827969.383034"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "155"
-         endingLineNumber = "155"
+         startingLineNumber = "179"
+         endingLineNumber = "179"
          landmarkName = "stimulusDisplayUpdateCallback(const Datum&amp; data, MWTime time)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -65,11 +65,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ClockSync.h"
-         timestampString = "331753462.268782"
+         timestampString = "331827810.409291"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "165"
-         endingLineNumber = "165"
+         startingLineNumber = "190"
+         endingLineNumber = "190"
          landmarkName = "codeTransitionCallback(int channel, int value)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -79,11 +79,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ClockSync.h"
-         timestampString = "331747644.327432"
+         timestampString = "331827969.383034"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "103"
-         endingLineNumber = "103"
+         startingLineNumber = "111"
+         endingLineNumber = "111"
          landmarkName = "ClockSync(int _n_channels, std::string _zmq_address, shared_ptr&lt;Variable&gt; _code_variable, shared_ptr&lt;Variable&gt; _display_update_variable, shared_ptr&lt;Variable&gt; _offset_variable)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -107,11 +107,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ClockSync.h"
-         timestampString = "331754132.951169"
+         timestampString = "331828497.337311"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "249"
-         endingLineNumber = "249"
+         startingLineNumber = "318"
+         endingLineNumber = "318"
          landmarkName = "connectSockets()"
          landmarkType = "5">
       </FileBreakpoint>
