@@ -10,7 +10,8 @@
 #define DynamicNoiseStimulus_PLUGIN_H_
 
 #include <MWorksCore/Plugin.h>
-using namespace mw;
+
+BEGIN_NAMESPACE_MW
 
 extern "C"{
     Plugin *getPlugin();
@@ -21,5 +22,8 @@ class DynamicNoiseStimulusPlugin : public Plugin {
 	virtual void registerComponents(shared_ptr<mw::ComponentRegistry> registry);	
 };
 
+
+
+END_NAMESPACE_MW
 
 #endif

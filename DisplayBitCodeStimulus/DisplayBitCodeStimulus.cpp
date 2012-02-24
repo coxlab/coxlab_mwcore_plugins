@@ -22,7 +22,7 @@ DisplayBitCodeStimulus::DisplayBitCodeStimulus(const ParameterValueMap &p) :
     bg_luminance_variable(p[BG_LUMINANCE]),
     fg_luminance_variable(p[FG_LUMINANCE]),
     clock_offset_variable(p[CLOCK_OFFSET]),
-    generator(42u),
+    generator(time(0)),
     uni_dist(0, (1 <<(int)(n_markers_variable->getValue()))-1),
     random_generator(generator, uni_dist)
 { 
@@ -83,7 +83,7 @@ void DisplayBitCodeStimulus::drawInUnitSquare(shared_ptr<StimulusDisplay> displa
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_ADD);
     
-    GLfloat z = 0.0;
+    GLfloat z = 0.01;
     
     // draw background
     glBegin(GL_QUADS);
@@ -106,6 +106,8 @@ void DisplayBitCodeStimulus::drawInUnitSquare(shared_ptr<StimulusDisplay> displa
         
         code_variable->setValue(Datum((long)new_code));
     }
+    
+    z = 0.05;
     
     int current_code = (int)(code_variable->getValue());
     

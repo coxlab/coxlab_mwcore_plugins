@@ -12,69 +12,108 @@
 #include <fstream>
 #include "md5.hh"
 
+
 #define USE_FFTW_MALLOC     1
 
+BEGIN_NAMESPACE_MW
 
-DynamicNoiseStimulus::DynamicNoiseStimulus(std::string _tag, 
-                        power_spectrum_type _power_spectrum, 
-                        int _frames_per_sequence,
-                        int _pixel_width,
-                        int _pixel_height,
-                        shared_ptr<Variable> _spatial_lowpass_cutoff,
-                        shared_ptr<Variable> _spatial_highpass_cutoff,
-                        shared_ptr<Variable> _temporal_lowpass_cutoff,
-                        shared_ptr<Variable> _temporal_highpass_cutoff,
-                        shared_ptr<Variable> _random_seed,
-                        shared_ptr<Variable> _rng_count,
-                        shared_ptr<Variable> _load_announce_variable,
-                        shared_ptr<Scheduler> _scheduler,
-                        shared_ptr<StimulusDisplay> _stimulus_display,
-                        shared_ptr<Variable> _frames_per_second,
-                        shared_ptr<Variable> _xoffset, 
-                        shared_ptr<Variable> _yoffset,
-                        shared_ptr<Variable> _xscale, 
-                        shared_ptr<Variable> _yscale, 
-                        shared_ptr<Variable> _rot,
-                        shared_ptr<Variable> _alpha):
-                        
-                        DynamicNoiseGenerator(_power_spectrum, _frames_per_sequence, _pixel_width, _pixel_height),
-                        DynamicStimulusDriver (_scheduler,
-                                               _frames_per_second),
-                        BasicTransformStimulus(_tag,
-                                               _xoffset,
-                                               _yoffset,
-                                               _xscale,
-                                               _yscale,
-                                               _rot,
-                                               _alpha),
-                        last_frame_drawn(-1)
-                        {
+template<>
+DynamicNoiseGenerator::power_spectrum_type ParameterValue::convert(const std::string &s, ComponentRegistryPtr reg) {
+    std::string type_string(boost::algorithm::to_lower_copy(s));                                       
     
-    display = _stimulus_display;
-    _random_seed->setValue(random_seed_datum);
-    random_seed = _random_seed; 
+    if (type_string == "white") {
+        return DynamicNoiseGenerator::white;
+    } else if (type_string == "one_over_f") {
+        return DynamicNoiseGenerator::one_over_f;
+    } else if (type_string == "bandlimited_gwn") {
+        return DynamicNoiseGenerator::bandlimited_gwn;
+    } else {
+        throw SimpleException("Unknown power spectrum type", type_string);			
+    }
+}
+
+
+void DynamicNoiseStimulus::describeComponent(ComponentInfo &info) {
+    BasicTransformStimulus::describeComponent(info);
+    info.setSignature("stimulus/dynamic_noise_stimulus");
+    info.addParameter("power_spectrum_type", "white");
+    info.addParameter("pixel_width");
+    info.addParameter("pixel_height");
+    info.addParameter("random_seed_variable");
+    info.addParameter("frame_variable");
+    info.addParameter("load_announce_variable");
+    info.addParameter("spatial_lowpass_cutoff", "100.");
+    info.addParameter("spatial_highpass_cutoff", ".1");
+    info.addParameter("temporal_lowpass_cutoff", "100.");
+    info.addParameter("temporal_highpass_cutoff", ".1");
+    info.addParameter("frames_per_sequence", "200");
     
-    rng_count_internal = 0LL;
-    Datum rng_count_datum(rng_count_internal);
-    _rng_count->setValue(rng_count_datum);
-    rng_count = _rng_count;
-                            
-                               
-    spatial_lowpass_cutoff = _spatial_lowpass_cutoff;
-    spatial_highpass_cutoff = _spatial_highpass_cutoff;
-    temporal_lowpass_cutoff = _temporal_lowpass_cutoff;
-    temporal_highpass_cutoff = _temporal_highpass_cutoff;
+}
+
+
+DynamicNoiseStimulus::DynamicNoiseStimulus(const ParameterValueMap &parameters):
+    DynamicStimulusDriver(),
+    BasicTransformStimulus(parameters),
+    DynamicNoiseGenerator((power_spectrum_type)parameters["power_spectrum_type"], 
+                          (int)parameters["frames_per_sequence"],
+                          (int)parameters["pixel_width"],
+                          (int)parameters["pixel_height"],
+                          time(0)),
+    last_frame_drawn(-1),
+    frame_number(0)
+{
     
-    load_announce_variable = _load_announce_variable;
+    // what kind of noise to produce
+    std::string power_spectrum_type_string = parameters["power_spectrum_type"];
+    DynamicNoiseStimulus::power_spectrum_type power_spectrum = DynamicNoiseStimulus::white; 
+    if(power_spectrum_type_string == "white"){
+        power_spectrum = DynamicNoiseStimulus::white; 
+    } else if(power_spectrum_type_string == "one_over_f"){
+        power_spectrum = DynamicNoiseStimulus::one_over_f;
+    } else if(power_spectrum_type_string == "bandlimited_gwn"){
+        power_spectrum = DynamicNoiseStimulus::bandlimited_gwn;
+    }
     
-    preallocateTextures();
+    
+    
+    // how fast should the frames go by
+	//shared_ptr<Variable> frames_per_second = reg->getVariableForAttribute("frames_per_second", parameters);
+
+    // what is the maximum number of frames that will be presented at a go
+    // This number is fixed at parse time so that the frames can be preallocated
+    int frames_per_sequence = parameters["frames_per_sequence"];
+    
+    pixel_width = parameters["pixel_width"];
+    pixel_height = parameters["pixel_height"];
+    
+    random_seed = parameters["random_seed"];
+    //rng_count = parameters["rng_count"];
+    
+	
+    spatial_lowpass_cutoff = parameters["spatial_lowpass_cutoff"];
+    spatial_highpass_cutoff = parameters["spatial_highpass_cutoff"];
+    temporal_lowpass_cutoff = parameters["temporal_lowpass_cutoff"];
+    temporal_highpass_cutoff = parameters["temporal_highpass_cutoff"];
+    
+    load_announce_variable = parameters["load_announce_variable"];
+    
+    //rng_count_internal = 0LL;
+    random_seed = parameters["random_seed"];
+    
+    //rng_count_internal = 0LL;
+    //Datum rng_count_datum(rng_count_internal);
+    
+    //rng_count = parameters["rng_count"];
+    //rng_count->setValue(rng_count_datum);
+
+    //preallocateTextures();
                 
     bicubic_filter_shader = shared_ptr<Shaders::ConvolutionFilterShader>(new Shaders::ConvolutionFilterShader(VS_SCALINGMETHOD_LANCZOS3, false));
     
     
 }
 
-//DynamicNoiseStimulus::DynamicNoiseStimulus(const DynamicNoiseStimulus &tocopy) { }
+
 DynamicNoiseStimulus::~DynamicNoiseStimulus(){ 
 
     
@@ -117,6 +156,9 @@ DynamicNoiseStimulus::~DynamicNoiseStimulus(){
 
 void DynamicNoiseStimulus::load(shared_ptr<StimulusDisplay> _display){
     
+    preallocateTextures(_display);
+
+    
     
     if(_display != NULL){
         for(int i = 0; i < _display->getNContexts(); i++){
@@ -129,8 +171,12 @@ void DynamicNoiseStimulus::load(shared_ptr<StimulusDisplay> _display){
         }
     }
     
-    starting_rng_count = rng_count_internal;
+//    starting_rng_count = rng_count_internal;
 
+    // reseed the rng, and store the new seed in random_seed variable
+    long new_seed = time(0);
+    random_seed->setValue(new_seed);
+    reseed(new_seed);
 
     generateModulusImage((double)spatial_lowpass_cutoff->getValue(),
                          (double)spatial_highpass_cutoff->getValue(),
@@ -139,8 +185,8 @@ void DynamicNoiseStimulus::load(shared_ptr<StimulusDisplay> _display){
     
     
 
-    Datum rng_count_datum((long long)rng_count_internal);
-    rng_count->setValue(rng_count_datum);
+    //Datum rng_count_datum((long long)rng_count_internal);
+    //rng_count->setValue(rng_count_datum);
     
     generateNoiseImage();
     
@@ -156,21 +202,24 @@ void DynamicNoiseStimulus::load(shared_ptr<StimulusDisplay> _display){
             int offset = f * pixel_width * pixel_height;
             for(int i = 0; i < _display->getNContexts(); i++){
                 _display->setCurrent(i);
-                loadDataToGLTexture(result_storage + offset, pixel_width, pixel_height, frame_textures[f]);
+                loadDataToGLTexture(_display, result_storage + offset, 
+                                    pixel_width, pixel_height, frame_textures[f]);
             }
         }
     }
     
-    ending_rng_count = rng_count_internal;
+    //ending_rng_count = rng_count_internal;
 }
 
 void DynamicNoiseStimulus::drawInUnitSquare(shared_ptr<StimulusDisplay> display) {
     
-    int frame_number = getFrameNumber();
+    frame_number = last_frame_drawn + 1;
     
     if(frame_number < 0 || frame_number >= frames_per_sequence){
         return;
     }
+    
+    frame_variable->setValue(frame_number);
     
     double aspect = (double)pixel_width / (double)pixel_height;
     if(1 || loaded) {
@@ -291,7 +340,8 @@ void DynamicNoiseGenerator::preallocateStorage(){
     result_storage = new float[pixel_height * pixel_width * frames_per_sequence];
 }
     
-void DynamicNoiseStimulus::preallocateTextures(){
+void DynamicNoiseStimulus::preallocateTextures(shared_ptr<StimulusDisplay> display){
+
     // Generate texture maps in each OpenGL context
     if(display != NULL){
         int n_contexts = display->getNContexts();
@@ -369,10 +419,10 @@ void DynamicNoiseGenerator::generateModulusImage(double spatial_lowpass_cutoff,
                     double r = sqrt( u*u + v*v );
                     
                     double s_high = 1.0 / (1.0 + pow((r / space_highpass_cutoff), 2.0*filter_order));
-                    //s_high *= 1.0 / (1.0 + pow(w / time_highpass_cutoff, 2.0 * filter_order));
+                    s_high /= (1.0 + pow(w / time_highpass_cutoff, 2.0 * filter_order));
                     
                     double s_low = 1.0 / (1.0 + pow((r / space_lowpass_cutoff), 2.0*filter_order));
-                    //s_low *= 1.0 / (1.0 + pow(fabs(w) / time_lowpass_cutoff, 2.0 * filter_order));
+                    s_low /= (1.0 + pow(fabs(w) / time_lowpass_cutoff, 2.0 * filter_order));
                     
                     
                     modulus_image[k*pixel_height*pixel_width + i*pixel_width + j][0] =  s_low - s_high;
@@ -416,7 +466,9 @@ void DynamicNoiseGenerator::generateModulusImage(double spatial_lowpass_cutoff,
 }
 
 
-void DynamicNoiseStimulus::loadDataToGLTexture(float *data, int width, int height, vector<GLuint> textures){
+void DynamicNoiseStimulus::loadDataToGLTexture(shared_ptr<StimulusDisplay> display,
+                                               float *data, int width, int height, 
+                                               vector<GLuint> textures){
     
     // move data to texture maps on each display
     for(int i = 0; i < display->getNContexts(); i++){
@@ -466,7 +518,7 @@ void DynamicNoiseGenerator::generateNoiseImage(){
     // use the rng to fill the preallocated random phase array
     for (int i = 0; i < (pixel_height * pixel_width * frames_per_sequence); i++) {
         complex<double> temp_phase(0.0,random_phase_gen());
-        rng_count_internal++;
+        //rng_count_internal++;
         temp_phase = exp(temp_phase);
         random_phase_storage[i][0] = real(temp_phase);
         random_phase_storage[i][1] = imag(temp_phase);
@@ -608,6 +660,11 @@ void DynamicNoiseGenerator::generateNoiseImage(){
 
 }
 
+void DynamicNoiseStimulus::didStop() {
+    last_frame_drawn = -1;
+}
+
+
 
 Datum DynamicNoiseStimulus::getCurrentAnnounceDrawData() {
     
@@ -615,13 +672,15 @@ Datum DynamicNoiseStimulus::getCurrentAnnounceDrawData() {
     announceData.addElement(STIM_NAME,tag);        // char
     announceData.addElement(STIM_ACTION,STIM_ACTION_DRAW);
     announceData.addElement(STIM_TYPE,"dynamic_noise");
-    announceData.addElement("frame", Datum((long)getFrameNumber()));
-    announceData.addElement("rng_start", Datum(starting_rng_count));
-    announceData.addElement("rng_end", Datum(ending_rng_count));
+    announceData.addElement("frame", Datum((long)frame_number));
+    //announceData.addElement("rng_start", Datum(starting_rng_count));
+    //announceData.addElement("rng_end", Datum(ending_rng_count));
     announceData.addElement("seed", random_seed->getValue());
     announceData.addElement("md5", hash_string);
     
     return (announceData);
 }
 
+
+END_NAMESPACE_MW
 

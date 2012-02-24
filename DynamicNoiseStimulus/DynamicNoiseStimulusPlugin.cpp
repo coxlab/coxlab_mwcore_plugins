@@ -7,10 +7,12 @@
  *
  */
 
+#include "DynamicNoiseStimulus.h"
 #include "DynamicNoiseStimulusPlugin.h"
-#include "DynamicNoiseStimulusFactory.h"
-#include "MWorksCore/ComponentFactory.h"
-using namespace mw;
+#include <MWorksCore/StandardStimulusFactory.h>
+
+
+BEGIN_NAMESPACE_MW
 
 Plugin *getPlugin(){
     return new DynamicNoiseStimulusPlugin();
@@ -19,9 +21,8 @@ Plugin *getPlugin(){
 
 void DynamicNoiseStimulusPlugin::registerComponents(shared_ptr<mw::ComponentRegistry> registry) {
 	
-    // TODO: you need to customize the "signature" of the object your plugin will create
-    //       The signature is of the form component/type Ð(e.g. stimulus/circle, or iodevice/NIDAQ)
-    registry->registerFactory(std::string("stimulus/dynamic_noise_stimulus"),
-							  (ComponentFactory *)(new DynamicNoiseStimulusFactory()));
+    registry->registerFactory<StandardStimulusFactory, DynamicNoiseStimulus>();
 }
 
+
+END_NAMESPACE_MW

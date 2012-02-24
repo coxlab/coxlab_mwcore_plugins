@@ -25,6 +25,9 @@ namespace mw {
 using namespace std;
 
 
+#define PATH_INFO_CONDUIT_EVENT_CODE    100
+#define PING_CONDUIT_EVENT_CODE         101
+
 class CNCDevice  : public IODevice {
 
 public:
@@ -63,17 +66,17 @@ public:
                                                                         EventTransport::bidirectional_event_transport,
                                                                         _resource_name));
         //transport->flush();
-        conduit = shared_ptr<SimpleConduit>(new SimpleConduit(transport));
+        conduit = shared_ptr<SimpleConduit>(new SimpleConduit(transport, true)); // correct incoming timestamps
         
-        conduit->registerCallback(CNCDevice::path_info, bind(&CNCDevice::handleIncomingEvent, this, _1));
-        conduit->registerCallback(CNCDevice::ping, bind(&CNCDevice::handlePingEvent, this, _1));
+        conduit->registerCallback(PATH_INFO_CONDUIT_EVENT_CODE, bind(&CNCDevice::handleIncomingEvent, this, _1));
+        conduit->registerCallback(PING_CONDUIT_EVENT_CODE, bind(&CNCDevice::handlePingEvent, this, _1));
         
     }
     
     virtual ~CNCDevice(){
         conduit->finalize();
     }
-    
+        
     
     virtual void handlePingEvent(shared_ptr<Event> event){
     

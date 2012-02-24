@@ -22,20 +22,6 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "DisplayBitCodeStimulus.cpp"
-         timestampString = "331746726.867113"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "18"
-         endingLineNumber = "18"
-         landmarkName = "DisplayBitCodeStimulus::DisplayBitCodeStimulus(const ParameterValueMap &amp;p)"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
          filePath = "ClockSync.h"
          timestampString = "331827969.383034"
          startingColumnNumber = "9223372036854775807"
