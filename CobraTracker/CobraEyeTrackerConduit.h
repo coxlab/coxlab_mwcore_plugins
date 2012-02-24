@@ -20,9 +20,13 @@
 #include "MWorksCore/SimpleConduit.h"
 #include "MWorksCore/IPCEventTransport.h"
 
+#define GAZE_INFO_CONDUIT_EVENT_ID  100
+#define EYETRACKER_INFO_CONDUIT_EVENT_ID   101
+
 namespace mw {
 
 using namespace std;
+
 
 
 class CobraDevice  : public IODevice {
@@ -33,19 +37,32 @@ public:
     // will need to know these values
     // Going forward, maybe there is a way to have the Python side of the 
     // conduit be built with these values as constants
-    enum CobraCapability {   gaze_h = 0, 
-                         gaze_v = 1,
-                         pupil_radius = 2,
-                         timestamp = 3,
-                         combined_gaze_info = 4,
-                         ping = 5
+    enum CobraCapability{   gaze_h = 0, 
+                            gaze_v = 1,
+                            pupil_radius = 2,
+                            timestamp = 3,
+                            calibration_status = 4,
+                            pupil_h = 5,
+                            pupil_v = 6,
+                            cr_h = 7,
+                            cr_v = 8,
+                            eyetracker_info = 9
                         };
 
 protected:
 
     shared_ptr<SimpleConduit> conduit;
 
-    shared_ptr<Variable> gaze_h_variable, gaze_v_variable, pupil_radius_variable, timestamp_variable;
+    shared_ptr<Variable> gaze_h_variable, 
+                         gaze_v_variable, 
+                         pupil_radius_variable,
+                         pupil_h_variable,
+                         pupil_v_variable,
+                         cr_h_variable,
+                         cr_v_variable,
+                         calibration_status_variable,
+                         timestamp_variable,
+                         eyetracker_info_variable;
     
     NSTask *task;
     
@@ -53,16 +70,14 @@ public:
 
     CobraDevice(string _resource_name = "cobra_eye_tracker"){
     
-        fprintf(stderr, _resource_name.c_str()); fflush(stderr);
         shared_ptr<IPCEventTransport> transport(new IPCEventTransport(EventTransport::client_event_transport,
                                                                         EventTransport::bidirectional_event_transport,
                                                                         _resource_name));
-        //transport->flush();
-        conduit = shared_ptr<SimpleConduit>(new SimpleConduit(transport));
         
-        conduit->registerCallback(CobraDevice::combined_gaze_info, bind(&CobraDevice::handleIncomingEvent, this, _1));
-        conduit->registerCallback(CobraDevice::ping, bind(&CobraDevice::handlePingEvent, this, _1));
+        conduit = shared_ptr<SimpleConduit>(new SimpleConduit(transport, true)); // correct incoming timestamps
         
+        conduit->registerCallback(GAZE_INFO_CONDUIT_EVENT_ID, bind(&CobraDevice::handleIncomingGazeEvent, this, _1));
+        conduit->registerCallback(EYETRACKER_INFO_CONDUIT_EVENT_ID, bind(&CobraDevice::handleIncomingInfoEvent, this, _1));
     }
     
     virtual ~CobraDevice(){
@@ -77,7 +92,7 @@ public:
     
     }
     
-    virtual void handleIncomingEvent(shared_ptr<Event> event){
+    virtual void handleIncomingGazeEvent(shared_ptr<Event> event){
     
         // forward the event into the data stream?
         
@@ -88,6 +103,13 @@ public:
         Datum gaze_v_datum = combined_gaze_info.getElement(gaze_v);
         Datum pupil_radius_datum = combined_gaze_info.getElement(pupil_radius);
         Datum timestamp_datum = combined_gaze_info.getElement(timestamp);
+        Datum calibration_status_datum = combined_gaze_info.getElement(calibration_status);
+        
+        Datum pupil_h_datum = combined_gaze_info.getElement(pupil_h);
+        Datum pupil_v_datum = combined_gaze_info.getElement(pupil_v);
+        Datum cr_h_datum = combined_gaze_info.getElement(cr_h);
+        Datum cr_v_datum = combined_gaze_info.getElement(cr_v);
+        
         
         MWorksTime time = event->getTime();
         
@@ -106,8 +128,36 @@ public:
         if(timestamp_variable != NULL){
             timestamp_variable->setValue(timestamp_datum, time);
         }
+        
+        if(calibration_status_variable != NULL){
+            calibration_status_variable->setValue(calibration_status_datum, time);
+        }
+        
+        if(pupil_h_variable != NULL){
+            pupil_h_variable->setValue(pupil_h_datum, time);
+        }
+        
+        if(pupil_v_variable != NULL){
+            pupil_v_variable->setValue(pupil_v_datum, time);
+        }
+        
+        if(cr_h_variable != NULL){
+            cr_h_variable->setValue(cr_h_datum, time);
+        }
+        
+        if(cr_v_variable != NULL){
+            cr_v_variable->setValue(cr_v_datum, time);
+        }
     }
     
+
+    virtual void handleIncomingInfoEvent(shared_ptr<Event> event){
+    
+        // forward the event into the data stream?
+        Datum et_info = event->getData();
+        eyetracker_info_variable->setValue(et_info, event->getTime());
+
+    }
 
     // Garbage that should be removed from the base class
     
@@ -119,14 +169,11 @@ public:
     
 
     virtual void setActive(bool _active){
-//        boost::mutex::scoped_lock active_lock(active_mutex);
-//        active = _active;
+        // no-op
     }
 
     virtual bool getActive(){
-//        boost::mutex::scoped_lock active_lock(active_mutex);
-//        bool is_active = active;
-//        return is_active;
+        // no-op
         return true;
     }
 
@@ -161,6 +208,18 @@ class CobraChannel : public mw::Component {
             capability = CobraDevice::pupil_radius;
         } else if(cap == "timestamp"){
             capability = CobraDevice::timestamp;
+        } else if(cap == "calibration_status"){
+            capability = CobraDevice::calibration_status;
+        } else if(cap == "pupil_h"){
+            capability = CobraDevice::pupil_h;
+        } else if(cap == "pupil_v"){
+            capability = CobraDevice::pupil_v;
+        } else if(cap == "cr_h"){
+            capability = CobraDevice::cr_h;
+        } else if(cap == "cr_v"){
+            capability = CobraDevice::cr_v;
+        } else if(cap == "eyetracker_info"){
+            capability = CobraDevice::eyetracker_info;
         }
     }
     
