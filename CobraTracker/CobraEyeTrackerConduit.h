@@ -103,14 +103,8 @@ public:
         Datum gaze_v_datum = combined_gaze_info.getElement(gaze_v);
         Datum pupil_radius_datum = combined_gaze_info.getElement(pupil_radius);
         Datum timestamp_datum = combined_gaze_info.getElement(timestamp);
-        Datum calibration_status_datum = combined_gaze_info.getElement(calibration_status);
         
-        Datum pupil_h_datum = combined_gaze_info.getElement(pupil_h);
-        Datum pupil_v_datum = combined_gaze_info.getElement(pupil_v);
-        Datum cr_h_datum = combined_gaze_info.getElement(cr_h);
-        Datum cr_v_datum = combined_gaze_info.getElement(cr_v);
-        
-        
+                
         MWorksTime time = event->getTime();
         
         if(gaze_h_variable != NULL){
@@ -129,24 +123,34 @@ public:
             timestamp_variable->setValue(timestamp_datum, time);
         }
         
-        if(calibration_status_variable != NULL){
-            calibration_status_variable->setValue(calibration_status_datum, time);
-        }
         
-        if(pupil_h_variable != NULL){
-            pupil_h_variable->setValue(pupil_h_datum, time);
-        }
+        if(combined_gaze_info.getNElements() > 4){
+            Datum calibration_status_datum = combined_gaze_info.getElement(calibration_status);
+            Datum pupil_h_datum = combined_gaze_info.getElement(pupil_h);
+            Datum pupil_v_datum = combined_gaze_info.getElement(pupil_v);
+            Datum cr_h_datum = combined_gaze_info.getElement(cr_h);
+            Datum cr_v_datum = combined_gaze_info.getElement(cr_v);
+
         
-        if(pupil_v_variable != NULL){
-            pupil_v_variable->setValue(pupil_v_datum, time);
-        }
-        
-        if(cr_h_variable != NULL){
-            cr_h_variable->setValue(cr_h_datum, time);
-        }
-        
-        if(cr_v_variable != NULL){
-            cr_v_variable->setValue(cr_v_datum, time);
+            if(calibration_status_variable != NULL){
+                calibration_status_variable->setValue(calibration_status_datum, time);
+            }
+            
+            if(pupil_h_variable != NULL){
+                pupil_h_variable->setValue(pupil_h_datum, time);
+            }
+            
+            if(pupil_v_variable != NULL){
+                pupil_v_variable->setValue(pupil_v_datum, time);
+            }
+            
+            if(cr_h_variable != NULL){
+                cr_h_variable->setValue(cr_h_datum, time);
+            }
+            
+            if(cr_v_variable != NULL){
+                cr_v_variable->setValue(cr_v_datum, time);
+            }
         }
     }
     
