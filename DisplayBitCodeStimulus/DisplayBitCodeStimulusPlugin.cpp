@@ -7,11 +7,12 @@
  *
  */
 
+
+#include "DisplayBitCodeStimulus.h"
 #include "DisplayBitCodeStimulusPlugin.h"
 //#include "DisplayBitCodeStimulusFactory.h"
 #include "MWorksCore/ComponentFactory.h"
 #include "MWorksCore/StandardStimulusFactory.h"
-#include "DisplayBitCodeStimulus.h"
 
 
 Plugin *getPlugin(){

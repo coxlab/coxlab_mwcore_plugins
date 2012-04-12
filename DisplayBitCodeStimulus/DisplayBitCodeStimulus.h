@@ -10,9 +10,9 @@
 #ifndef DisplayBitCodeStimulus_H_
 #define DisplayBitCodeStimulus_H_
 
+#include <boost/random.hpp>
 #include <MWorksCore/Plugin.h>
 #include <MWorksCore/StandardStimuli.h>
-#include <boost/random.hpp>
 #include "MWorksCore/ComponentInfo.h"
 #include "MworksCore/ParameterValue.h"
 #include "ClockSync.h"
