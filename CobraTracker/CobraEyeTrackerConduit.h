@@ -46,7 +46,9 @@ public:
                             pupil_v = 6,
                             cr_h = 7,
                             cr_v = 8,
-                            eyetracker_info = 9
+                            eyetracker_info = 9,
+                            top_led = 10,
+                            side_led = 11
                         };
 
 protected:
@@ -62,7 +64,9 @@ protected:
                          cr_v_variable,
                          calibration_status_variable,
                          timestamp_variable,
-                         eyetracker_info_variable;
+                         eyetracker_info_variable,
+                         top_led_variable,
+                         side_led_variable;
     
     NSTask *task;
     
@@ -109,6 +113,8 @@ public:
         Datum pupil_v_datum = combined_gaze_info.getElement(pupil_v);
         Datum cr_h_datum = combined_gaze_info.getElement(cr_h);
         Datum cr_v_datum = combined_gaze_info.getElement(cr_v);
+        Datum top_led_datum = combined_gaze_info.getElement(top_led);
+        Datum side_led_datum = combined_gaze_info.getElement(side_led);
         
         
         MWorksTime time = event->getTime();
@@ -147,6 +153,14 @@ public:
         
         if(cr_v_variable != NULL){
             cr_v_variable->setValue(cr_v_datum, time);
+        }
+
+        if(top_led_variable != NULL){
+            top_led_variable->setValue(top_led_variable, time);
+        }
+
+        if(side_led_variable != NULL){
+            side_led_variable->setValue(side_led_variable, time);
         }
     }
     
@@ -220,6 +234,10 @@ class CobraChannel : public mw::Component {
             capability = CobraDevice::cr_v;
         } else if(cap == "eyetracker_info"){
             capability = CobraDevice::eyetracker_info;
+        } else if(cap == "top_led"){
+            capability = CobraDevice::top_led;
+        } else if(cap == "side_led"){
+            capability = CobraDevice::side_led;
         }
     }
     

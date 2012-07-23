@@ -38,6 +38,8 @@ void CobraDevice::addChild(std::map<std::string, std::string> parameters,
     SET_CAPABILITY_VAR( timestamp, timestamp_variable );
     SET_CAPABILITY_VAR( calibration_status, calibration_status_variable );
     SET_CAPABILITY_VAR( eyetracker_info, eyetracker_info_variable );
+    SET_CAPABILITY_VAR( top_led, top_led_variable );
+    SET_CAPABILITY_VAR( side_led, side_led_variable );
     
 }
 
