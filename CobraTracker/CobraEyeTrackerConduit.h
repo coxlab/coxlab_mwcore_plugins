@@ -167,11 +167,11 @@ public:
         }
 
         if(top_led_variable != NULL){
-            top_led_variable->setValue(top_led_variable, time);
+            top_led_variable->setValue(top_led_datum, time);
         }
 
         if(side_led_variable != NULL){
-            side_led_variable->setValue(side_led_variable, time);
+            side_led_variable->setValue(side_led_datum, time);
         }
     }
 
