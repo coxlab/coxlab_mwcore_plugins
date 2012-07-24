@@ -86,7 +86,7 @@ DynamicNoiseStimulus::DynamicNoiseStimulus(const ParameterValueMap &parameters):
     pixel_width = parameters["pixel_width"];
     pixel_height = parameters["pixel_height"];
     
-    random_seed = parameters["random_seed"];
+    random_seed_variable = parameters["random_seed"];
     //rng_count = parameters["rng_count"];
     
 	
@@ -98,7 +98,6 @@ DynamicNoiseStimulus::DynamicNoiseStimulus(const ParameterValueMap &parameters):
     load_announce_variable = parameters["load_announce_variable"];
     
     //rng_count_internal = 0LL;
-    random_seed = parameters["random_seed"];
     
     //rng_count_internal = 0LL;
     //Datum rng_count_datum(rng_count_internal);
@@ -175,7 +174,7 @@ void DynamicNoiseStimulus::load(shared_ptr<StimulusDisplay> _display){
 
     // reseed the rng, and store the new seed in random_seed variable
     long new_seed = time(0);
-    random_seed->setValue(new_seed);
+    random_seed_variable->setValue(new_seed);
     reseed(new_seed);
 
     generateModulusImage((double)spatial_lowpass_cutoff->getValue(),
@@ -219,7 +218,7 @@ void DynamicNoiseStimulus::drawInUnitSquare(shared_ptr<StimulusDisplay> display)
         return;
     }
     
-    frame_variable->setValue(frame_number);
+    //frame_variable->setValue(frame_number);
     
     double aspect = (double)pixel_width / (double)pixel_height;
     if(1 || loaded) {
@@ -675,7 +674,7 @@ Datum DynamicNoiseStimulus::getCurrentAnnounceDrawData() {
     announceData.addElement("frame", Datum((long)frame_number));
     //announceData.addElement("rng_start", Datum(starting_rng_count));
     //announceData.addElement("rng_end", Datum(ending_rng_count));
-    announceData.addElement("seed", random_seed->getValue());
+    announceData.addElement("seed", random_seed_variable->getValue());
     announceData.addElement("md5", hash_string);
     
     return (announceData);

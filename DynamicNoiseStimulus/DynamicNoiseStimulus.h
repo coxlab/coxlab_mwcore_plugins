@@ -11,6 +11,9 @@
 #ifndef DynamicNoiseStimulus_H_
 #define DynamicNoiseStimulus_H_
 
+#include <boost/random.hpp>
+
+
 #include <MWorksCore/ParameterValue.h>
 
 #include <MWorksCore/Plugin.h>
@@ -23,7 +26,6 @@
 
 #include <vector>
 #include <complex>
-#include <boost/random.hpp>
 #include "fftw3.h"
 
 BEGIN_NAMESPACE_MW
