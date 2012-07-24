@@ -46,9 +46,9 @@ public:
                             pupil_v = 6,
                             cr_h = 7,
                             cr_v = 8,
-                            eyetracker_info = 9,
-                            top_led = 10,
-                            side_led = 11
+                            top_led = 9,
+                            side_led = 10,
+                            eyetracker_info = 11,
                         };
 
 protected:
