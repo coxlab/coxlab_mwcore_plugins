@@ -344,6 +344,7 @@
 				GCC_PREFIX_HEADER = mw_plugin.pch;
 				INFOPLIST_FILE = "MouseViewIO-Info.plist";
 				INSTALL_PATH = "$(PLUGINS_DIR)";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_LDFLAGS = (
 					"-framework",
 					OpenGL,
@@ -363,7 +364,9 @@
 				GCC_PREFIX_HEADER = mw_plugin.pch;
 				INFOPLIST_FILE = "MouseViewIO-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = MouseViewIO;
+				SDKROOT = macosx10.8;
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
@@ -400,6 +403,7 @@
 		5C3190341375CA55006849EC /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Development;

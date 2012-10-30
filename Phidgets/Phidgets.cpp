@@ -41,7 +41,7 @@ bool PhidgetDevice::stopDeviceIO(){
 void PhidgetDevice::addChild(std::map<std::string, std::string> parameters,
 								ComponentRegistry *reg,
 								shared_ptr<Component> _child){
-	shared_ptr<PhidgetDeviceChannel> child = dynamic_pointer_cast<PhidgetDeviceChannel, Component>(_child);
+	shared_ptr<PhidgetDeviceChannel> child = boost::dynamic_pointer_cast<PhidgetDeviceChannel, Component>(_child);
 	
 	
 	if(child == NULL){

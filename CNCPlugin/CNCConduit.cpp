@@ -21,7 +21,7 @@ void CNCDevice::addChild(std::map<std::string, std::string> parameters,
 										ComponentRegistry *reg,
                            shared_ptr<mw::Component> _child){
 
-	shared_ptr<CNCChannel> channel = dynamic_pointer_cast<CNCChannel, mw::Component>(_child);
+	shared_ptr<CNCChannel> channel = boost::dynamic_pointer_cast<CNCChannel, mw::Component>(_child);
 	if(channel == NULL){
 		throw SimpleException("Attempt to access an invalid CNC channel object");
 	}

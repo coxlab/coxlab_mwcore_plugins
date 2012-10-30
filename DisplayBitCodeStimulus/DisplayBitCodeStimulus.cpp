@@ -139,7 +139,7 @@ Datum DisplayBitCodeStimulus::getCurrentAnnounceDrawData() {
     
     
     Datum announceData(M_DICTIONARY, 2);
-    announceData.addElement(STIM_NAME,tag);        // char
+    announceData.addElement(STIM_NAME, getTag());        // char
     announceData.addElement("bit_code",Datum((long)(*code_variable))); 
 
     return (announceData);

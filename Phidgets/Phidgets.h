@@ -82,7 +82,7 @@ class PhidgetDeviceChannelFactory : public ComponentFactory {
 		
 		REQUIRE_ATTRIBUTES(parameters, "variable", "capability", "index");
 		
-		string capability_string = to_lower_copy(parameters["capability"]);
+		string capability_string = boost::to_lower_copy(parameters["capability"]);
 		PhidgetChannelType type;
 		int index = reg->getNumber(parameters["index"]);
 		

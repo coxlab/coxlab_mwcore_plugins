@@ -210,7 +210,7 @@ class CNCDeviceChannelFactory : public ComponentFactory {
 		
 		REQUIRE_ATTRIBUTES(parameters, "variable", "capability");
 		
-		string capability_string = to_lower_copy(parameters["capability"]);
+		string capability_string = boost::to_lower_copy(parameters["capability"]);
 		
 		shared_ptr<Variable> variable = reg->getVariable(parameters["variable"]);
 		

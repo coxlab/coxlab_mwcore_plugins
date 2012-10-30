@@ -324,7 +324,7 @@ public:
             zmq_socket->setsockopt(ZMQ_SUBSCRIBE, NULL, 0);
             
             // construct the url
-            ostringstream filename_stream, url_stream;
+            std::ostringstream filename_stream, url_stream;
             
             string host_address = zmq_address;
             
@@ -367,7 +367,7 @@ public:
             
             
             // construct the url
-            ostringstream filename_stream, url_stream;
+            std::ostringstream filename_stream, url_stream;
             
             string host_address = zmq_address;
             

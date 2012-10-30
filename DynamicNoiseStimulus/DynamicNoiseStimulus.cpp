@@ -668,7 +668,7 @@ void DynamicNoiseStimulus::didStop() {
 Datum DynamicNoiseStimulus::getCurrentAnnounceDrawData() {
     
     Datum announceData(M_DICTIONARY, 3);
-    announceData.addElement(STIM_NAME,tag);        // char
+    announceData.addElement(STIM_NAME, getTag());        // char
     announceData.addElement(STIM_ACTION,STIM_ACTION_DRAW);
     announceData.addElement(STIM_TYPE,"dynamic_noise");
     announceData.addElement("frame", Datum((long)frame_number));

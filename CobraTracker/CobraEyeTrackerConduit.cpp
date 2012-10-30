@@ -23,7 +23,7 @@ void CobraDevice::addChild(std::map<std::string, std::string> parameters,
 										ComponentRegistry *reg,
                            shared_ptr<mw::Component> _child){
 
-	shared_ptr<CobraChannel> channel = dynamic_pointer_cast<CobraChannel, mw::Component>(_child);
+	shared_ptr<CobraChannel> channel = boost::dynamic_pointer_cast<CobraChannel, mw::Component>(_child);
 	if(channel == NULL){
 		throw SimpleException("Attempt to access an invalid Cobra EyeTracker channel object");
 	}
