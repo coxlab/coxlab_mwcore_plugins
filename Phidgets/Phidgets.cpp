@@ -116,7 +116,6 @@ int InputChangeHandler(CPhidgetInterfaceKitHandle IFK, void *usrptr, int Index, 
 			return 0;
 		}
 		
-		printf("Digital input state: %d > Value: %d\n", Index, State);
 		
 		shared_ptr<Variable> var = channel->getVariable();
 		if(var != NULL){
@@ -151,9 +150,7 @@ int SensorChangeHandler(CPhidgetInterfaceKitHandle IFK, void *usrptr, int Index,
 			mwarning(M_SYSTEM_MESSAGE_DOMAIN, "Invalid channel change trigger from phidgets device");
 			return 0;
 		}
-		
-		printf("Sensor: %d > Value: %d\n", Index, Value);
-		
+
 		shared_ptr<Variable> var = channel->getVariable();
 		var->setValue((long)Value);
 	}
