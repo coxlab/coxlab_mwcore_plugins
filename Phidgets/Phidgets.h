@@ -36,6 +36,8 @@ class PhidgetDeviceChannel : public Component {
 	
 		PhidgetChannelType channel_type;
 		int index;
+        int sensitivity;
+        int rate;
 		
 		CPhidgetInterfaceKitHandle ifKit;
 		
@@ -43,9 +45,12 @@ class PhidgetDeviceChannel : public Component {
 		
 	public:
 	
-		PhidgetDeviceChannel(PhidgetChannelType _type, int _index, shared_ptr<Variable> _variable){
+		PhidgetDeviceChannel(PhidgetChannelType _type, int _index, shared_ptr<Variable> _variable, int _sensitivity, int _rate){
 			channel_type = _type;
 			index = _index;
+            sensitivity = _sensitivity;
+            rate = _rate;
+            
 			
 			ifKit = NULL;
 			
@@ -68,6 +73,14 @@ class PhidgetDeviceChannel : public Component {
 		int getIndex(){
 			return index;
 		}
+
+        int getSensitivity() {
+            return sensitivity;
+        }
+
+        int getRate() {
+            return rate;
+        }
 		
 		PhidgetChannelType getType(){
 			return channel_type;
@@ -97,8 +110,16 @@ class PhidgetDeviceChannelFactory : public ComponentFactory {
 		}
 		
 		shared_ptr<Variable> variable = reg->getVariable(parameters["variable"]);
+
+        string sensitivity_string;
+        GET_ATTRIBUTE(parameters, sensitivity_string, "sensitivity", "10");
+        int sensitivity = reg->getNumber(sensitivity_string);
+
+        string rate_string;
+        GET_ATTRIBUTE(parameters, rate_string, "rate", "25");
+        int rate = reg->getNumber(rate_string);
 		
-		shared_ptr <Component> new_channel(new PhidgetDeviceChannel(type, index, variable));
+		shared_ptr <Component> new_channel(new PhidgetDeviceChannel(type, index, variable, sensitivity, rate));
 		return new_channel;
 	}
 
@@ -201,6 +222,8 @@ class PhidgetDevice : public IODevice {
 		//virtual ExpandableList<IOCapability> *getCapabilities(){ return NULL; }
 		//virtual bool mapRequestsToChannels(){  return true;  }
 		//virtual bool initializeChannels(){  return true;  }
+        virtual bool configureAnalogChannel(int i);
+
 		virtual bool startup(){  
 			return true;  
 		}
