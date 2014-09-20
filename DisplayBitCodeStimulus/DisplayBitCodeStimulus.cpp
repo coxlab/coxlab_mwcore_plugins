@@ -8,7 +8,7 @@
  */
 
 #include "DisplayBitCodeStimulus.h"
-#include "ClockSync.h"
+//i#include "ClockSync.h"
 #include <math.h>
 
 namespace mw{
@@ -32,11 +32,11 @@ DisplayBitCodeStimulus::DisplayBitCodeStimulus(const ParameterValueMap &p) :
     shared_ptr<Variable> display_update_variable = registry->getVariable("#stimDisplayUpdate");
     
     if(clock_offset_variable != NULL){
-        clock_sync = shared_ptr<ClockSync>(new ClockSync((long)n_markers_variable->getValue(), 
-                                                         "tcp://127.0.0.1", 
-                                                         code_variable,
-                                                         display_update_variable,
-                                                         clock_offset_variable) );
+//        clock_sync = shared_ptr<ClockSync>(new ClockSync((long)n_markers_variable->getValue(), 
+//                                                         "tcp://127.0.0.1", 
+//                                                         code_variable,
+//                                                         display_update_variable,
+//                                                         clock_offset_variable) );
     }
     
 }

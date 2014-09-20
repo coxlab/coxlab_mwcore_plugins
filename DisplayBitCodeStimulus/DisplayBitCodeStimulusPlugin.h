@@ -12,10 +12,6 @@
 #include <MWorksCore/Plugin.h>
 using namespace mw;
 
-extern "C"{
-    Plugin *getPlugin();
-}
-
 
 namespace mw {
     

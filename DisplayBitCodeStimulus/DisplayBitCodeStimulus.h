@@ -15,7 +15,7 @@
 #include <MWorksCore/StandardStimuli.h>
 #include "MWorksCore/ComponentInfo.h"
 #include "MworksCore/ParameterValue.h"
-#include "ClockSync.h"
+//#include "ClockSync.h"
 
 
 namespace mw{
@@ -44,7 +44,7 @@ protected:
     boost::variate_generator< boost::minstd_rand, boost::uniform_int<> > random_generator;
     
     
-    shared_ptr<ClockSync> clock_sync;
+//    shared_ptr<ClockSync> clock_sync;
     shared_ptr<Variable> clock_offset_variable;
     
 
