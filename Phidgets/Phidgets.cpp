@@ -57,6 +57,7 @@ void PhidgetDevice::addChild(std::map<std::string, std::string> parameters,
 	
 	if(type == M_PHIDGET_ANALOG_INPUT){
 		analog_input_channels[index] = wchild;
+        configureAnalogChannel(index);
 	} else if(type == M_PHIDGET_DIGITAL_INPUT){
 		digital_input_channels[index] = wchild;
 	} else if(type == M_PHIDGET_DIGITAL_OUTPUT){
@@ -67,6 +68,20 @@ void PhidgetDevice::addChild(std::map<std::string, std::string> parameters,
 	} else {
 		throw SimpleException("Unknown phidget channel type");
 	}
+}
+
+bool PhidgetDevice::configureAnalogChannel(int i){
+    shared_ptr<PhidgetDeviceChannel> channel = getAnalogInputChannel(i);
+    if(channel == NULL){
+        mwarning(M_SYSTEM_MESSAGE_DOMAIN, "Could not configure channel");
+        printf("failed to acquire and configure channel %i", i);
+        return false;
+    }
+    CPhidgetInterfaceKit_setDataRate(ifKit, i, channel->getRate());
+    printf("phidget channel %i rate set to %i\n", i, channel->getRate());
+    CPhidgetInterfaceKit_setSensorChangeTrigger(ifKit, i, channel->getSensitivity());
+    printf("phidget channel %i sensitivity set to %i\n", i, channel->getSensitivity());
+    return true;
 }
 
 

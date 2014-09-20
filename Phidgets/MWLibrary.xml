@@ -20,7 +20,9 @@
                        tag="channel 1"
                        variable=""
                        index="0"
-                       capability="analog_input"/>
+                       capability="analog_input"
+                       rate="40"
+                       sensitivity="10"/>
        </iodevice>
       
     </code>
@@ -37,7 +39,11 @@
 		<allowed_parent>Phidgets IO</allowed_parent>
 		
 		<description>
-			A phidgets IO channel
+			A phidgets IO channel.
+            See phidgets docs for rate and sensitivity descriptions
+            www.phidgets.com/wiki/index.php?title=Analog_Input_Primer
+            rate = ms between data samples (1, 2, 4 or multiple of 8)
+            sensitivity = min change required before sampling
 		</description>
 		
 		<!-- Payload -->
@@ -46,7 +52,9 @@
             tag="channel 1"
             variable=""
             index="0"
-            capability="analog_input"/>
+            capability="analog_input"
+            rate="40",
+            sensitivity="10"/>
 		</code>
 	</MWElement>
 </MWElements>
