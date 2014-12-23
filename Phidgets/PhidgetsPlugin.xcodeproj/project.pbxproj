@@ -32,6 +32,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		5C0D3DCA1A4A06A20086795F /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C0D3DC91A4A06A20086795F /* libboost_system.a */; };
 		5C32C9B6127B64C5008913F7 /* MWLibrary.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5C32C9B5127B64C5008913F7 /* MWLibrary.xml */; };
 		5C4B0A610DC791D4001BC518 /* Phidgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5C4B0A5E0DC791D4001BC518 /* Phidgets.cpp */; };
 		5C4B0A650DC79212001BC518 /* MWorksCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C4B0A630DC79212001BC518 /* MWorksCore.framework */; };
@@ -64,6 +65,7 @@
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF630370AF2F00C91783 /* PhidgetsPlugin_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhidgetsPlugin_Prefix.pch; sourceTree = "<group>"; };
+		5C0D3DC91A4A06A20086795F /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = "../../../../../../Library/Application Support/MWorks/Developer/lib/libboost_system.a"; sourceTree = "<group>"; };
 		5C32C9B5127B64C5008913F7 /* MWLibrary.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = MWLibrary.xml; sourceTree = "<group>"; };
 		5C4B0A5E0DC791D4001BC518 /* Phidgets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Phidgets.cpp; sourceTree = "<group>"; };
 		5C4B0A5F0DC791D4001BC518 /* Phidgets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Phidgets.h; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 			files = (
 				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
 				5C4B0A650DC79212001BC518 /* MWorksCore.framework in Frameworks */,
+				5C0D3DCA1A4A06A20086795F /* libboost_system.a in Frameworks */,
 				5C4B0A660DC79212001BC518 /* Phidget21.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -108,6 +111,7 @@
 		089C1671FE841209C02AAC07 /* Frameworks and Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				5C0D3DC91A4A06A20086795F /* libboost_system.a */,
 				1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */,
 				1058C7AEFEA557BF11CA2CBB /* Other Frameworks */,
 			);
@@ -208,6 +212,8 @@
 /* Begin PBXProject section */
 		089C1669FE841209C02AAC07 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "PhidgetsPlugin" */;
 			compatibilityVersion = "Xcode 3.0";
 			developmentRegion = English;
@@ -318,7 +324,11 @@
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = Info.plist;
-				LIBRARY_SEARCH_PATHS = "$(MW_LIB_DIR)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(MW_LIB_DIR)",
+					"$(LOCAL_LIBRARY_DIR)/Application",
+					Support/MWorks/Developer/lib,
+				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = PhidgetsPlugin;
 				WRAPPER_EXTENSION = bundle;
@@ -335,7 +345,11 @@
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = Info.plist;
-				LIBRARY_SEARCH_PATHS = /Library/MonkeyWorks/lib;
+				LIBRARY_SEARCH_PATHS = (
+					/Library/MonkeyWorks/lib,
+					"$(LOCAL_LIBRARY_DIR)/Application",
+					Support/MWorks/Developer/lib,
+				);
 				OTHER_LDFLAGS = "-lboost_system-mt";
 				PRODUCT_NAME = CoxlabCorePlugins;
 				WRAPPER_EXTENSION = bundle;
@@ -346,8 +360,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5C78E9221159430900151A76 /* Development.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_LDFLAGS = "";
+				VALID_ARCHS = x86_64;
 			};
 			name = Development;
 		};
@@ -356,6 +374,8 @@
 			buildSettings = {
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_LDFLAGS = "";
+				VALID_ARCHS = x86_64;
 			};
 			name = Release;
 		};
@@ -385,6 +405,8 @@
 			buildSettings = {
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_LDFLAGS = "";
+				VALID_ARCHS = x86_64;
 			};
 			name = "Development (10.5 Compatible)";
 		};
@@ -399,7 +421,11 @@
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = Info.plist;
-				LIBRARY_SEARCH_PATHS = "$(MW_LIB_DIR)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(MW_LIB_DIR)",
+					"$(LOCAL_LIBRARY_DIR)/Application",
+					Support/MWorks/Developer/lib,
+				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = PhidgetsPlugin;
 				WRAPPER_EXTENSION = bundle;

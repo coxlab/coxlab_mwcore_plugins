@@ -17,7 +17,12 @@ extern "C"{
 
 
 
+namespace mw {
+    
+
 class PhidgetsPlugin : public mw::Plugin {
     
 	virtual void registerComponents(boost::shared_ptr<mw::ComponentRegistry> registry);	
 };
+
+}

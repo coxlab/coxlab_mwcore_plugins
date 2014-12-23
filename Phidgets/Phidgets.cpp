@@ -9,8 +9,58 @@
 
 #include "Phidgets.h"
 #include "MWorksCore/ComponentRegistry.h"
+#include "MWorksCore/StandardComponentFactory.h"
 
 using namespace mw;
+
+
+template<>
+PhidgetChannelType ParameterValue::convert(const std::string &s, ComponentRegistryPtr reg) {
+    std::string type_string(boost::algorithm::to_lower_copy(s));
+    
+    if (type_string == "analog_input") {
+        return M_PHIDGET_ANALOG_INPUT;
+//    } else if (type_string == "analog_output") {
+//        return M_PHIDGET_ANALOG_OUTPUT;
+    } else if (type_string == "digital_input") {
+        return M_PHIDGET_DIGITAL_INPUT;
+    } else if (type_string == "digital_output") {
+        return M_PHIDGET_DIGITAL_OUTPUT;
+    } else {
+        throw SimpleException("Unknown channel type (must be one of: [analog_input, analog_output, digital_input, digital_output])", type_string);
+    }
+}
+
+
+PhidgetDeviceChannel::PhidgetDeviceChannel(const ParameterValueMap &p) :
+    channel_type((PhidgetChannelType)p[CHANNEL_TYPE]),
+    index((int)p[INDEX]),
+    sensitivity((int)p[SENSITIVITY]),
+    rate((int)p[RATE]),
+    variable(p[VARIABLE])
+{
+    ifKit = NULL;
+}
+
+void PhidgetDeviceChannel::describeComponent(ComponentInfo& info){
+    info.setSignature("iochannel/phidgets");
+    info.addParameter(CHANNEL_TYPE);
+    info.addParameter(INDEX);
+    info.addParameter(SENSITIVITY);
+    info.addParameter(RATE);
+    info.addParameter(VARIABLE);
+}
+
+const std::string PhidgetDeviceChannel::CHANNEL_TYPE("type");
+const std::string PhidgetDeviceChannel::VARIABLE("variable");
+const std::string PhidgetDeviceChannel::INDEX("index");
+const std::string PhidgetDeviceChannel::SENSITIVITY("sensitivity");
+const std::string PhidgetDeviceChannel::RATE("rate");
+
+
+
+
+
 
 
 PhidgetDevice::~PhidgetDevice(){
@@ -174,9 +224,3 @@ int SensorChangeHandler(CPhidgetInterfaceKitHandle IFK, void *usrptr, int Index,
 }
 
 
-
-shared_ptr<mw::Component> PhidgetDeviceFactory::createObject(std::map<std::string, std::string> parameters,
-													 ComponentRegistry *reg) {
-    shared_ptr <mw::Component> newDevice = shared_ptr<Component>(new PhidgetDevice());
-		return newDevice;
-	}

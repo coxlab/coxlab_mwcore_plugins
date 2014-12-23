@@ -14,9 +14,10 @@
 #include <Phidget21/phidget21.h>
 #include <string>
 #include <boost/format.hpp>
+#include <boost/shared_ptr.hpp>
 
-using namespace std;
-
+using boost::shared_ptr;
+//using namespace std;
 
 
 int AttachHandler(CPhidgetHandle IFK, void *userptr);
@@ -45,18 +46,17 @@ class PhidgetDeviceChannel : public Component {
 		
 	public:
 	
-		PhidgetDeviceChannel(PhidgetChannelType _type, int _index, shared_ptr<Variable> _variable, int _sensitivity, int _rate){
-			channel_type = _type;
-			index = _index;
-            sensitivity = _sensitivity;
-            rate = _rate;
-            
-			
-			ifKit = NULL;
-			
-			variable = _variable;
-		}
-		
+    
+        PhidgetDeviceChannel(const ParameterValueMap &parameters);
+        
+        static void describeComponent(ComponentInfo& info);
+    
+        static const std::string VARIABLE;
+        static const std::string CHANNEL_TYPE;
+        static const std::string INDEX;
+        static const std::string SENSITIVITY;
+        static const std::string RATE;
+    
 		
 		void setDevice(CPhidgetInterfaceKitHandle _ifKit){
 			ifKit = _ifKit;
@@ -87,43 +87,49 @@ class PhidgetDeviceChannel : public Component {
 		}
 		
 };
+    
+    
+template<>
+PhidgetChannelType ParameterValue::convert(const std::string &s, ComponentRegistryPtr reg);
 
-class PhidgetDeviceChannelFactory : public ComponentFactory {
-
-	shared_ptr<Component> createObject(std::map<std::string, std::string> parameters,
-													 ComponentRegistry *reg) {
-		
-		REQUIRE_ATTRIBUTES(parameters, "variable", "capability", "index");
-		
-		string capability_string = boost::to_lower_copy(parameters["capability"]);
-		PhidgetChannelType type;
-		int index = reg->getNumber(parameters["index"]);
-		
-		if(capability_string == "digital_input"){
-			type = M_PHIDGET_DIGITAL_INPUT;
-		} else if(capability_string == "digital_output"){
-			type = M_PHIDGET_DIGITAL_OUTPUT;
-		} else if(capability_string == "analog_input"){
-			type = M_PHIDGET_ANALOG_INPUT;
-		} else {
-			throw SimpleException("Unknown phidget channel type", capability_string);
-		}
-		
-		shared_ptr<Variable> variable = reg->getVariable(parameters["variable"]);
-
-        string sensitivity_string;
-        GET_ATTRIBUTE(parameters, sensitivity_string, "sensitivity", "10");
-        int sensitivity = reg->getNumber(sensitivity_string);
-
-        string rate_string;
-        GET_ATTRIBUTE(parameters, rate_string, "rate", "25");
-        int rate = reg->getNumber(rate_string);
-		
-		shared_ptr <Component> new_channel(new PhidgetDeviceChannel(type, index, variable, sensitivity, rate));
-		return new_channel;
-	}
-
-};
+    
+//
+//class PhidgetDeviceChannelFactory : public ComponentFactory {
+//
+//	shared_ptr<Component> createObject(std::map<std::string, std::string> parameters,
+//													 ComponentRegistry *reg) {
+//		
+//		REQUIRE_ATTRIBUTES(parameters, "variable", "capability", "index");
+//		
+//		string capability_string = boost::to_lower_copy(parameters["capability"]);
+//		PhidgetChannelType type;
+//		int index = reg->getNumber(parameters["index"]);
+//		
+//		if(capability_string == "digital_input"){
+//			type = M_PHIDGET_DIGITAL_INPUT;
+//		} else if(capability_string == "digital_output"){
+//			type = M_PHIDGET_DIGITAL_OUTPUT;
+//		} else if(capability_string == "analog_input"){
+//			type = M_PHIDGET_ANALOG_INPUT;
+//		} else {
+//			throw SimpleException("Unknown phidget channel type", capability_string);
+//		}
+//		
+//		shared_ptr<Variable> variable = reg->getVariable(parameters["variable"]);
+//
+//        string sensitivity_string;
+//        GET_ATTRIBUTE(parameters, sensitivity_string, "sensitivity", "10");
+//        int sensitivity = reg->getNumber(sensitivity_string);
+//
+//        string rate_string;
+//        GET_ATTRIBUTE(parameters, rate_string, "rate", "25");
+//        int rate = reg->getNumber(rate_string);
+//		
+//		shared_ptr <Component> new_channel(new PhidgetDeviceChannel(type, index, variable, sensitivity, rate));
+//		return new_channel;
+//	}
+//
+//};
 
 
 class PhidgetDevice : public IODevice {
@@ -141,7 +147,7 @@ class PhidgetDevice : public IODevice {
 
 	public:
 	
-		PhidgetDevice(){
+		PhidgetDevice(const ParameterValueMap &parameters){
 		
             int err_code = EPHIDGET_OK;
             
@@ -256,11 +262,11 @@ class PhidgetDevice : public IODevice {
 };
 
 
-class PhidgetDeviceFactory : public ComponentFactory {
-
-	shared_ptr<Component> createObject(std::map<std::string, std::string> parameters,
-													 ComponentRegistry *reg);
-};
+//class PhidgetDeviceFactory : public ComponentFactory {
+//
+//	shared_ptr<Component> createObject(std::map<std::string, std::string> parameters,
+//													 ComponentRegistry *reg);
+//};
 
 
 

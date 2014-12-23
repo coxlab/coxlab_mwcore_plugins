@@ -9,6 +9,7 @@
 
 #include "PhidgetsPlugin.h"
 #include "Phidgets.h"
+#include <MWorksCore/StandardComponentFactory.h>
 
 using namespace mw;
 
@@ -19,10 +20,14 @@ Plugin *getPlugin(){
 
 void PhidgetsPlugin::registerComponents(shared_ptr<ComponentRegistry> registry) {
 	
-	registry->registerFactory(std::string("iodevice/phidget"),
-								  (ComponentFactory *)(new PhidgetDeviceFactory()));
-								  
-	registry->registerFactory(std::string("iochannel/phidget"),
-								  (ComponentFactory *)(new PhidgetDeviceChannelFactory()));
+    registry->registerFactory<StandardComponentFactory, PhidgetDevice>();
+    registry->registerFactory<StandardComponentFactory, PhidgetDeviceChannel>();
+    
+    
+//	registry->registerFactory(std::string("iodevice/phidget"),
+//								  (ComponentFactory *)(new PhidgetDeviceFactory()));
+//								  
+//	registry->registerFactory(std::string("iochannel/phidget"),
+//								  (ComponentFactory *)(new PhidgetDeviceChannelFactory()));
 	
 }
