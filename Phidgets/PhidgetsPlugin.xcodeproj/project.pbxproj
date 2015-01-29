@@ -259,7 +259,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# shell script goes here\necho \"Deciding whether to install Phidgets\"\n\nif test -e /Library/Frameworks/Phidgets21.framework\nthen\techo \"No need to install the phidgets framework\"\nelse installer -pkg PhidgetsInstaller/Phidgets.mpkg -target /\nfi\nexit 0";
+			shellScript = "# shell script goes here\necho \"Deciding whether to install Phidgets\"\n\nif test -e /Library/Frameworks/Phidget21.framework\nthen\techo \"No need to install the phidgets framework\"\nelse installer -pkg PhidgetsInstaller/Phidgets.mpkg -target /\nfi\nexit 0";
 		};
 		5C4B0B5D0DC7CAB9001BC518 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -324,11 +324,7 @@
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = Info.plist;
-				LIBRARY_SEARCH_PATHS = (
-					"$(MW_LIB_DIR)",
-					"$(LOCAL_LIBRARY_DIR)/Application",
-					Support/MWorks/Developer/lib,
-				);
+				LIBRARY_SEARCH_PATHS = "$(MW_LIB_DIR)";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = PhidgetsPlugin;
 				WRAPPER_EXTENSION = bundle;
@@ -360,12 +356,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5C78E9221159430900151A76 /* Development.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_LDFLAGS = "";
-				VALID_ARCHS = x86_64;
 			};
 			name = Development;
 		};
@@ -375,7 +369,6 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_LDFLAGS = "";
-				VALID_ARCHS = x86_64;
 			};
 			name = Release;
 		};
@@ -406,7 +399,6 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_LDFLAGS = "";
-				VALID_ARCHS = x86_64;
 			};
 			name = "Development (10.5 Compatible)";
 		};
