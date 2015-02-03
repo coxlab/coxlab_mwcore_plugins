@@ -228,9 +228,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				5C488B430F52ED3D00C5A526 /* InstallPhidgets */,
 				8D5B49AC048680CD000E48DA /* PhidgetsPlugin */,
 				5CFC67B60F2A849C00552431 /* Everything */,
-				5C488B430F52ED3D00C5A526 /* InstallPhidgets */,
 			);
 		};
 /* End PBXProject section */
