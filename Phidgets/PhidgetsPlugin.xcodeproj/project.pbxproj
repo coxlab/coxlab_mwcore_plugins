@@ -24,10 +24,22 @@
 			buildPhases = (
 			);
 			dependencies = (
-				5CFC67BA0F2A84A800552431 /* PBXTargetDependency */,
+				E1B54D2A1A812DE100559782 /* PBXTargetDependency */,
 			);
 			name = Everything;
 			productName = Everything;
+		};
+		E1B54D221A812DCE00559782 /* InstallPhidgetsPlugin */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = E1B54D231A812DCE00559782 /* Build configuration list for PBXAggregateTarget "InstallPhidgetsPlugin" */;
+			buildPhases = (
+				E1B54D2B1A812DFF00559782 /* CopyFiles */,
+			);
+			dependencies = (
+				E1B54D281A812DD900559782 /* PBXTargetDependency */,
+			);
+			name = InstallPhidgetsPlugin;
+			productName = InstallPhidgetsPlugin;
 		};
 /* End PBXAggregateTarget section */
 
@@ -40,6 +52,7 @@
 		5C4B0ADE0DC793E2001BC518 /* PhidgetsPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5C4B0ADD0DC793E2001BC518 /* PhidgetsPlugin.cpp */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		E1B54D2C1A812E0D00559782 /* PhidgetsPlugin.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8D5B49B6048680CD000E48DA /* PhidgetsPlugin.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,14 +63,34 @@
 			remoteGlobalIDString = 5C488B430F52ED3D00C5A526;
 			remoteInfo = InstallPhidgets;
 		};
-		5CFC67B90F2A84A800552431 /* PBXContainerItemProxy */ = {
+		E1B54D271A812DD900559782 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = PhidgetsPlugin;
 		};
+		E1B54D291A812DE100559782 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E1B54D221A812DCE00559782;
+			remoteInfo = InstallPhidgetsPlugin;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E1B54D2B1A812DFF00559782 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(MW_PLUGINS_DIR)";
+			dstSubfolderSpec = 0;
+			files = (
+				E1B54D2C1A812E0D00559782 /* PhidgetsPlugin.bundle in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -194,7 +227,6 @@
 				8D5B49AF048680CD000E48DA /* Resources */,
 				8D5B49B1048680CD000E48DA /* Sources */,
 				8D5B49B3048680CD000E48DA /* Frameworks */,
-				5C4B0B5D0DC7CAB9001BC518 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -213,6 +245,11 @@
 		089C1669FE841209C02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				TargetAttributes = {
+					E1B54D221A812DCE00559782 = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+				};
 			};
 			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "PhidgetsPlugin" */;
 			compatibilityVersion = "Xcode 3.0";
@@ -230,6 +267,7 @@
 			targets = (
 				5C488B430F52ED3D00C5A526 /* InstallPhidgets */,
 				8D5B49AC048680CD000E48DA /* PhidgetsPlugin */,
+				E1B54D221A812DCE00559782 /* InstallPhidgetsPlugin */,
 				5CFC67B60F2A849C00552431 /* Everything */,
 			);
 		};
@@ -261,19 +299,6 @@
 			shellPath = /bin/sh;
 			shellScript = "# shell script goes here\necho \"Deciding whether to install Phidgets\"\n\nif test -e /Library/Frameworks/Phidget21.framework\nthen\techo \"No need to install the phidgets framework\"\nelse installer -pkg PhidgetsInstaller/Phidgets.mpkg -target /\nfi\nexit 0";
 		};
-		5C4B0B5D0DC7CAB9001BC518 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/zsh;
-			shellScript = "export FULL_NAME=${PRODUCT_NAME}.${WRAPPER_EXTENSION}\nexport FINAL_INSTALL_DIR=${PLUGINS_DIR}\n\nmkdir -p \"${FINAL_INSTALL_DIR}/${FULL_NAME}\"\nrm -R \"${FINAL_INSTALL_DIR}/${FULL_NAME}\"\ncp -R \"${BUILT_PRODUCTS_DIR}/${FULL_NAME}\" ${FINAL_INSTALL_DIR}/\n";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -294,10 +319,15 @@
 			target = 5C488B430F52ED3D00C5A526 /* InstallPhidgets */;
 			targetProxy = 5C488B980F5347CC00C5A526 /* PBXContainerItemProxy */;
 		};
-		5CFC67BA0F2A84A800552431 /* PBXTargetDependency */ = {
+		E1B54D281A812DD900559782 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8D5B49AC048680CD000E48DA /* PhidgetsPlugin */;
-			targetProxy = 5CFC67B90F2A84A800552431 /* PBXContainerItemProxy */;
+			targetProxy = E1B54D271A812DD900559782 /* PBXContainerItemProxy */;
+		};
+		E1B54D2A1A812DE100559782 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E1B54D221A812DCE00559782 /* InstallPhidgetsPlugin */;
+			targetProxy = E1B54D291A812DE100559782 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -465,6 +495,27 @@
 			};
 			name = Release;
 		};
+		E1B54D241A812DCE00559782 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Development;
+		};
+		E1B54D251A812DCE00559782 /* Development (10.5 Compatible) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = "Development (10.5 Compatible)";
+		};
+		E1B54D261A812DCE00559782 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -507,6 +558,15 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		E1B54D231A812DCE00559782 /* Build configuration list for PBXAggregateTarget "InstallPhidgetsPlugin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1B54D241A812DCE00559782 /* Development */,
+				E1B54D251A812DCE00559782 /* Development (10.5 Compatible) */,
+				E1B54D261A812DCE00559782 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
