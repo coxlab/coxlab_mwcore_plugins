@@ -146,6 +146,8 @@ class PhidgetDevice : public IODevice {
 		map< int, weak_ptr<PhidgetDeviceChannel> > digital_output_channels;
 
 	public:
+    
+        static void describeComponent(ComponentInfo &info);
 	
 		PhidgetDevice(const ParameterValueMap &parameters){
 		

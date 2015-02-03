@@ -43,7 +43,10 @@ PhidgetDeviceChannel::PhidgetDeviceChannel(const ParameterValueMap &p) :
 }
 
 void PhidgetDeviceChannel::describeComponent(ComponentInfo& info){
-    info.setSignature("iochannel/phidgets");
+    Component::describeComponent(info);
+    
+    info.setSignature("iochannel/phidget");
+    
     info.addParameter(CHANNEL_TYPE);
     info.addParameter(INDEX);
     info.addParameter(SENSITIVITY);
@@ -51,7 +54,7 @@ void PhidgetDeviceChannel::describeComponent(ComponentInfo& info){
     info.addParameter(VARIABLE);
 }
 
-const std::string PhidgetDeviceChannel::CHANNEL_TYPE("type");
+const std::string PhidgetDeviceChannel::CHANNEL_TYPE("capability");
 const std::string PhidgetDeviceChannel::VARIABLE("variable");
 const std::string PhidgetDeviceChannel::INDEX("index");
 const std::string PhidgetDeviceChannel::SENSITIVITY("sensitivity");
@@ -61,6 +64,12 @@ const std::string PhidgetDeviceChannel::RATE("rate");
 
 
 
+
+
+void PhidgetDevice::describeComponent(ComponentInfo &info) {
+    IODevice::describeComponent(info);
+    info.setSignature("iodevice/phidget");
+}
 
 
 PhidgetDevice::~PhidgetDevice(){
