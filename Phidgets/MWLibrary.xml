@@ -53,7 +53,7 @@
             variable=""
             index="0"
             capability="analog_input"
-            rate="40",
+            rate="40"
             sensitivity="10"/>
 		</code>
 	</MWElement>
